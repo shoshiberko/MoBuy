@@ -6,10 +6,19 @@ import "bootstrap/dist/css/bootstrap.css";
 //import SideNavBar from "./components/SideNavBar";
 import * as serviceWorker from "./serviceWorker";
 import Dashboard from "./components/Dashboard";
-import SignIn from "./components/SignIn";
-import SignUp from "./components/SignUp";
+import { BrowserRouter as Router } from "react-router-dom";
 
-ReactDOM.render(<Dashboard />, document.getElementById("root"));
+//ReactDOM.render(<Dashboard />, document.getElementById("root"));
+
+const rootElement = document.getElementById("root");
+ReactDOM.render(
+  <React.StrictMode>
+    <Router>
+      <Dashboard />
+    </Router>
+  </React.StrictMode>,
+  rootElement
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

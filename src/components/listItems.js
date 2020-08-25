@@ -9,50 +9,63 @@ import ProfileIcon from "@material-ui/icons/AccountCircle";
 import BranchesIcon from "@material-ui/icons/Place";
 import AboutUsIcon from "@material-ui/icons/Info";
 import ContactUsIcon from "@material-ui/icons/ContactSupport";
+import { withRouter } from "react-router-dom";
 
-export const mainListItems = (
-  <div>
-    <ListItem button>
-      <ListItemIcon>
-        <HomeIcon />
-      </ListItemIcon>
-      <ListItemText primary="Home" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <ProfileIcon />
-      </ListItemIcon>
-      <ListItemText primary="Profile" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <MarketIcon />
-      </ListItemIcon>
-      <ListItemText primary="Market" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <HeartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Saved Items" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <BranchesIcon />
-      </ListItemIcon>
-      <ListItemText primary="Branches" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <AboutUsIcon />
-      </ListItemIcon>
-      <ListItemText primary="About Us" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <ContactUsIcon />
-      </ListItemIcon>
-      <ListItemText primary="Contact Us" />
-    </ListItem>
-  </div>
-);
+const mainListItems = history => {
+  function handleClickHome(e) {
+    history.push("/");
+    console.log("Home was clicked.");
+  }
+  function handleClickProfile(e) {
+    history.push("/Profile");
+    console.log("Profile was clicked.");
+  }
+  return (
+    <div>
+      <ListItem button onClick={handleClickHome}>
+        <ListItemIcon>
+          <HomeIcon />
+        </ListItemIcon>
+        <ListItemText primary="Home" />
+      </ListItem>
+      <ListItem button onClick={handleClickProfile}>
+        <ListItemIcon>
+          <ProfileIcon />
+        </ListItemIcon>
+        <ListItemText primary="Profile" />
+      </ListItem>
+      <ListItem button>
+        <ListItemIcon>
+          <MarketIcon />
+        </ListItemIcon>
+        <ListItemText primary="Market" />
+      </ListItem>
+      <ListItem button>
+        <ListItemIcon>
+          <HeartIcon />
+        </ListItemIcon>
+        <ListItemText primary="Saved Items" />
+      </ListItem>
+      <ListItem button>
+        <ListItemIcon>
+          <BranchesIcon />
+        </ListItemIcon>
+        <ListItemText primary="Branches" />
+      </ListItem>
+      <ListItem button>
+        <ListItemIcon>
+          <AboutUsIcon />
+        </ListItemIcon>
+        <ListItemText primary="About Us" />
+      </ListItem>
+      <ListItem button>
+        <ListItemIcon>
+          <ContactUsIcon />
+        </ListItemIcon>
+        <ListItemText primary="Contact Us" />
+      </ListItem>
+    </div>
+  );
+};
+
+export default mainListItems;
