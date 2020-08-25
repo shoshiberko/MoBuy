@@ -168,7 +168,20 @@ export default function Dashboard() {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <DrawerFunc />
+      <Drawer
+        variant="permanent"
+        classes={{
+          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose)
+        }}
+        open={open}
+      >
+        <div className={classes.toolbarIcon}>
+          <IconButton onClick={handleDrawerClose}>
+            <ChevronLeftIcon />
+          </IconButton>
+        </div>
+        <List>{mainListItems}</List>
+      </Drawer>
       <Switch>
         <Route exact from="/h" render={props => <SignIn {...props} />} />
         <Route exact path="/Profile" render={props => <SignUp {...props} />} />

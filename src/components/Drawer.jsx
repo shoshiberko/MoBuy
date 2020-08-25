@@ -34,12 +34,31 @@ const useStyles = makeStyles({
 });
 
 const DrawerFunc = props => {
+  const [open, setOpen] = React.useState(true);
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
   const { history } = props;
   console.log("drawer", history);
   const classes = useStyles();
   return (
-    <Drawer variant="permanent" className={classes.drawer}>
-      <List>{mainListItems(history)}</List>
+    <Drawer
+      variant="permanent"
+      classes={{
+        paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose)
+      }}
+      open={open}
+    >
+      <div className={classes.toolbarIcon}>
+        <IconButton onClick={handleDrawerClose}>
+          <ChevronLeftIcon />
+        </IconButton>
+      </div>
+      <List>{mainListItems}</List>
     </Drawer>
   );
 };
