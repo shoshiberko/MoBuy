@@ -19,7 +19,6 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import Rating from "@material-ui/lab/Rating";
-import ColorLensIcon from "@material-ui/icons/ColorLens";
 
 const useStyles = makeStyles(theme => ({
   root: {
