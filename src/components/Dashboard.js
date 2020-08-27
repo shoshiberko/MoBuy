@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useContext } from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -31,6 +31,8 @@ import Cart from "../pages/cart";
 import Catalog from "./Catalog";
 import HomePage from "./HomePage";
 import Store from "../pages/store";
+import { formatNumber } from "../helpers/utils";
+import { CartContext } from "../contexts/CartContext";
 
 function Copyright() {
   return (
@@ -127,6 +129,15 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Dashboard() {
+  const {
+    total,
+    cartItems,
+    itemCount,
+    clearCart,
+    checkout,
+    handleCheckout
+  } = useContext(CartContext);
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -172,7 +183,14 @@ export default function Dashboard() {
             </Badge>
           </IconButton>
           <IconButton color="inherit" component="a" href="/Cart">
-            <Badge badgeContent={4} color="secondary">
+            <Badge
+              badgeContent={itemCount}
+              color="secondary"
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "right"
+              }}
+            >
               <CartIcon />
             </Badge>
           </IconButton>
