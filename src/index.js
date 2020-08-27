@@ -7,15 +7,20 @@ import "bootstrap/dist/css/bootstrap.css";
 import * as serviceWorker from "./serviceWorker";
 import Dashboard from "./components/Dashboard";
 import { BrowserRouter as Router } from "react-router-dom";
-
 //ReactDOM.render(<Dashboard />, document.getElementById("root"));
+import CartContextProvider from "./contexts/CartContext";
+import ProductsContextProvider from "./contexts/ProductsContext";
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <Dashboard />
-    </Router>
+    <ProductsContextProvider>
+      <CartContextProvider>
+        <Router>
+          <Dashboard />
+        </Router>
+      </CartContextProvider>
+    </ProductsContextProvider>
   </React.StrictMode>,
   rootElement
 );

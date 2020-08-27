@@ -28,10 +28,6 @@ import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import { Route, Switch } from "react-router-dom";
 import Cart from "../pages/cart";
-import Catalog from "./Catalog";
-import HomePage from "./HomePage";
-import Store from "../pages/store";
-
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -128,80 +124,32 @@ const useStyles = makeStyles(theme => ({
 
 export default function Dashboard() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
-        position="absolute"
-        className={clsx(classes.appBar, open && classes.appBarShift)}
-      >
-        <Toolbar className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            className={clsx(
-              classes.menuButton,
-              open && classes.menuButtonHidden
-            )}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            component="h1"
-            variant="h6"
-            color="inherit"
-            noWrap
-            className={classes.title}
-          >
-            MoBuy
-          </Typography>
-          <IconButton color="inherit" component="a" href="/Notification">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <IconButton color="inherit" component="a" href="/Cart">
-            <Badge badgeContent={4} color="secondary">
-              <CartIcon />
-            </Badge>
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose)
-        }}
-        open={open}
-      >
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <List>{mainListItems}</List>
-      </Drawer>
-
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}></Container>
-        <Switch>
-          <Route exact from="/" render={props => <HomePage {...props} />} />
-          <Route exact from="/Cart" render={props => <Cart {...props} />} />
-          <Route exact from="/Market" render={props => <Store {...props} />} />
-        </Switch>
-      </main>
+    <div>
+      <Grid container spacing={3}>
+        {/* Chart */}
+        <Grid item xs={12} md={8} lg={9}>
+          <Paper className={fixedHeightPaper}>
+            <Chart />
+          </Paper>
+        </Grid>
+        {/* Recent Deposits */}
+        <Grid item xs={12} md={4} lg={3}>
+          <Paper className={fixedHeightPaper}>
+            <Deposits />
+          </Paper>
+        </Grid>
+        {/* Recent Orders */}
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
+            <Orders />
+          </Paper>
+        </Grid>
+      </Grid>
+      <Box pt={4}>
+        <Copyright />
+      </Box>
     </div>
   );
 }
