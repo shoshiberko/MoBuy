@@ -23,7 +23,6 @@ import mainListItems /*, secondaryListItems*/ from "./listItems";
 import Chart from "./Chart";
 import Deposits from "./Deposits";
 import Orders from "./Orders";
-import Product from "./Product";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import { Route, Switch } from "react-router-dom";
