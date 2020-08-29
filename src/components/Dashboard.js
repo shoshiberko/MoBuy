@@ -31,6 +31,7 @@ import Cart from "../pages/cart";
 import Catalog from "./Catalog";
 import HomePage from "./HomePage";
 import Store from "../pages/store";
+import SavedItems from "../pages/savedItems";
 import { formatNumber } from "../helpers/utils";
 import { CartContext } from "../contexts/CartContext";
 
@@ -218,6 +219,11 @@ export default function Dashboard() {
           <Route exact from="/" render={props => <HomePage {...props} />} />
           <Route exact from="/Cart" render={props => <Cart {...props} />} />
           <Route exact from="/Market" render={props => <Store {...props} />} />
+          <Route
+            exact
+            from="/SavedItems"
+            render={props => <SavedItems {...props} />}
+          />
         </Switch>
       </main>
     </div>

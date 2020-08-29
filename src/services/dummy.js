@@ -5,7 +5,8 @@ export const dummyProducts = [
     price: 39.11,
     photo: "url(https://source.unsplash.com/random)",
     rating: "4.5",
-    moreDetails: "hi"
+    moreDetails: "hi",
+    saved: true
   },
   {
     id: 2,
@@ -13,7 +14,8 @@ export const dummyProducts = [
     price: 257.92,
     photo: "/img/2.jpg",
     rating: 5,
-    moreDetails: "hi"
+    moreDetails: "hi",
+    saved: true
   },
   {
     id: 3,
@@ -21,7 +23,8 @@ export const dummyProducts = [
     price: 51.01,
     photo: "url(https://source.unsplash.com/random)",
     rating: 3,
-    moreDetails: "hi"
+    moreDetails: "hi",
+    saved: false
   },
   {
     id: 4,
@@ -29,7 +32,8 @@ export const dummyProducts = [
     price: 250.9,
     photo: "url(https://source.unsplash.com/random)",
     rating: 5,
-    moreDetails: "hi"
+    moreDetails: "hi",
+    saved: true
   },
   {
     id: 5,
@@ -37,7 +41,8 @@ export const dummyProducts = [
     price: 175.85,
     photo: "url(https://source.unsplash.com/random)",
     rating: 5,
-    moreDetails: "hi"
+    moreDetails: "hi",
+    saved: false
   },
   {
     id: 6,
@@ -45,7 +50,8 @@ export const dummyProducts = [
     price: 82.61,
     photo: "url(https://source.unsplash.com/random)",
     rating: 2,
-    moreDetails: "hi"
+    moreDetails: "hi",
+    saved: false
   },
   {
     id: 7,
@@ -61,7 +67,8 @@ export const dummyProducts = [
     price: 134.99,
     photo: "url(https://source.unsplash.com/random)",
     rating: 4.5,
-    moreDetails: "hi"
+    moreDetails: "hi",
+    saved: false
   },
   {
     id: 9,
@@ -69,7 +76,8 @@ export const dummyProducts = [
     price: 199.16,
     photo: "url(https://source.unsplash.com/random)",
     rating: 3,
-    moreDetails: "hi"
+    moreDetails: "hi",
+    saved: false
   },
   {
     id: 10,
@@ -77,6 +85,7 @@ export const dummyProducts = [
     price: "123.82",
     photo: "url(https://source.unsplash.com/random)",
     rating: 1,
-    moreDetails: "hi"
+    moreDetails: "hi",
+    saved: true
   }
 ];

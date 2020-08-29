@@ -15,6 +15,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
@@ -44,7 +45,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function RecipeReviewCard({ product }) {
-  const [value, setValue] = React.useState(2);
+  const [saved, setSaved] = React.useState(product.saved);
+  const handleProductChangedSaved = () => {
+    setSaved(!saved);
+    //here we need to update in the db (send a request to the server in order to update this user's product is saved )
+  };
+
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -89,8 +95,12 @@ export default function RecipeReviewCard({ product }) {
       <CardMedia className={classes.media} image={product.photo} title="" />
       <CardContent></CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
+        <IconButton
+          aria-label="add to favorites"
+          onClick={handleProductChangedSaved}
+        >
+          {!saved && <FavoriteBorderIcon />}
+          {saved && <FavoriteIcon />}
         </IconButton>
         <IconButton aria-label="preview">
           <VisibilityIcon />
