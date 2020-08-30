@@ -102,7 +102,7 @@ export default function RecipeReviewCard({ product }) {
           {!saved && <FavoriteBorderIcon />}
           {saved && <FavoriteIcon />}
         </IconButton>
-        <IconButton aria-label="preview">
+        <IconButton aria-label="preview" component="a" href="/Id">
           <VisibilityIcon />
         </IconButton>
         <Rating

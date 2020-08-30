@@ -42,6 +42,8 @@ import { Card } from "@material-ui/core";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import Checkout from "../pages/payment";
+import ProductDetails from "../pages/productDetailsView";
+import ChatBot from "./ChatBot";
 
 function Copyright() {
   return (
@@ -288,6 +290,11 @@ export default function Dashboard() {
                   from="/SignUp"
                   render={props => <AboutUs {...props} />}
                 />
+                <Route
+                  exact
+                  from="/Id"
+                  render={props => <ProductDetails {...props} />}
+                />
               </Switch>
             </Grid>
             {/* Recent Deposits */}
@@ -308,6 +315,11 @@ export default function Dashboard() {
                   from="/SignUp"
                   render={props => <ContantInfo {...props} />}
                 />
+                <Route
+                  exact
+                  from="/ChatBot"
+                  render={props => <ChatBot {...props} />}
+                />
               </Switch>
             </Grid>
             {/* Recent Orders */}
@@ -320,6 +332,8 @@ export default function Dashboard() {
             className="{classes.floatingButton}"
             style={{ position: "fixed", bottom: "30px", right: "30px" }}
             aria-label="add"
+            component="a"
+            href="/ChatBot"
           >
             <AddIcon />
           </Fab>
