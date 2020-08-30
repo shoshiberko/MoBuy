@@ -24,10 +24,6 @@ import GoogleLogin from 'react-google-login';
 
 
 const useStyles = makeStyles(theme => ({
-  root1: {
-    height: "100vh",
-    width: "230vh",
-  },
   DialogAction: {
     length: 30,
     width: 70
@@ -84,7 +80,7 @@ export default function FormDialog() {
 
   return (
     <div>
-      <Dialog open={open} onClose={handleClose} className={classes.root1}>
+      <Dialog open={open} onClose={handleClose} maxWidth='md' fullWidth='true' >
         <DialogActions className={classes.DialogAction}>
           <IconButton component="a" href="/" onClick={handleClose} color="primary" >
             <CloseIcon />
