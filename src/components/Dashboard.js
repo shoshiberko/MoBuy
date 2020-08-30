@@ -30,17 +30,18 @@ import Store from "../pages/store";
 import SavedItems from "../pages/savedItems";
 import { formatNumber } from "../helpers/utils";
 import { CartContext } from "../contexts/CartContext";
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 import SignInDialog from "./SignInDialog";
 import SignUpDialog from "./SignUpDialog";
-import ContantInfo from "./ContantInfo"
+import ContantInfo from "./ContantInfo";
 import ContantUs from "./ContantUs";
-import CallIcon from '@material-ui/icons/Call';
-import AboutUs from "./AboutUs"
+import CallIcon from "@material-ui/icons/Call";
+import AboutUs from "./AboutUs";
 import { Card } from "@material-ui/core";
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
+import Checkout from "../pages/payment";
 
 function Copyright() {
   return (
@@ -136,7 +137,6 @@ const useStyles = makeStyles(theme => ({
   },
   floatingButton: {
     paddingBottom: theme.spacing(4)
-
   }
 }));
 
@@ -226,15 +226,32 @@ export default function Dashboard() {
         <List>{mainListItems}</List>
       </Drawer>
       <Switch>
-        <Route exact path="/SignIn" render={props => <SignInDialog {...props} />} />
-        <Route exact from="/SignUp" render={props => <SignUpDialog {...props} />} />
+        <Route
+          exact
+          path="/SignIn"
+          render={props => <SignInDialog {...props} />}
+        />
+        <Route
+          exact
+          from="/SignUp"
+          render={props => <SignUpDialog {...props} />}
+        />
       </Switch>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Switch>
             <Route exact from="/Cart" render={props => <Cart {...props} />} />
-            <Route exact from="/Market" render={props => <Store {...props} />} />
+            <Route
+              exact
+              from="/Checkout"
+              render={props => <Checkout {...props} />}
+            />
+            <Route
+              exact
+              from="/Market"
+              render={props => <Store {...props} />}
+            />
 
             <Route
               exact
@@ -246,35 +263,68 @@ export default function Dashboard() {
             {/* Chart */}
             <Grid item xs={12} md={8} lg={9}>
               <Switch>
-                <Route exact from="/ContactUs" render={props => <ContantUs {...props} />} />
-                <Route exact from="/AboutUs" render={props => <AboutUs {...props} />} />
-                <Route exact from="/" render={props => <AboutUs {...props} />} />
-                <Route exact from="/SignIn" render={props => <AboutUs {...props} />} />
-                <Route exact from="/SignUp" render={props => <AboutUs {...props} />} />
-
+                <Route
+                  exact
+                  from="/ContactUs"
+                  render={props => <ContantUs {...props} />}
+                />
+                <Route
+                  exact
+                  from="/AboutUs"
+                  render={props => <AboutUs {...props} />}
+                />
+                <Route
+                  exact
+                  from="/"
+                  render={props => <AboutUs {...props} />}
+                />
+                <Route
+                  exact
+                  from="/SignIn"
+                  render={props => <AboutUs {...props} />}
+                />
+                <Route
+                  exact
+                  from="/SignUp"
+                  render={props => <AboutUs {...props} />}
+                />
               </Switch>
             </Grid>
             {/* Recent Deposits */}
             <Grid item xs={12} md={4} lg={3}>
               <Switch>
-                <Route exact from="/" render={props => <ContantInfo {...props} />} />
-                <Route exact from="/SignIn" render={props => <ContantInfo {...props} />} />
-                <Route exact from="/SignUp" render={props => <ContantInfo {...props} />} />
+                <Route
+                  exact
+                  from="/"
+                  render={props => <ContantInfo {...props} />}
+                />
+                <Route
+                  exact
+                  from="/SignIn"
+                  render={props => <ContantInfo {...props} />}
+                />
+                <Route
+                  exact
+                  from="/SignUp"
+                  render={props => <ContantInfo {...props} />}
+                />
               </Switch>
             </Grid>
             {/* Recent Orders */}
             <Grid item xs={12} md={4} lg={3}>
               {/*<Card><h1>GoogleMaps</h1></Card>*/}
-
             </Grid>
-
           </Grid>
-          <Fab color="inherit" className="{classes.floatingButton}" style={{ position: 'fixed', bottom: '30px', right: '30px' }} aria-label="add">
+          <Fab
+            color="inherit"
+            className="{classes.floatingButton}"
+            style={{ position: "fixed", bottom: "30px", right: "30px" }}
+            aria-label="add"
+          >
             <AddIcon />
           </Fab>
         </Container>
       </main>
-
     </div>
   );
 }

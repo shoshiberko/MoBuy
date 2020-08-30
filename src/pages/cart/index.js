@@ -51,9 +51,9 @@ const Cart = () => {
                 <button
                   type="button"
                   className="btn btn-primary mb-2"
-                  onClick={handleCheckout}
+                  //onClick={handleCheckout}
                 >
-                  CHECKOUT
+                  <a href="/Checkout">CHECKOUT</a>
                 </button>
                 <button
                   type="button"
