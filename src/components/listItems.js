@@ -10,8 +10,7 @@ import BranchesIcon from "@material-ui/icons/Place";
 import AboutUsIcon from "@material-ui/icons/Info";
 import ContactUsIcon from "@material-ui/icons/ContactSupport";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import SignIn from "./SignIn";
-import SignUp from "./SignUp";
+
 
 const CustomLink = (
   <div>
@@ -27,7 +26,7 @@ const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Home" />
     </ListItem>
-    <ListItem button component="a" href="/Profile">
+    <ListItem button component="a" href="/SignIn">
       <ListItemIcon>
         <ProfileIcon />
       </ListItemIcon>

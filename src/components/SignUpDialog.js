@@ -1,56 +1,86 @@
-import * as React from "react";
+import React from 'react';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from '@material-ui/icons/Close';
+import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
+import Link from "@material-ui/core/Link"
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 const useStyles = makeStyles(theme => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center"
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(3)
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+root1:{
+  height:"100vh",
+  width:"230vh"
+},
+DialogAction:{
+  length:30,
+  width:70
+},
+root: {
+  height: "100vh",
+},
+image: {
+  backgroundImage: "url(https://source.unsplash.com/random)",
+  backgroundRepeat: "no-repeat",
+  backgroundColor:
+    theme.palette.type === "light"
+      ? theme.palette.grey[50]
+      : theme.palette.grey[900],
+  backgroundSize: "cover",
+  backgroundPosition: "center"
+},
+paper: {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center"
+},
+avatar: {
+  //margin: theme.spacing(1),
+  backgroundColor: theme.palette.secondary.main
+},
+form: {
+  width: "100%", // Fix IE 11 issue.
+  marginTop: theme.spacing(1)
+},
+submit: {
+  margin: theme.spacing(3, 0, 2)
+}
 }));
-
-export default function SignUp() {
+export default function FormDialog() {
+  const [open, setOpen] = React.useState(true);
   const classes = useStyles();
 
+  const handleClickOpenDialog = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <Container component="main" maxWidth="xs">
+    <div>
+      <Dialog open={open} onClose={handleClose} className={classes.root1}>
+       <DialogActions className={classes.DialogAction}>
+          <IconButton component="a" href="/" onClick={handleClose} color="primary" >
+            <CloseIcon/>  
+          </IconButton>     
+        </DialogActions>
+      <DialogContent>
+      <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -124,16 +154,18 @@ export default function SignUp() {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link component="a" href="/SignIn">
                 Already have an account? Sign in
               </Link>
             </Grid>
           </Grid>
         </form>
       </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
+     
     </Container>
+      </DialogContent>
+      
+       </Dialog>
+    </div>
   );
 }

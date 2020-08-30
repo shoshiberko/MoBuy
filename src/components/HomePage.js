@@ -23,8 +23,6 @@ import mainListItems /*, secondaryListItems*/ from "./listItems";
 import Chart from "./Chart";
 import Deposits from "./Deposits";
 import Orders from "./Orders";
-import SignIn from "./SignIn";
-import SignUp from "./SignUp";
 import { Route, Switch } from "react-router-dom";
 import Cart from "../pages/cart";
 function Copyright() {
