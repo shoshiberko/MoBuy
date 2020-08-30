@@ -117,7 +117,7 @@ const useStyles = makeStyles(theme => ({
   content: {
     flexGrow: 1,
     height: "100vh",
-    overflow: "auto"
+    overflow: "hidden"
   },
   container: {
     paddingTop: theme.spacing(4),
@@ -225,40 +225,40 @@ export default function Dashboard() {
       </Switch>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}></Container>
-        <Switch>
-          <Route exact from="/Cart" render={props => <Cart {...props} />} />
-          <Route exact from="/Market" render={props => <Store {...props} />} />
+        <Container maxWidth="lg" className={classes.container}>
+          <Switch>
+            <Route exact from="/Cart" render={props => <Cart {...props} />} />
+            <Route exact from="/Market" render={props => <Store {...props} />} />
 
-          <Route
-            exact
-            from="/SavedItems"
-            render={props => <SavedItems {...props} />}
-          />
-        </Switch>
-        <Grid container spacing={3}>
-          {/* Chart */}
-          <Grid item xs={12} md={8} lg={9}>
-            <Switch>
-              <Route exact from="/ContactUs" render={props => <ContantUs {...props} />} />
-              <Route exact from="/AboutUs" render={props => <AboutUs {...props} />} />
-              <Route exact from="/" render={props => <AboutUs {...props} />} />
-              <Route exact from="/SignIn" render={props => <AboutUs {...props} />} />
-              <Route exact from="/SignUp" render={props => <AboutUs {...props} />} />
+            <Route
+              exact
+              from="/SavedItems"
+              render={props => <SavedItems {...props} />}
+            />
+          </Switch>
+          <Grid container spacing={3}>
+            {/* Chart */}
+            <Grid item xs={12} md={8} lg={9}>
+              <Switch>
+                <Route exact from="/ContactUs" render={props => <ContantUs {...props} />} />
+                <Route exact from="/AboutUs" render={props => <AboutUs {...props} />} />
+                <Route exact from="/" render={props => <AboutUs {...props} />} />
+                <Route exact from="/SignIn" render={props => <AboutUs {...props} />} />
+                <Route exact from="/SignUp" render={props => <AboutUs {...props} />} />
 
-            </Switch>
+              </Switch>
+            </Grid>
+            {/* Recent Deposits */}
+            <Grid item xs={12} md={4} lg={3}>
+              <ContantInfo></ContantInfo>
+            </Grid>
+            {/* Recent Orders */}
+            <Grid item xs={12} md={4} lg={3}>
+              <Card><h1>GoogleMaps</h1></Card>
+
+            </Grid>
           </Grid>
-          {/* Recent Deposits */}
-          <Grid item xs={12} md={4} lg={3}>
-            <ContantInfo></ContantInfo>
-          </Grid>
-          {/* Recent Orders */}
-          <Grid item xs={12} md={4} lg={3}>
-            <Card><h1>GoogleMaps</h1></Card>
-
-          </Grid>
-        </Grid>
-
+        </Container>
       </main>
     </div>
   );
