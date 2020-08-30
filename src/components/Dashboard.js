@@ -39,6 +39,8 @@ import ContantUs from "./ContantUs";
 import CallIcon from '@material-ui/icons/Call';
 import AboutUs from "./AboutUs"
 import { Card } from "@material-ui/core";
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
 function Copyright() {
   return (
@@ -117,7 +119,7 @@ const useStyles = makeStyles(theme => ({
   content: {
     flexGrow: 1,
     height: "100vh",
-    overflow: "hidden"
+    overflow: "auto"
   },
   container: {
     paddingTop: theme.spacing(4),
@@ -131,6 +133,10 @@ const useStyles = makeStyles(theme => ({
   },
   fixedHeight: {
     height: 240
+  },
+  floatingButton: {
+    paddingBottom: theme.spacing(4)
+
   }
 }));
 
@@ -250,16 +256,25 @@ export default function Dashboard() {
             </Grid>
             {/* Recent Deposits */}
             <Grid item xs={12} md={4} lg={3}>
-              <ContantInfo></ContantInfo>
+              <Switch>
+                <Route exact from="/" render={props => <ContantInfo {...props} />} />
+                <Route exact from="/SignIn" render={props => <ContantInfo {...props} />} />
+                <Route exact from="/SignUp" render={props => <ContantInfo {...props} />} />
+              </Switch>
             </Grid>
             {/* Recent Orders */}
             <Grid item xs={12} md={4} lg={3}>
-              <Card><h1>GoogleMaps</h1></Card>
+              {/*<Card><h1>GoogleMaps</h1></Card>*/}
 
             </Grid>
+
           </Grid>
+          <Fab color="inherit" className="{classes.floatingButton}" style={{ position: 'fixed', bottom: '30px', right: '30px' }} aria-label="add">
+            <AddIcon />
+          </Fab>
         </Container>
       </main>
+
     </div>
   );
 }
