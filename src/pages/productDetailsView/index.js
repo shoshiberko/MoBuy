@@ -13,6 +13,7 @@ import BorderHeartIcon from "@material-ui/icons/FavoriteBorder";
 import Rating from "@material-ui/lab/Rating";
 import ColorPicker from "react-circle-color-picker";
 import Comments from "./Comments";
+import Magnifier from "react-magnifier";
 const images = [
   {
     original: "https://picsum.photos/id/1018/1000/600/",
