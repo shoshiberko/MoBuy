@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import ProductItem from "./ProductItem";
-import { ProductsContext } from "../../contexts/ProductsContext";
+//import { ProductsContext } from "../../contexts/ProductsContext";
 //import styles from './ProductsGrid.module.scss';
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
@@ -41,8 +41,19 @@ const useStyles = makeStyles(theme => ({
 const ProductsGrid = () => {
   const classes = useStyles();
 
-  const { products } = useContext(ProductsContext);
+  //const { products } = useContext(ProductsContext);
+  const [products, productsSet] = React.useState([]);
+  React.useEffect(() => {
+    async function fetchProducts() {
+      const fullResponse = await fetch(
+        "/Products?userEmail=" + sessionStorage.getItem("userEmail")
+      );
+      const responseJson = await fullResponse.json();
+      productsSet(responseJson);
+    }
 
+    fetchProducts();
+  }, []);
   return (
     <React.Fragment>
       <CssBaseline />
@@ -85,11 +96,12 @@ const ProductsGrid = () => {
           {/* End hero unit */}
 
           <Grid container spacing={4}>
-            {products.map((product, index) => (
-              <Grid item key={index} xs={12} sm={6} md={4}>
-                <ProductItem key={index} product={product} />
-              </Grid>
-            ))}
+            {products !== undefined &&
+              products.map((product, index) => (
+                <Grid item key={index} xs={12} sm={6} md={4}>
+                  <ProductItem key={index} product={product} />
+                </Grid>
+              ))}
           </Grid>
         </Container>
       </main>

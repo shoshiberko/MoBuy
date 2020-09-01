@@ -1,21 +1,14 @@
-const debug = require("debug")("mongo:model-user");
+const debug = require("debug")("mongo:model-authenticate");
 const mongo = require("mongoose");
-//const passportLocalMongoose = require("passport-local-mongoose");
+const passportLocalMongoose = require("passport-local-mongoose");
 
 module.exports = (db) => {
   // create a schema
   let schema = new mongo.Schema(
     {
       _id: String,
-      firstName: String,
-      lastName: String,
       emailAddress: { type: String, required: true, unique: true, index: true },
-      userType: String,
-      image: String,
-      savedItemsList: Array, //({ productId: Number }),// without color: String
-      cartItemsList: Array, //({ productId: Number, count: Number, color: String }),
-      orderList: Array, //({orderId})
-      address: String,
+      password: { type: String },
       isDeleted: Boolean,
       created_at: Date,
       updated_at: Date,
@@ -27,19 +20,12 @@ module.exports = (db) => {
   // you can create more important methods like name validations or formatting
   // you can also do queries and find similar users
 
-  schema.statics.CREATE = async function (user) {
+  schema.statics.CREATE = async function (authenticate) {
     return this.create({
-      _id: user[0],
-      firstName: user[1],
-      lastName: user[2],
-      emailAddress: user[3],
-      userType: user[4],
-      image: user[5],
-      savedItemsList: user[6],
-      cartItemsList: user[7],
-      orderList: user[8],
-      address: user[9],
-      isDeleted: user[10],
+      _id: authenticate[0],
+      emailAddress: authenticate[1],
+      password: authenticate[2],
+      isDeleted: authenticate[3],
     });
   };
 
@@ -68,22 +54,22 @@ module.exports = (db) => {
       let asynch = callback.constructor.name === "AsyncFunction";
       debug(`request: with ${asynch ? "async" : "sync"} callback`);
       args.pop();
-      let cursor, user;
+      let cursor, authenticate;
       try {
         cursor = await this.find(...args).cursor();
       } catch (err) {
         throw err;
       }
       try {
-        while (null !== (user = await cursor.next())) {
+        while (null !== (authenticate = await cursor.next())) {
           if (asynch) {
             try {
-              await callback(user);
+              await callback(authenticate);
             } catch (err) {
               throw err;
             }
           } else {
-            callback(user);
+            callback(authenticate);
           }
         }
       } catch (err) {
@@ -103,13 +89,13 @@ module.exports = (db) => {
     return this.find(...args).exec();
   };
 
-  schema.statics.UPDATE = async function (user) {
+  /*schema.statics.UPDATE = async function (user) {
     const filter = { _id: user._id };
     const update = {
       firstName: user.firstName,
       lastName: user.lastName,
       emailAddress: user.emailAddress,
-      //  password: user.password,
+      password: user.password,
       userType: user.userType,
       image: user.image,
       savedItemsList: user.savedItemsList,
@@ -122,20 +108,20 @@ module.exports = (db) => {
     // `doc` is the document _before_ `update` was applied
     let doc = await this.findOneAndUpdate(filter, update);
     await doc.save();
-  };
+  };*/
 
-  schema.statics.DELETE = async function (user) {
+  /* schema.statics.DELETE = async function (user) {
     const filter = { _id: user._id };
     const update = { isDeleted: true };
     // `doc` is the document _before_ `update` was applied
     let doc = await this.findOneAndUpdate(filter, update);
     await doc.save();
-  };
+  };*/
 
-  //schema.plugin(passportLocalMongoose, { usernameField: "emailAddress" });
+  schema.plugin(passportLocalMongoose, { usernameField: "emailAddress" });
   // the schema is useless so far
   // we need to create a model using it
   // db.model('Client', schema, 'Client'); // (model, schema, collection)
-  db.model("User", schema); // if model name === collection name
-  debug("User model created");
+  db.model("Authenticate", schema); // if model name === collection name
+  debug("Authenticate model created");
 };

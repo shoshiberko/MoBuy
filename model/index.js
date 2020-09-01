@@ -1,6 +1,6 @@
 const debug = require("debug")("mongo:model");
 const mongo = require("mongoose");
-
+mongo.set("useFindAndModify", false);
 let db = mongo.createConnection();
 (async () => {
   try {
@@ -19,5 +19,6 @@ require("./product")(db);
 require("./branch")(db);
 require("./order")(db);
 require("./comment")(db);
+require("./authenticate")(db);
 
-module.exports = model => db.model(model);
+module.exports = (model) => db.model(model);

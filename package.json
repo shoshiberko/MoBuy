@@ -14,6 +14,7 @@
     "compass-mixins": "^0.12.10",
     "connect-ensure-login": "^0.1.1",
     "cookie-parser": "~1.4.4",
+    "crypto": "^1.0.1",
     "debug": "~2.6.9",
     "ejs": "~2.6.1",
     "express": "~4.16.1",

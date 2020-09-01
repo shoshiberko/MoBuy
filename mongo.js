@@ -1,5 +1,6 @@
 const debug = require("debug")("mongo:mongo");
 const mongo = require("mongoose");
+mongoose.set("useFindAndModify", false);
 let db = mongo.createConnection(
   "mongodb+srv://flowers4u:12344321@cluster0-deaod.mongodb.net/mobuy?retryWrites=true&w=majority"
   //"mongodb+srv://mobuy:12344321@cluster0.ngia2.mongodb.net/mobuy?retryWrites=true&w=majority"

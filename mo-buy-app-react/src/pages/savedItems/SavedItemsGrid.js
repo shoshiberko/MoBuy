@@ -9,31 +9,42 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   icon: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   heroContent: {
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6)
+    padding: theme.spacing(8, 0, 6),
   },
   heroButtons: {
-    marginTop: theme.spacing(4)
+    marginTop: theme.spacing(4),
   },
   cardGrid: {
     paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(8)
+    paddingBottom: theme.spacing(8),
   },
   footer: {
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(6)
-  }
+    padding: theme.spacing(6),
+  },
 }));
 
 const ProductsGrid = () => {
   const classes = useStyles();
 
-  const { products } = useContext(ProductsContext);
+  const [products, productsSet] = React.useState([]);
+  React.useEffect(() => {
+    async function fetchProducts() {
+      const fullResponse = await fetch(
+        "/Products?userEmail=" + sessionStorage.getItem("userEmail")
+      );
+      const responseJson = await fullResponse.json();
+      productsSet(responseJson);
+    }
+
+    fetchProducts();
+  }, []);
 
   return (
     <React.Fragment>
@@ -78,7 +89,7 @@ const ProductsGrid = () => {
 
           <Grid container spacing={4}>
             {products
-              .filter(product => product.saved === true) //just the saved items
+              .filter((product) => product.savedItem === true) //just the saved items
               .map((product, index) => (
                 <Grid item key={index} xs={12} sm={6} md={4}>
                   <Product key={index} product={product} />

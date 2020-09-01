@@ -20,35 +20,52 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import Rating from "@material-ui/lab/Rating";
+import $ from "jquery";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345
+    maxWidth: 345,
   },
   media: {
     height: 0,
-    paddingTop: "56.25%" // 16:9
+    paddingTop: "56.25%", // 16:9
   },
   expand: {
     transform: "rotate(0deg)",
     marginLeft: "auto",
     transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest
-    })
+      duration: theme.transitions.duration.shortest,
+    }),
   },
   expandOpen: {
-    transform: "rotate(180deg)"
+    transform: "rotate(180deg)",
   },
   avatar: {
-    backgroundColor: red[500]
-  }
+    backgroundColor: red[500],
+  },
 }));
 
 export default function RecipeReviewCard({ product }) {
-  const [saved, setSaved] = React.useState(product.saved);
+  const [saved, setSaved] = React.useState(product.savedItem);
   const handleProductChangedSaved = () => {
-    setSaved(!saved);
-    //here we need to update in the db (send a request to the server in order to update this user's product is saved )
+    var data = {
+      emailAddress: sessionStorage.getItem("userEmail"),
+      productId: product._id,
+      state: !saved,
+    };
+
+    // Submit form via jQuery/AJAX
+    $.ajax({
+      type: "POST",
+      url: "/StateSavedItem",
+      data: data,
+    })
+      .done(function(data) {
+        setSaved(!saved);
+      })
+      .fail(function(jqXhr) {});
+
+    //here we need to update  the db (send a request to the server in order to update this user's product is saved )
   };
 
   const classes = useStyles();
@@ -60,8 +77,8 @@ export default function RecipeReviewCard({ product }) {
 
   const { addProduct, cartItems, increase } = useContext(CartContext);
 
-  const isInCart = product => {
-    return !!cartItems.find(item => item.id === product.id);
+  const isInCart = (product) => {
+    return !!cartItems.find((item) => item.id === product.id);
   };
 
   return (
@@ -113,7 +130,7 @@ export default function RecipeReviewCard({ product }) {
         />
         <IconButton
           className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded
+            [classes.expandOpen]: expanded,
           })}
           onClick={handleExpandClick}
           aria-expanded={expanded}
