@@ -1,6 +1,6 @@
 const debug = require("debug")("mongo:model-user");
 const mongo = require("mongoose");
-//const passportLocalMongoose = require("passport-local-mongoose");
+const passportLocalMongoose = require("passport-local-mongoose");
 
 module.exports = (db) => {
   // create a schema
@@ -33,6 +33,7 @@ module.exports = (db) => {
       firstName: user[1],
       lastName: user[2],
       emailAddress: user[3],
+      //password: user[4],
       userType: user[4],
       image: user[5],
       savedItemsList: user[6],
@@ -109,7 +110,7 @@ module.exports = (db) => {
       firstName: user.firstName,
       lastName: user.lastName,
       emailAddress: user.emailAddress,
-      //  password: user.password,
+      // password: user.password,
       userType: user.userType,
       image: user.image,
       savedItemsList: user.savedItemsList,
@@ -132,7 +133,7 @@ module.exports = (db) => {
     await doc.save();
   };
 
-  //schema.plugin(passportLocalMongoose, { usernameField: "emailAddress" });
+  schema.plugin(passportLocalMongoose, { usernameField: "emailAddress" });
   // the schema is useless so far
   // we need to create a model using it
   // db.model('Client', schema, 'Client'); // (model, schema, collection)

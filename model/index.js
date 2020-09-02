@@ -19,6 +19,5 @@ require("./product")(db);
 require("./branch")(db);
 require("./order")(db);
 require("./comment")(db);
-require("./authenticate")(db);
 
 module.exports = (model) => db.model(model);

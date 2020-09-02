@@ -2,7 +2,6 @@ const express = require("express");
 const product = require("../model/product");
 const router = express.Router();
 const User = require("../model")("User");
-const Authenticate = require("../model")("Authenticate");
 const Branch = require("../model")("Branch");
 const Comment = require("../model")("Comment");
 const Order = require("../model")("Order");
@@ -13,7 +12,7 @@ const connectEnsureLogin = require("connect-ensure-login");
 /* PASSPORT LOCAL AUTHENTICATION */
 const passport = require("passport");
 
-passport.use("Authenticate", Authenticate.createStrategy());
+passport.use("User", User.createStrategy());
 
 function SessionConstructor(userId, userType, details) {
   this.userId = userId;
@@ -23,31 +22,8 @@ function SessionConstructor(userId, userType, details) {
 
 //module.exports = function(passport) {
 
-passport.serializeUser(Authenticate.serializeUser());
-passport.deserializeUser(Authenticate.deserializeUser());
-/*passport.serializeUser(function(userObject, done) {
-  // userObject could be a Model1
-
-  let sessionConstructor = new SessionConstructor(
-    userObject.id,
-    userObject.userType,
-    ""
-  );
-  done(null, sessionConstructor);
-});
-
-passport.deserializeUser(function(sessionConstructor, done) {
-  User.findOne(
-    {
-      _id: sessionConstructor.userId
-    },
-    "-localStrategy.password",
-    function(err, user) {
-      // When using string syntax, prefixing a path with - will flag that path as excluded.
-      done(err, user);
-    }
-  );
-});*/
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 function initDB() {
   var users_ = [
@@ -83,7 +59,7 @@ function initDB() {
     },
   ];
 
-  users_.forEach((element) =>
+  /*users_.forEach((element) =>
     User.CREATE([
       element.id,
       element.firstName,
@@ -98,7 +74,7 @@ function initDB() {
       false,
     ])
   );
-  /* products_.forEach(element =>
+   products_.forEach(element =>
     Product.CREATE([
       element.id,
       element.name,
@@ -115,10 +91,18 @@ function initDB() {
     ])
   );*/
 
-  Authenticate.register(
+  User.register(
     {
       _id: "12388888",
+      firstName: "Shosh",
+      lastName: "Bar",
       emailAddress: "s@gmail.com",
+      userType: "Client",
+      image: "",
+      savedItemsList: [], //({ productId: Number, color: String }),
+      cartItemsList: [], //({ productId: Number, count: Number, color: String }),
+      orderList: [], //({orderId})
+      address: "",
       isDeleted: "false",
     },
     "123",
@@ -132,22 +116,9 @@ function initDB() {
   console.log("initDB");
 }
 
-async function loadUsers(userName) {
-  usersLst = [];
-  try {
-    let _users = await User.find({ isDeleted: false })
-      //.where("userName")
-      //.ne(userName)
-      .exec();
-  } catch (err) {
-    console.log(`Failure ${err}`);
-  }
-}
-
 router.post("/SignIn", (req, res, next) => {
   //initDB();
-  console.log(req);
-  passport.authenticate(["Authenticate"], (err, user, info) => {
+  passport.authenticate(["User"], (err, user, info) => {
     if (err) {
       console.log("1 " + err);
       res.send(404);
@@ -178,9 +149,7 @@ router.get("/Products", connectEnsureLogin.ensureLoggedIn(), async function (
   }).exec();
 
   let savedItemsIdsList = user.savedItemsList;
-  console.log("savedItemsIdsList", savedItemsIdsList);
   let products = await Product.find({ isDeleted: false }).exec();
-  console.log(products);
   if (savedItemsIdsList !== undefined) {
     res.json(
       products.map((element) => {
@@ -221,28 +190,7 @@ router.get("/Products", connectEnsureLogin.ensureLoggedIn(), async function (
   //res.json(products);
 });
 
-router.get("/contactSend", function (req, res) {
-  res.end("Thank You!");
-  //res.end();
-});
-
-router.get("/logout", connectEnsureLogin.ensureLoggedIn(), function (req, res) {
-  req.session.regenerate((err) => {
-    // res.redirect('/');
-
-    fs.readFile("views/logout.txt", { encoding: "utf-8" }, function (
-      err,
-      data
-    ) {
-      if (!err) {
-        res.writeHead(200, { "Content-Type": "text/html" });
-        res.end(data);
-        // res.end();
-      }
-    });
-  });
-});
-
+/*
 router.get("/Product", connectEnsureLogin.ensureLoggedIn(), async function (
   req,
   res
@@ -294,7 +242,7 @@ router.get("/Product", connectEnsureLogin.ensureLoggedIn(), async function (
   } else {
     res.render("flowersCatalog.ejs", { flowers: flowers });
   }
-});
+});*/
 
 router.post(
   "/StateSavedItem",
@@ -305,9 +253,6 @@ router.post(
         emailAddress: req.body.emailAddress,
         isDeleted: false,
       }).exec();
-      //initDB();
-      console.log("user is:", user);
-      //console.log("userId is:", user.id);
       let productId = req.body.productId;
 
       let product = await Product.findOne({
@@ -315,30 +260,11 @@ router.post(
         _id: productId,
       }).exec();
 
-      console.log("product is", product);
-      /* await Product.UPDATE({
-        _id: 12345,
-        name: product.name,
-        price: product.price,
-        imageList: product.imagesList,
-        rating: 1,
-        numOfRatings: product.numOfRatings,
-        moreDetails: product.moreDetails,
-        colorsList: product.colorsList,
-        productType: product.productType,
-        company: product.company,
-        commentsList: product.commentsList,
-        isDeleted: false,
-      });*/
       let _savedItemsList = user.savedItemsList;
-      console.log("_savedItemsList is", _savedItemsList);
-      console.log("state", req.body.state);
       if (product === undefined) {
-        console.log("111");
         //product does not exist
         res.send(404);
       } else if (req.body.state === "true") {
-        console.log("222");
         //need to add the product id to the user's savedItems list
         if (_savedItemsList === undefined) _savedItemsList = [];
         if (
@@ -346,9 +272,6 @@ router.post(
           _savedItemsList.findIndex((item) => item === productId) === -1
         ) {
           _savedItemsList.push(productId);
-          console.log("_savedItemsList After is", _savedItemsList);
-          // User.UPDATE(user);
-          console.log("userId:", user._id);
           await User.UPDATE({
             _id: user._id,
             savedItemsList: _savedItemsList,
@@ -365,7 +288,6 @@ router.post(
           res.send(200);
         } else res.send(404);
       } else if (_savedItemsList !== undefined) {
-        console.log("abc");
         //need to remove the product id from the user's savedItems list/
         _savedItemsList = _savedItemsList.filter((item) => {
           item !== productId;
@@ -386,11 +308,9 @@ router.post(
         });
         res.send(200);
       } else {
-        console.log("hgt");
         res.send(404);
       }
     } catch (err) {
-      console.log("prob");
       console.log(err);
       res.send(404);
     }
