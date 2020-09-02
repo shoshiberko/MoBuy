@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RecipeReviewCard({ product }) {
+export default function RecipeReviewCard({ product, renderProductsGrid }) {
   const [saved, setSaved] = React.useState(product.savedItem);
   const handleProductChangedSaved = () => {
     var data = {
@@ -54,15 +54,20 @@ export default function RecipeReviewCard({ product }) {
       state: !saved,
     };
 
+    if (saved && renderProductsGrid !== undefined) {
+      //if the item is not saved now- after user clicked the favorite icon and there is need to remove thie product from the grid
+      renderProductsGrid(product.id);
+    } else {
+      setSaved(!saved);
+    }
+
     // Submit form via jQuery/AJAX
     $.ajax({
       type: "POST",
       url: "/StateSavedItem",
       data: data,
     })
-      .done(function(data) {
-        setSaved(!saved);
-      })
+      .done(function(data) {})
       .fail(function(jqXhr) {});
 
     //here we need to update  the db (send a request to the server in order to update this user's product is saved )

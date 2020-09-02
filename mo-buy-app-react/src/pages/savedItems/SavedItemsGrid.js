@@ -92,7 +92,17 @@ const ProductsGrid = () => {
               .filter((product) => product.savedItem === true) //just the saved items
               .map((product, index) => (
                 <Grid item key={index} xs={12} sm={6} md={4}>
-                  <Product key={index} product={product} />
+                  <Product
+                    key={index}
+                    product={product}
+                    renderProductsGrid={(productId) => {
+                      productsSet(
+                        products.filter((item) => {
+                          return item.id !== productId;
+                        })
+                      );
+                    }}
+                  />
                 </Grid>
               ))}
           </Grid>

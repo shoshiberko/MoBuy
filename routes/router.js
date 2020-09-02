@@ -318,9 +318,12 @@ router.post(
         } else res.send(404);
       } else if (_savedItemsList !== undefined) {
         //need to remove the product id from the user's savedItems list/
+        console.log("productId:", productId);
+        console.log("before:", _savedItemsList);
         _savedItemsList = _savedItemsList.filter((item) => {
-          item !== productId;
+          return item !== productId.toString();
         });
+        console.log("after:", _savedItemsList);
         //User.UPDATE(user);
         await User.UPDATE({
           _id: user._id,
@@ -421,7 +424,7 @@ router.post("/RemoveItem", connectEnsureLogin.ensureLoggedIn(), async function (
       if (_cartItemsList === undefined) res.send(404);
 
       _cartItemsList = _cartItemsList.filter((item) => {
-        item !== productId;
+        return item !== productId;
       });
       await User.UPDATE({
         _id: user._id,
