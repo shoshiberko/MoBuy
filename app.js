@@ -53,6 +53,12 @@ app.use(
   "/SignIn",
   express.static(path.join(__dirname, "mo-buy-app-react", "build"))
 );
+
+app.use(
+  "/ViewProductItem",
+  express.static(path.join(__dirname, "mo-buy-app-react", "build"))
+);
+
 app.use("/", basicRouter);
 //app.use('/', indexRouter);
 

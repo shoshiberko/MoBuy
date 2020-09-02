@@ -17,25 +17,41 @@ import Magnifier from "react-magnifier";
 const images = [
   {
     original: "https://picsum.photos/id/1018/1000/600/",
-    thumbnail: "https://picsum.photos/id/1018/250/150/"
+    thumbnail: "https://picsum.photos/id/1018/250/150/",
   },
   {
     original: "https://picsum.photos/id/1015/1000/600/",
-    thumbnail: "https://picsum.photos/id/1015/250/150/"
+    thumbnail: "https://picsum.photos/id/1015/250/150/",
   },
   {
     original: "https://picsum.photos/id/1019/1000/600/",
-    thumbnail: "https://picsum.photos/id/1019/250/150/"
-  }
+    thumbnail: "https://picsum.photos/id/1019/250/150/",
+  },
 ];
 
 class ComplexGrid extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor(match) {
+    super();
+    this.params = match.params;
     this.state = { full: 0, isVisible: 0 };
     this.handleClick = this.handleHeartClick.bind(this);
     this.toggleVisibility = this.toggleVisibilityFunc.bind(this);
   }
+
+  async componentDidMount() {
+    try {
+      const resp = await fetch("/GetProductItem?Id=" + this.params._id);
+      if (!resp.ok) {
+        // noinspection ExceptionCaughtLocallyJS
+        throw Error(resp.statusText);
+      }
+      const product = await resp.json();
+      this.setState({ product: product });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   toggleVisibilityFunc() {
     const { full, isVisible } = this.state;
     if (isVisible) this.setState({ isVisible: 0 });
@@ -71,7 +87,7 @@ class ComplexGrid extends React.Component {
                       { hex: "#000000", selected: false },
                       { hex: "#E53B2C", selected: false },
                       { hex: "#0000FF", selected: false },
-                      { hex: "#FFFFFF", selected: false }
+                      { hex: "#FFFFFF", selected: false },
                     ]}
                   />
                 </Grid>

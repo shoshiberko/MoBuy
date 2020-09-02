@@ -23,7 +23,7 @@ import mainListItems /*, secondaryListItems*/ from "./listItems";
 import Chart from "./Chart";
 import Deposits from "./Deposits";
 import Orders from "./Orders";
-import { Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Cart from "../pages/cart";
 import HomePage from "./HomePage";
 import Store from "../pages/store";
@@ -239,6 +239,10 @@ export default function MainWindow() {
             exact
             from="/SavedItems"
             render={(props) => <SavedItems {...props} />}
+          />
+          <Route
+            path="/ViewProductItem/:productId"
+            component={ProductDetails}
           />
         </Switch>
       </Container>

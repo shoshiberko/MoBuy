@@ -124,7 +124,11 @@ export default function RecipeReviewCard({ product, renderProductsGrid }) {
           {!saved && <FavoriteBorderIcon />}
           {saved && <FavoriteIcon />}
         </IconButton>
-        <IconButton aria-label="preview" component="a" href="/Id">
+        <IconButton
+          aria-label="preview"
+          component="a"
+          href={"/ViewProductItem?productId=" + product.id}
+        >
           <VisibilityIcon />
         </IconButton>
         <Rating

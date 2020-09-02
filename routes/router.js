@@ -550,4 +550,16 @@ router.post("/AddItem", connectEnsureLogin.ensureLoggedIn(), async function (
   }
 });
 
+router.get(
+  "/GetProductItem",
+  connectEnsureLogin.ensureLoggedIn(),
+  async function (req, res) {
+    let product = await Product.findOne({
+      _id: req.query.productId,
+      isDeleted: false,
+    }).exec();
+    res.json(product);
+  }
+);
+
 module.exports = router;

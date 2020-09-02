@@ -170,6 +170,7 @@ export default function App() {
           from="/SavedItems"
           render={(props) => <MainWindow {...props} />}
         />
+        <Route path="/ViewProductItem/:productId" component={MainWindow} />
       </Switch>
       <CssBaseline />
     </div>
