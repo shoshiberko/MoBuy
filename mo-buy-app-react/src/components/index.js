@@ -43,8 +43,38 @@ import SignIn from "./SignIn";
 import InfoRoundedIcon from "@material-ui/icons/InfoRounded";
 import ContactSupportRoundedIcon from "@material-ui/icons/ContactSupportRounded";
 import Tooltip from "@material-ui/core/Tooltip";
+import { createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/styles";
 
 const drawerWidth = 240;
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: "#ff8e8c",
+      main: "#ff5a5f",
+      dark: "#c62035",
+      contrastText: "#fff",
+    },
+    secondary: {
+      light: "#4da9b7",
+      main: "#017a87",
+      dark: "#004e5a",
+      contrastText: "#000",
+    },
+  },
+  typography: {
+    fontFamily: "Roboto Condensed",
+  },
+  /*typography: {
+    fontFamily: [
+      "Nunito",
+      "Roboto",
+      '"Helvetica Neue"',
+      "Arial",
+      "sans-serif",
+    ].join(","),
+  },*/
+});
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -115,64 +145,66 @@ export default function App() {
   const classes = useStyles();
 
   return (
-    <div>
-      <Container />
-      <Switch>
-        <Route
-          exact
-          from="/SignIn"
-          render={(props) => (
-            <div>
-              <SignInAppBar />
-              <SignIn {...props} />
-            </div>
-          )}
-        />
-        <Route exact from="/" render={(props) => <Welcome {...props} />} />
-        <Route
-          exact
-          from="/SignUp"
-          render={(props) => (
-            <div>
-              <SignInAppBar />
-              <SignIn {...props} />
-            </div>
-          )}
-        />
-        <Route
-          exact
-          from="/ContactUs"
-          render={(props) => <MainWindow {...props} />}
-        />
-        <Route
-          exact
-          from="/AboutUs"
-          render={(props) => <MainWindow {...props} />}
-        />
-        <Route
-          exact
-          from="/Cart"
-          render={(props) => <MainWindow {...props} />}
-        />
-        <Route
-          exact
-          from="/Checkout"
-          render={(props) => <MainWindow {...props} />}
-        />
-        <Route
-          exact
-          from="/Market"
-          render={(props) => <MainWindow {...props} />}
-        />
+    <ThemeProvider theme={theme}>
+      <div>
+        <Container />
+        <Switch>
+          <Route
+            exact
+            from="/SignIn"
+            render={(props) => (
+              <div>
+                <SignInAppBar />
+                <SignIn {...props} />
+              </div>
+            )}
+          />
+          <Route exact from="/" render={(props) => <Welcome {...props} />} />
+          <Route
+            exact
+            from="/SignUp"
+            render={(props) => (
+              <div>
+                <SignInAppBar />
+                <SignIn {...props} />
+              </div>
+            )}
+          />
+          <Route
+            exact
+            from="/ContactUs"
+            render={(props) => <MainWindow {...props} />}
+          />
+          <Route
+            exact
+            from="/AboutUs"
+            render={(props) => <MainWindow {...props} />}
+          />
+          <Route
+            exact
+            from="/Cart"
+            render={(props) => <MainWindow {...props} />}
+          />
+          <Route
+            exact
+            from="/Checkout"
+            render={(props) => <MainWindow {...props} />}
+          />
+          <Route
+            exact
+            from="/Market"
+            render={(props) => <MainWindow {...props} />}
+          />
 
-        <Route
-          exact
-          from="/SavedItems"
-          render={(props) => <MainWindow {...props} />}
-        />
-        <Route path="/ViewProductItem/:productId" component={MainWindow} />
-      </Switch>
-      <CssBaseline />
-    </div>
+          <Route
+            exact
+            from="/SavedItems"
+            render={(props) => <MainWindow {...props} />}
+          />
+          <Route path="/ViewProductItem/:productId" component={MainWindow} />
+        </Switch>
+        <CssBaseline />
+      </div>
+    </ThemeProvider>
   );
 }

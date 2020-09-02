@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
@@ -13,7 +13,40 @@ import BorderHeartIcon from "@material-ui/icons/FavoriteBorder";
 import Rating from "@material-ui/lab/Rating";
 import ColorPicker from "react-circle-color-picker";
 import Comments from "./Comments";
-import Magnifier from "react-magnifier";
+import { formatNumber } from "../../helpers/utils";
+import Chip from "@material-ui/core/Chip";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import ListItemText from "@material-ui/core/ListItemText";
+import Avatar from "@material-ui/core/Avatar";
+import FolderIcon from "@material-ui/icons/Folder";
+import DeleteIcon from "@material-ui/icons/Delete";
+
+function generate(element, listItem) {
+  return listItem.map((value) =>
+    React.cloneElement(element, {
+      key: value,
+    })
+  );
+}
+
+const product = {
+  id: 207,
+  name: "Galaxi S9",
+  price: 500,
+  imagesList: ["", "", ""], //String's array
+  rating: 0,
+  numOfRatings: 0,
+  moreDetails: ["hi", "ggg", "ggg"],
+  colorsList: ["0x000000", "0xffffff"], // string's list (hex color in rgb)
+  productType: "phone",
+  company: "SAMSUNG",
+  commentsList: [], //array of comments id (id-s from the comment schema)
+  isDeleted: false,
+};
 const images = [
   {
     original: "https://picsum.photos/id/1018/1000/600/",
@@ -29,10 +62,24 @@ const images = [
   },
 ];
 
+const styles = (theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(5),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+  },
+
+  price: {
+    color: theme.palette.error.main,
+  },
+});
+
 class ComplexGrid extends React.Component {
-  constructor(match) {
+  constructor() {
     super();
-    this.params = match.params;
     this.state = { full: 0, isVisible: 0 };
     this.handleClick = this.handleHeartClick.bind(this);
     this.toggleVisibility = this.toggleVisibilityFunc.bind(this);
@@ -64,24 +111,48 @@ class ComplexGrid extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
     const { full, isVisible } = this.state;
     return (
       <div>
-        <Paper elevation={0}>
-          <Grid container spacing={2}>
-            <Grid item xs container>
+        <div div className="text-center mt-5">
+          <Grid container spacing={3}>
+            <Grid item xs={12} />
+            <Grid item xs={12}></Grid>
+
+            <Grid item xs={1}></Grid>
+            <Grid item xs={5}>
               <ImageGallery items={images} maxWidth="xs" />
             </Grid>
-            <Grid item xs={12} sm container>
-              <Grid item xs container direction="column" spacing={2}>
+
+            <Grid item xs={3} className="text-left ml-5">
+              <Grid container direction="column">
+                <Grid container spacing={2}>
+                  <Grid item>
+                    <Typography gutterBottom variant="h3">
+                      {product.name}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={3} className="mt-3">
+                    <Chip
+                      variant="outlined"
+                      size="madium"
+                      label={product.company}
+                    />
+                  </Grid>
+                </Grid>
                 <Grid item xs>
-                  <Typography gutterBottom variant="h4">
-                    Phone Name
+                  <Typography
+                    variant="h5"
+                    gutterBottom
+                    className={classes.price}
+                  >
+                    {formatNumber(product.price)}
                   </Typography>
-                  <Typography variant="h5" gutterBottom>
-                    Price
-                  </Typography>
-                  <Rating precision={0.5} value={3.5} readOnly />
+                  <Rating precision={0.5} value={product.rating} readOnly />
+                </Grid>
+
+                <Grid item>
                   <ColorPicker
                     colors={[
                       { hex: "#000000", selected: false },
@@ -106,29 +177,54 @@ class ComplexGrid extends React.Component {
                     {full ? <FullHeartIcon /> : <BorderHeartIcon />}
                   </IconButton>
                 </Grid>
-                <div>
-                  <Button onClick={this.toggleVisibility}>
-                    {isVisible ? "Hide details" : "Show details"}
-                  </Button>
-                  {isVisible ? (
-                    <div>
-                      <p>
-                        When the button is click I do want this component or
-                        text to be shown - so my question is how do I hide the
-                        component
-                      </p>
-                    </div>
-                  ) : (
-                    <div />
-                  )}
-                </div>
-                <Comments />
               </Grid>
+
+              <Typography variant="h6" gutterBottom className="text-left mr-5">
+                Free delivery
+              </Typography>
+            </Grid>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={12}>
+              <div>
+                <Button onClick={this.toggleVisibility}>
+                  {isVisible ? "Hide details" : "Show details"}
+                </Button>
+                {isVisible ? (
+                  <div>
+                    <List>
+                      {product.moreDetails !== undefined &&
+                        product.moreDetails.map((item, index) => (
+                          <ListItem>
+                            <ListItemAvatar>
+                              <Avatar>
+                                <FolderIcon />
+                              </Avatar>
+                            </ListItemAvatar>
+                            <ListItemText
+                              primary="Single-line item"
+                              secondary={item}
+                            />
+                            <ListItemSecondaryAction>
+                              <IconButton edge="end" aria-label="delete">
+                                <DeleteIcon />
+                              </IconButton>
+                            </ListItemSecondaryAction>
+                          </ListItem>
+                        ))}
+                    </List>
+                  </div>
+                ) : (
+                  <div />
+                )}
+              </div>
+            </Grid>
+            <Grid item xs={12} className="text-left ml-5">
+              <Comments />
             </Grid>
           </Grid>
-        </Paper>
+        </div>
       </div>
     );
   }
 }
-export default ComplexGrid;
+export default withStyles(styles, { withTheme: true })(ComplexGrid);

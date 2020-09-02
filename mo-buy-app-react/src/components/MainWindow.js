@@ -216,7 +216,7 @@ export default function MainWindow() {
           <Route
             exact
             from="/ContactUs"
-            render={(props) => <ContantUs {...props} />}
+            render={(props) => <ProductDetails {...props} />}
           />
           <Route
             exact
