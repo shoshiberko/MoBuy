@@ -30,9 +30,9 @@ const images = [
 ];
 
 class ComplexGrid extends React.Component {
-  constructor(match) {
+  constructor(props) {
     super();
-    this.params = match.params;
+    this.params = this.props.match.params;
     this.state = { full: 0, isVisible: 0 };
     this.handleClick = this.handleHeartClick.bind(this);
     this.toggleVisibility = this.toggleVisibilityFunc.bind(this);
@@ -40,7 +40,8 @@ class ComplexGrid extends React.Component {
 
   async componentDidMount() {
     try {
-      const resp = await fetch("/GetProductItem?Id=" + this.params._id);
+      const resp = await fetch("/GetProductItem?Id=" + this.params.id);
+      console.log("Efratttttt ",this.params.id);
       if (!resp.ok) {
         // noinspection ExceptionCaughtLocallyJS
         throw Error(resp.statusText);

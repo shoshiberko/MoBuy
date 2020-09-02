@@ -261,7 +261,7 @@ export default function SignIn() {
                       <Link>Forgot password?</Link>
                     </Grid>
                     <Grid item>
-                      <Link component="a" href="/SignUp">
+                      <Link component="Link" href="/SignUp">
                         {"Don't have an account? Sign Up"}
                       </Link>
                     </Grid>

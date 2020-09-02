@@ -75,7 +75,7 @@ export default function FormDialog() {
     <div>
       <Dialog open={open} onClose={handleClose} className={classes.root1}>
        <DialogActions className={classes.DialogAction}>
-          <IconButton component="a" href="/" onClick={handleClose} color="primary" >
+          <IconButton component="Link" href="/" onClick={handleClose} color="primary" >
             <CloseIcon/>  
           </IconButton>     
         </DialogActions>
@@ -154,7 +154,7 @@ export default function FormDialog() {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link component="a" href="/SignIn">
+              <Link component="Link" href="/SignIn">
                 Already have an account? Sign in
               </Link>
             </Grid>

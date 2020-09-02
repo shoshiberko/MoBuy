@@ -175,7 +175,7 @@ export default function MainWindow() {
           >
             MoBuy
           </Typography>
-          <IconButton color="inherit">
+          <IconButton color="inherit" component="a" href="/Profile">
             <AccountCircleIcon />
           </IconButton>
           <IconButton color="inherit" component="a" href="/Notification">
@@ -183,7 +183,7 @@ export default function MainWindow() {
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <IconButton color="inherit" component="a" href="/Cart">
+          <IconButton color="inherit" href="/Cart">
             <Badge
               badgeContent={itemCount}
               color="secondary"

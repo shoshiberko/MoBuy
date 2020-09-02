@@ -9,59 +9,73 @@ import ProfileIcon from "@material-ui/icons/AccountCircle";
 import BranchesIcon from "@material-ui/icons/Place";
 import AboutUsIcon from "@material-ui/icons/Info";
 import ContactUsIcon from "@material-ui/icons/ContactSupport";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route/*, Link*/ } from "react-router-dom";
+import Link from '@material-ui/core/Link';
 
-
-const CustomLink = (
+/*const CustomLink = (
   <div>
     <Link to="/"></Link>
   </div>
-);
+);*/
 
 const mainListItems = (
   <div>
-    <ListItem button component="a" href="/">
+    <Link href="/">
+    <ListItem button>
       <ListItemIcon>
         <HomeIcon />
       </ListItemIcon>
       <ListItemText primary="Home" />
     </ListItem>
-    <ListItem button component="a" href="/SignIn">
+    </Link>
+    <Link href="/SignIn">
+    <ListItem button>
       <ListItemIcon>
         <ProfileIcon />
       </ListItemIcon>
       <ListItemText primary="Profile" />
     </ListItem>
-    <ListItem button component="a" href="/Market">
+    </Link> 
+    <Link href="/Market">
+    <ListItem button>
       <ListItemIcon>
         <MarketIcon />
       </ListItemIcon>
       <ListItemText primary="Market" />
     </ListItem>
-    <ListItem button component="a" href="/SavedItems">
+    </Link>
+    <Link href="/SavedItems">
+    <ListItem button>
       <ListItemIcon>
         <FavoriteIcon />
       </ListItemIcon>
       <ListItemText primary="Saved Items" />
     </ListItem>
-    <ListItem button component="a" href="/Branches">
+    </Link>
+    <Link href="/Branches">
+    <ListItem button>
       <ListItemIcon>
         <BranchesIcon />
       </ListItemIcon>
       <ListItemText primary="Branches" />
     </ListItem>
-    <ListItem button component="a" href="/AboutUs">
+    </Link>
+    <Link href="/AboutUs">
+    <ListItem button >
       <ListItemIcon>
         <AboutUsIcon />
       </ListItemIcon>
       <ListItemText primary="About Us" />
     </ListItem>
-    <ListItem button component="a" href="/ContactUs">
+    </Link>
+    <Link href="/ContactUs">
+    <ListItem button >
       <ListItemIcon>
         <ContactUsIcon />
       </ListItemIcon>
       <ListItemText primary="Contact Us" />
     </ListItem>
+    </Link>
   </div>
 );
 export default mainListItems;
