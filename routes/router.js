@@ -555,11 +555,21 @@ router.get(
   connectEnsureLogin.ensureLoggedIn(),
   async function (req, res) {
     let product = await Product.findOne({
-      _id: req.query.productId,
+      _id: req.query.Id,
       isDeleted: false,
     }).exec();
     res.json(product);
   }
 );
 
+
+router.get(
+  "/LogOut",
+  connectEnsureLogin.ensureLoggedIn(),
+  async function (req, res) {
+   // sessionStorage.setItem("userEmail","");
+   req.logout();
+   res.redirect("/SignIn");
+    }
+);
 module.exports = router;

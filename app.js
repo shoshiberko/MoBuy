@@ -55,7 +55,7 @@ app.use(
 );
 
 app.use(
-  "/ViewProductItem",
+  "/ViewProductItem/:productId",
   express.static(path.join(__dirname, "mo-buy-app-react", "build"))
 );
 
