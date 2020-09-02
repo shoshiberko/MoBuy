@@ -4,7 +4,7 @@ var favicon = require("serve-favicon");
 const expressSession = require("express-session")({
   secret: "secret",
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
 });
 
 //var indexRouter = require("./routes/index");
@@ -45,6 +45,11 @@ app.use(
 );
 
 app.use(
+  "/Cart",
+  express.static(path.join(__dirname, "mo-buy-app-react", "build"))
+);
+
+app.use(
   "/SignIn",
   express.static(path.join(__dirname, "mo-buy-app-react", "build"))
 );
@@ -52,12 +57,12 @@ app.use("/", basicRouter);
 //app.use('/', indexRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};

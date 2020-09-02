@@ -44,8 +44,8 @@ function initDB() {
 
   var products_ = [
     {
-      id: 12345,
-      name: "Galaxi S7",
+      id: 206,
+      name: "Galaxi S8",
       price: 500,
       imagesList: ["", "", ""], //String's array
       rating: 0,
@@ -54,6 +54,34 @@ function initDB() {
       colorsList: ["0x000000", "0xffffff"], // string's list (hex color in rgb)
       productType: "phone",
       company: "SAMSUNG",
+      commentsList: [], //array of comments id (id-s from the comment schema)
+      isDeleted: false,
+    },
+    {
+      id: 207,
+      name: "Galaxi S9",
+      price: 500,
+      imagesList: ["", "", ""], //String's array
+      rating: 0,
+      numOfRatings: 0,
+      moreDetails: ["", "", ""],
+      colorsList: ["0x000000", "0xffffff"], // string's list (hex color in rgb)
+      productType: "phone",
+      company: "SAMSUNG",
+      commentsList: [], //array of comments id (id-s from the comment schema)
+      isDeleted: false,
+    },
+    {
+      id: 208,
+      name: "Iphone X",
+      price: 500,
+      imagesList: ["", "", ""], //String's array
+      rating: 0,
+      numOfRatings: 0,
+      moreDetails: ["", "", ""],
+      colorsList: ["0x000000", "0xffffff"], // string's list (hex color in rgb)
+      productType: "phone",
+      company: "Apple",
       commentsList: [], //array of comments id (id-s from the comment schema)
       isDeleted: false,
     },
@@ -74,7 +102,8 @@ function initDB() {
       false,
     ])
   );
-   products_.forEach(element =>
+  */
+  products_.forEach((element) =>
     Product.CREATE([
       element.id,
       element.name,
@@ -87,9 +116,9 @@ function initDB() {
       element.productType,
       element.company,
       element.commentsList,
-      false
+      false,
     ])
-  );*/
+  );
 
   User.register(
     {
@@ -155,7 +184,7 @@ router.get("/Products", connectEnsureLogin.ensureLoggedIn(), async function (
       products.map((element) => {
         if (savedItemsIdsList.findIndex((item) => item === element._id) !== -1)
           return {
-            _id: element._id,
+            id: element._id,
             name: element.name,
             price: element.price,
             imagesList: element.imagesList,
@@ -170,7 +199,7 @@ router.get("/Products", connectEnsureLogin.ensureLoggedIn(), async function (
           };
         else {
           return {
-            _id: element.id,
+            id: element.id,
             name: element.name,
             price: element.price,
             imagesList: element.imagesList,
@@ -316,5 +345,206 @@ router.post(
     }
   }
 );
+
+router.post("/AddItem", connectEnsureLogin.ensureLoggedIn(), async function (
+  req,
+  res
+) {
+  try {
+    let user = await User.findOne({
+      emailAddress: req.body.emailAddress,
+      isDeleted: false,
+    }).exec();
+    let productId = req.body.productId;
+
+    let product = await Product.findOne({
+      isDeleted: false,
+      _id: productId,
+    }).exec();
+
+    let _cartItemsList = user.cartItemsList;
+    if (product === undefined) {
+      //product does not exist
+      res.send(404);
+    } else {
+      //need to add the product id to the user's savedItems list
+      if (_cartItemsList === undefined) _cartItemsList = [];
+      if (
+        _cartItemsList === [] ||
+        _cartItemsList.findIndex((item) => item.productId === productId) === -1
+      ) {
+        _cartItemsList.push({ productId: productId, count: 1 });
+        await User.UPDATE({
+          _id: user._id,
+          savedItemsList: user.savedItemsList,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          emailAddress: user.emailAddress,
+          userType: user.userType,
+          image: user.image,
+          cartItemsList: _cartItemsList,
+          orderList: user.orderList,
+          address: user.address,
+          isDeleted: false,
+        });
+        res.send(200);
+      } else res.send(404);
+    }
+  } catch (err) {
+    console.log(err);
+    res.send(404);
+  }
+});
+
+router.post("/RemoveItem", connectEnsureLogin.ensureLoggedIn(), async function (
+  req,
+  res
+) {
+  try {
+    let user = await User.findOne({
+      emailAddress: req.body.emailAddress,
+      isDeleted: false,
+    }).exec();
+    let productId = req.body.productId;
+    let product = await Product.findOne({
+      isDeleted: false,
+      _id: productId,
+    }).exec();
+
+    let _cartItemsList = user.cartItemsList;
+    console.log("_cartItemsList", _cartItemsList);
+    if (product === undefined) {
+      //product does not exist
+      res.send(404);
+    } else {
+      //need to add the product id to the user's savedItems list
+      if (_cartItemsList === undefined) res.send(404);
+
+      _cartItemsList = _cartItemsList.filter((item) => {
+        item !== productId;
+      });
+      await User.UPDATE({
+        _id: user._id,
+        savedItemsList: user.savedItemsList,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        emailAddress: user.emailAddress,
+        userType: user.userType,
+        image: user.image,
+        cartItemsList: _cartItemsList,
+        orderList: user.orderList,
+        address: user.address,
+        isDeleted: false,
+      });
+      res.send(200);
+    }
+  } catch (err) {
+    console.log(err);
+    res.send(404);
+  }
+});
+
+router.post(
+  "/IncreaseOrDecreaseItem",
+  connectEnsureLogin.ensureLoggedIn(),
+  async function (req, res) {
+    try {
+      let user = await User.findOne({
+        emailAddress: req.body.emailAddress,
+        isDeleted: false,
+      }).exec();
+      let productId = req.body.productId;
+      let incOrDec = req.body.reqType;
+      let product = await Product.findOne({
+        isDeleted: false,
+        _id: productId,
+      }).exec();
+
+      let _cartItemsList = user.cartItemsList;
+      if (product === undefined) {
+        //product does not exist
+        res.send(404);
+      } else {
+        //need to add the product id to the user's savedItems list
+        if (_cartItemsList === undefined) res.send(404);
+        prodIndex = _cartItemsList.findIndex(
+          (item) => item.productId === productId
+        );
+        if (prodIndex !== -1) {
+          if (incOrDec === "increase") _cartItemsList[prodIndex].count++;
+          //decrease
+          else _cartItemsList[prodIndex].count--;
+          await User.UPDATE({
+            _id: user._id,
+            savedItemsList: user.savedItemsList,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            emailAddress: user.emailAddress,
+            userType: user.userType,
+            image: user.image,
+            cartItemsList: _cartItemsList,
+            orderList: user.orderList,
+            address: user.address,
+            isDeleted: false,
+          });
+          res.send(200);
+        } else res.send(404);
+      }
+    } catch (err) {
+      console.log(err);
+      res.send(404);
+    }
+  }
+);
+
+router.post("/AddItem", connectEnsureLogin.ensureLoggedIn(), async function (
+  req,
+  res
+) {
+  try {
+    let user = await User.findOne({
+      emailAddress: req.body.emailAddress,
+      isDeleted: false,
+    }).exec();
+    let productId = req.body.productId;
+
+    let product = await Product.findOne({
+      isDeleted: false,
+      _id: productId,
+    }).exec();
+
+    let _cartItemsList = user.cartItemsList;
+    if (product === undefined) {
+      //product does not exist
+      res.send(404);
+    } else {
+      //need to add the product id to the user's savedItems list
+      if (_cartItemsList === undefined) _cartItemsList = [];
+      if (
+        _cartItemsList === [] ||
+        _cartItemsList.findIndex((item) => item.productId === productId) === -1
+      ) {
+        _cartItemsList.push({ productId: productId, count: 1 });
+        await User.UPDATE({
+          _id: user._id,
+          savedItemsList: user.savedItemsList,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          emailAddress: user.emailAddress,
+          userType: user.userType,
+          image: user.image,
+          cartItemsList: _cartItemsList,
+          orderList: user.orderList,
+          address: user.address,
+          isDeleted: false,
+        });
+        res.send(200);
+      } else res.send(404);
+    }
+  } catch (err) {
+    console.log(err);
+    res.send(404);
+  }
+});
 
 module.exports = router;

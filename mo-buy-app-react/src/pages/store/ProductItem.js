@@ -50,7 +50,7 @@ export default function RecipeReviewCard({ product }) {
   const handleProductChangedSaved = () => {
     var data = {
       emailAddress: sessionStorage.getItem("userEmail"),
-      productId: product._id,
+      productId: product.id,
       state: !saved,
     };
 

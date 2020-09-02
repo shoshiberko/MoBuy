@@ -46,19 +46,6 @@ import ProductDetails from "../pages/productDetailsView";
 import ChatBot from "./ChatBot";
 import Welcome from "./Welcome";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -142,8 +129,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(4),
   },
 }));
-
-export default function Dashboard() {
+export default function MainWindow() {
   const {
     total,
     cartItems,
@@ -161,11 +147,8 @@ export default function Dashboard() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
   return (
     <div className={classes.root}>
-      <CssBaseline />
       <AppBar
         position="absolute"
         className={clsx(classes.appBar, open && classes.appBarShift)}
@@ -192,7 +175,7 @@ export default function Dashboard() {
           >
             MoBuy
           </Typography>
-          <IconButton color="inherit" component="a" href="/SignIn">
+          <IconButton color="inherit">
             <AccountCircleIcon />
           </IconButton>
           <IconButton color="inherit" component="a" href="/Notification">
@@ -228,123 +211,37 @@ export default function Dashboard() {
         </div>
         <List>{mainListItems}</List>
       </Drawer>
-      <Switch>
-        <Route
-          exact
-          path="/SignIn"
-          render={(props) => <SignInDialog {...props} />}
-        />
-        <Route
-          exact
-          from="/SignUp"
-          render={(props) => <SignUpDialog {...props} />}
-        />
-      </Switch>
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <Switch>
-            <Route exact from="/Cart" render={(props) => <Cart {...props} />} />
-            <Route
-              exact
-              from="/Checkout"
-              render={(props) => <Checkout {...props} />}
-            />
-            <Route
-              exact
-              from="/Market"
-              render={(props) => <Store {...props} />}
-            />
+      <Container maxWidth="lg" className={classes.container}>
+        <Switch>
+          <Route
+            exact
+            from="/ContactUs"
+            render={(props) => <ContantUs {...props} />}
+          />
+          <Route
+            exact
+            from="/AboutUs"
+            render={(props) => <AboutUs {...props} />}
+          />
+          <Route exact from="/Cart" render={(props) => <Cart {...props} />} />
+          <Route
+            exact
+            from="/Checkout"
+            render={(props) => <Checkout {...props} />}
+          />
+          <Route
+            exact
+            from="/Market"
+            render={(props) => <Store {...props} />}
+          />
 
-            <Route
-              exact
-              from="/SavedItems"
-              render={(props) => <SavedItems {...props} />}
-            />
-          </Switch>
-          <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Switch>
-                <Route
-                  exact
-                  from="/"
-                  render={(props) => <Welcome {...props} />}
-                />
-                <Route
-                  exact
-                  from="/ContactUs"
-                  render={(props) => <ContantUs {...props} />}
-                />
-                <Route
-                  exact
-                  from="/AboutUs"
-                  render={(props) => <AboutUs {...props} />}
-                />
-                <Route
-                  exact
-                  from="/"
-                  render={(props) => <AboutUs {...props} />}
-                />
-                <Route
-                  exact
-                  from="/SignIn"
-                  render={(props) => <AboutUs {...props} />}
-                />
-                <Route
-                  exact
-                  from="/SignUp"
-                  render={(props) => <AboutUs {...props} />}
-                />
-                <Route
-                  exact
-                  from="/Id"
-                  render={(props) => <ProductDetails {...props} />}
-                />
-              </Switch>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Switch>
-                <Route
-                  exact
-                  from="/"
-                  render={(props) => <ContantInfo {...props} />}
-                />
-                <Route
-                  exact
-                  from="/SignIn"
-                  render={(props) => <ContantInfo {...props} />}
-                />
-                <Route
-                  exact
-                  from="/SignUp"
-                  render={(props) => <ContantInfo {...props} />}
-                />
-                <Route
-                  exact
-                  from="/ChatBot"
-                  render={(props) => <ChatBot {...props} />}
-                />
-              </Switch>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12} md={4} lg={3}>
-              {/*<Card><h1>GoogleMaps</h1></Card>*/}
-            </Grid>
-          </Grid>
-          <Fab
-            color="inherit"
-            className="{classes.floatingButton}"
-            style={{ position: "fixed", bottom: "30px", right: "30px" }}
-            aria-label="add"
-            component="a"
-            href="/ChatBot"
-          >
-            <AddIcon />
-          </Fab>
-        </Container>
-      </main>
+          <Route
+            exact
+            from="/SavedItems"
+            render={(props) => <SavedItems {...props} />}
+          />
+        </Switch>
+      </Container>
     </div>
   );
 }
