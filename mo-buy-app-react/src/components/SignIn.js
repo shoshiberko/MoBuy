@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -63,6 +63,13 @@ export default function SignIn() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const classes = useStyles();
+
+
+  useEffect(() => {
+    fetch("/LogOut")
+      .then(sessionStorage.setItem("userEmail", ""));
+  });
+
 
   const responseFacebook = (response) => {
     console.log(response);

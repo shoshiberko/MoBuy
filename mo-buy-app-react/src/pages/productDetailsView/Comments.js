@@ -38,12 +38,11 @@ let listComments = [
   }
 ];
 
-const OurCommants = () => {
+const OurCommants = ({list}) => {
   const classes = useStyles();
-  let i = 0;
   return (
     <div>
-      {listComments.map(item => (
+      {list.map(item => (
         <Comment>
           <Comment.Avatar src={item.avatar} />
           <Comment.Content>
@@ -70,13 +69,29 @@ const OurCommants = () => {
 
 class CommentExampleComment extends React.Component {
   //state = { name: "", textArea: "", rating: 0 };
-  constructor() {
+  constructor({ product }) {
     super();
-    this.state = { name: "", textArea: "", rating: 0 };
+    this.state = { name: "", textArea: "", rating: 0, product:{},CommentsList:[]};
+    //this.setState({CommentsList: props.product.commentsList});
+    this.setState({product: product, CommentsList: product.commentsList});
     this.forceUpdateHandler = this.forceUpdateHandler.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeRating = this.handleChangeRating.bind(this);
   }
+
+  /*async componentDidMount() {
+    try {
+      const resp = await fetch("/GetProductItem?Id=" + this.params.productId);
+      if (!resp.ok) {
+        // noinspection ExceptionCaughtLocallyJS
+        throw Error(resp.statusText);
+      }
+      const product = await resp.json();
+      this.setState({ CommentsList: product.commentsList });
+    } catch (err) {
+      console.log(err);
+    }
+  }*/
 
   handleChange = (e, { name, value }) => {
     this.setState({ [name]: value });
@@ -133,13 +148,13 @@ class CommentExampleComment extends React.Component {
     this.setState({ name: "", textArea: "", rating: 0 });
   }
   render() {
-    const { name, textArea, rating } = this.state;
+    const { name, textArea, rating, CommentsList } = this.state;
     return (
       <Comment.Group id="commentsList">
         <Header as="h3" dividing>
           Comments
         </Header>
-        <OurCommants />
+        <OurCommants list={CommentsList} />
         <Form reply>
           <Form.Field>
             <Form.Input

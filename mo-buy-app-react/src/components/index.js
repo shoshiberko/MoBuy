@@ -118,17 +118,17 @@ function SignInAppBar() {
           MoBuy
         </Typography>
         <Tooltip title="Login">
-          <IconButton color="inherit">
+          <IconButton color="inherit" component="a"  href="/SignIn">
             <AccountCircleIcon />
           </IconButton>
         </Tooltip>
         <Tooltip title="About Us">
-          <IconButton color="inherit">
+          <IconButton color="inherit" component="a" href="/AboutUs">
             <InfoRoundedIcon />
           </IconButton>
         </Tooltip>
         <Tooltip title="Contact Us">
-          <IconButton color="inherit">
+          <IconButton color="inherit" component="a" href="ContactUs">
             <ContactSupportRoundedIcon />
           </IconButton>
         </Tooltip>

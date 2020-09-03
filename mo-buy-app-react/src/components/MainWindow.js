@@ -31,6 +31,7 @@ import SavedItems from "../pages/savedItems";
 import { formatNumber } from "../helpers/utils";
 import { CartContext } from "../contexts/CartContext";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 import SignInDialog from "./SignInDialog";
 import SignUpDialog from "./SignUpDialog";
@@ -175,15 +176,18 @@ export default function MainWindow() {
           >
             MoBuy
           </Typography>
-          <IconButton color="inherit">
+          <IconButton color="inherit" component="a" href="/Profile">
             <AccountCircleIcon />
           </IconButton>
+          <IconButton color="inherit" component="a" href="/SignIn">
+       <ExitToAppIcon />
+        </IconButton>
           <IconButton color="inherit" component="a" href="/Notification">
             <Badge badgeContent={4} color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <IconButton color="inherit" component="a" href="/Cart">
+          <IconButton color="inherit" href="/Cart">
             <Badge
               badgeContent={itemCount}
               color="secondary"

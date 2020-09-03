@@ -156,7 +156,7 @@ router.post("/SignIn", (req, res, next) => {
       console.log("2 " + user);
       res.send(404);
     } else {
-      req.logIn(user, function (err) {
+      req.login(user, function (err) {
         if (err) {
           console.log("3 " + err);
           //return next(err);
@@ -555,11 +555,22 @@ router.get(
   connectEnsureLogin.ensureLoggedIn(),
   async function (req, res) {
     let product = await Product.findOne({
-      _id: req.query.productId,
+      _id: req.query.Id,
       isDeleted: false,
     }).exec();
     res.json(product);
   }
+);
+
+
+router.get(
+  "/LogOut",
+  connectEnsureLogin.ensureLoggedIn(),
+  async function (req, res) {
+   // sessionStorage.setItem("userEmail","");
+   req.logout();
+   res.redirect("/SignIn");
+    }
 );
 
 module.exports = router;

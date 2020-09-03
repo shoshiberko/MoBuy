@@ -192,15 +192,15 @@ export default function Dashboard() {
           >
             MoBuy
           </Typography>
-          <IconButton color="inherit" component="a" href="/SignIn">
+          <IconButton color="inherit" component="Link" href="/SignIn">
             <AccountCircleIcon />
           </IconButton>
-          <IconButton color="inherit" component="a" href="/Notification">
+          <IconButton color="inherit" component="Link" href="/Notification">
             <Badge badgeContent={4} color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <IconButton color="inherit" component="a" href="/Cart">
+          <IconButton color="inherit" component="Link" href="/Cart">
             <Badge
               badgeContent={itemCount}
               color="secondary"
@@ -338,7 +338,7 @@ export default function Dashboard() {
             className="{classes.floatingButton}"
             style={{ position: "fixed", bottom: "30px", right: "30px" }}
             aria-label="add"
-            component="a"
+            component="Link"
             href="/ChatBot"
           >
             <AddIcon />

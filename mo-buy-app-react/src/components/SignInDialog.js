@@ -116,7 +116,7 @@ export default function FormDialog() {
       <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth="true">
         <DialogActions className={classes.DialogAction}>
           <IconButton
-            component="a"
+            component="Link"
             href="/"
             onClick={handleClose}
             color="primary"
@@ -200,7 +200,7 @@ export default function FormDialog() {
                       <Link>Forgot password?</Link>
                     </Grid>
                     <Grid item>
-                      <Link component="a" href="/SignUp">
+                      <Link component="Link" href="/SignUp">
                         {"Don't have an account? Sign Up"}
                       </Link>
                     </Grid>

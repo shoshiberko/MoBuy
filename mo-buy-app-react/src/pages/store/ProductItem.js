@@ -127,7 +127,7 @@ export default function RecipeReviewCard({ product, renderProductsGrid }) {
         <IconButton
           aria-label="preview"
           component="a"
-          href={"/ViewProductItem?productId=" + product.id}
+          href={"/ViewProductItem/" + product.id}
         >
           <VisibilityIcon />
         </IconButton>
