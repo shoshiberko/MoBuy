@@ -12,19 +12,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import CartContextProvider from "./contexts/CartContext";
 import ProductsContextProvider from "./contexts/ProductsContext";
 import Grid from "@material-ui/core/Grid";
-import { createMuiTheme } from "@material-ui/core/styles";
-import { ThemeProvider } from "@material-ui/styles";
-const theme = createMuiTheme({
-  typography: {
-    fontFamily: [
-      "Nunito",
-      "Roboto",
-      '"Helvetica Neue"',
-      "Arial",
-      "sans-serif",
-    ].join(","),
-  },
-});
+
 const rootElement = document.getElementById("root");
 ReactDOM.render(
   <React.StrictMode>

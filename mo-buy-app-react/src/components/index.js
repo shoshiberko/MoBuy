@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -45,9 +45,16 @@ import ContactSupportRoundedIcon from "@material-ui/icons/ContactSupportRounded"
 import Tooltip from "@material-ui/core/Tooltip";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
+import SwitchComp from "@material-ui/core/Switch";
+import {
+  orange,
+  lightBlue,
+  deepPurple,
+  deepOrange,
+} from "@material-ui/core/colors";
 
 const drawerWidth = 240;
-const theme = createMuiTheme({
+/*const theme = createMuiTheme({
   palette: {
     primary: {
       light: "#ff8e8c",
@@ -63,18 +70,16 @@ const theme = createMuiTheme({
     },
   },
   typography: {
-    fontFamily: "Roboto Condensed",
-  },
-  /*typography: {
     fontFamily: [
+      "Roboto Condensed".
       "Nunito",
       "Roboto",
       '"Helvetica Neue"',
       "Arial",
       "sans-serif",
     ].join(","),
-  },*/
-});
+  },
+});*/
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -133,6 +138,24 @@ function SignInAppBar() {
 }
 
 export default function App() {
+  const [darkState, setDarkState] = useState(false);
+  const palletType = darkState ? "dark" : "light";
+  const mainPrimaryColor = darkState ? orange[500] : lightBlue[500];
+  const mainSecondaryColor = darkState ? deepOrange[900] : deepPurple[500];
+  const darkTheme = createMuiTheme({
+    palette: {
+      type: palletType,
+      primary: {
+        main: mainPrimaryColor,
+      },
+      secondary: {
+        main: mainSecondaryColor,
+      },
+    },
+  });
+  const handleThemeChange = () => {
+    setDarkState(!darkState);
+  };
   const {
     total,
     cartItems,
@@ -145,7 +168,7 @@ export default function App() {
   const classes = useStyles();
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={darkTheme}>
       <div>
         <Container />
         <Switch>
@@ -156,6 +179,7 @@ export default function App() {
               <div>
                 <SignInAppBar />
                 <SignIn {...props} />
+                <SwitchComp checked={darkState} onChange={handleThemeChange} />
               </div>
             )}
           />
