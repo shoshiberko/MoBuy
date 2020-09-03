@@ -11,6 +11,7 @@ const connectEnsureLogin = require("connect-ensure-login");
 
 /* PASSPORT LOCAL AUTHENTICATION */
 const passport = require("passport");
+const { map } = require("../app");
 
 passport.use("User", User.createStrategy());
 
@@ -219,59 +220,31 @@ router.get("/Products", connectEnsureLogin.ensureLoggedIn(), async function (
   //res.json(products);
 });
 
-/*
-router.get("/Product", connectEnsureLogin.ensureLoggedIn(), async function (
+router.get("/GetMyOrders", connectEnsureLogin.ensureLoggedIn(), async function (
   req,
   res
 ) {
-  var userName = req.query.name;
-  let user = await User.find({
-    userName: userName,
+  var userEmail = req.query.userEmail;
+
+  let orders = await Order.find({
+    userEmail: userEmail,
     isDeleted: false,
   }).exec();
-  let savedItemsId = user.savedItemsList;
 
-  let products = await Product.find({ isDeleted: false }).exec();
-  products.map((element) => {
-    if (savedItemsId.findInex(item.id) !== -1)
+  res.json(
+    orders.map((order) => {
       return {
-        id: element.id,
-        name: element.name,
-        price: element.price,
-        imagesList: element.imagesList,
-        rating: element.rating,
-        numOfRatings: element.numOfRatings,
-        moreDetails: element.moreDetails,
-        colorsList: element.colorsList,
-        productType: element.productType,
-        company: element.company,
-        commentsList: element.commentsList,
-        savedItem: true,
+        id: order._id,
+        cardNumber4LastDigits: order.paymentDetails.cardNumber4LastDigits,
+        cardType: order.paymentDetails.cardType,
+        totalPrice: order.paymentDetails.totalPrice,
+        date: order.created_at,
+        productsList: order.productsList,
+        address: order.address,
       };
-    else {
-      return {
-        id: element.id,
-        name: element.name,
-        price: element.price,
-        imagesList: element.imagesList,
-        rating: element.rating,
-        numOfRatings: element.numOfRatings,
-        moreDetails: element.moreDetails,
-        colorsList: element.colorsList,
-        productType: element.productType,
-        company: element.company,
-        commentsList: element.commentsList,
-        savedItem: false,
-      };
-    }
-  });
-
-  if (vendor !== null && vendor.length > 0) {
-    res.render("flowersCatalogVendors.ejs", { flowers: flowers });
-  } else {
-    res.render("flowersCatalog.ejs", { flowers: flowers });
-  }
-});*/
+    })
+  );
+});
 
 router.post(
   "/StateSavedItem",
@@ -318,12 +291,10 @@ router.post(
         } else res.send(404);
       } else if (_savedItemsList !== undefined) {
         //need to remove the product id from the user's savedItems list/
-        console.log("productId:", productId);
-        console.log("before:", _savedItemsList);
         _savedItemsList = _savedItemsList.filter((item) => {
           return item !== productId.toString();
         });
-        console.log("after:", _savedItemsList);
+        //  console.log("after:", _savedItemsList);
         //User.UPDATE(user);
         await User.UPDATE({
           _id: user._id,
@@ -374,27 +345,27 @@ router.post("/PlaceOrder", connectEnsureLogin.ensureLoggedIn(), async function (
   res
 ) {
   try {
-    console.log("PlaceOrder");
+    //console.log("PlaceOrder");
     let emailAddress = req.body.emailAddress;
     let user = await User.findOne({
       emailAddress: emailAddress,
       isDeleted: false,
     }).exec();
-    console.log("user", user);
+    // console.log("user", user);
     let orderProductsList = req.body.productsList;
-    console.log("orderProductsList", orderProductsList);
+    // console.log("orderProductsList", orderProductsList);
     let address = req.body.addresses;
-    console.log("address", address);
+    //console.log("address", address);
     let payments = req.body.payments;
-    console.log("payments", payments);
+    //console.log("payments", payments);
     //calculate the order id
     let orders = await Order.find().exec();
     let orderId = 100; //first order id is 100, the second will be 101...
     if (orders !== undefined) {
-      orderId += parseInt(orders.length);
-      console.log("orderId1", orderId);
+      orderId = parseInt(orders[orders.length - 1]._id) + 1;
+      // console.log("orderId1", orderId);
     }
-    console.log("orderId2", orderId);
+    //console.log("orderId2", orderId);
     //create the order in the DB
     await Order.CREATE([
       orderId,
@@ -477,7 +448,6 @@ router.post("/RemoveItem", connectEnsureLogin.ensureLoggedIn(), async function (
     }).exec();
 
     let _cartItemsList = user.cartItemsList;
-    console.log("_cartItemsList", _cartItemsList);
     if (product === undefined) {
       //product does not exist
       res.send(404);

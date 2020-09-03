@@ -195,6 +195,11 @@ export default function App() {
           />
           <Route
             exact
+            from="/MyOrders"
+            render={(props) => <MainWindow {...props} />}
+          />
+          <Route
+            exact
             from="/ContactUs"
             render={(props) => <MainWindow {...props} />}
           />

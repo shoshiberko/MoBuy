@@ -94,6 +94,7 @@ export default function Checkout() {
       productsList: cartItems.map((item) => {
         return {
           id: item.id,
+          name: item.name,
           color: "0xffffff",
           count: item.quantity,
           itemPrice: item.price,
@@ -129,9 +130,9 @@ export default function Checkout() {
     let cardNumber4LastDigits = creditCardNumber.substr(
       creditCardNumber.length - 4
     );
-    //console.log(formPaymentData);
+    console.log(formPaymentData);
     paymentsSet([
-      { name: "Card type", detail: formPaymentData.issuer },
+      { name: "Card type", detail: formPaymentData.issuer.toUpperCase() },
       { name: "Card holder", detail: formPaymentData.name },
       { name: "Last card digits", detail: cardNumber4LastDigits },
       { name: "Cvc", detail: formPaymentData.cvc },

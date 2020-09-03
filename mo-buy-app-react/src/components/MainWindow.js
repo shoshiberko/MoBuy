@@ -28,10 +28,12 @@ import Cart from "../pages/cart";
 import HomePage from "./HomePage";
 import Store from "../pages/store";
 import SavedItems from "../pages/savedItems";
+
+import MyOrders from "../pages/myOrders";
 import { formatNumber } from "../helpers/utils";
 import { CartContext } from "../contexts/CartContext";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 import SignInDialog from "./SignInDialog";
 import SignUpDialog from "./SignUpDialog";
@@ -180,8 +182,8 @@ export default function MainWindow() {
             <AccountCircleIcon />
           </IconButton>
           <IconButton color="inherit" component="a" href="/SignIn">
-       <ExitToAppIcon />
-        </IconButton>
+            <ExitToAppIcon />
+          </IconButton>
           <IconButton color="inherit" component="a" href="/Notification">
             <Badge badgeContent={4} color="secondary">
               <NotificationsIcon />
@@ -238,7 +240,11 @@ export default function MainWindow() {
             from="/Market"
             render={(props) => <Store {...props} />}
           />
-
+          <Route
+            exact
+            from="/MyOrders"
+            render={(props) => <MyOrders {...props} />}
+          />
           <Route
             exact
             from="/SavedItems"
