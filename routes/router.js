@@ -156,7 +156,7 @@ router.post("/SignIn", (req, res, next) => {
       console.log("2 " + user);
       res.send(404);
     } else {
-      req.logIn(user, function (err) {
+      req.login(user, function (err) {
         if (err) {
           console.log("3 " + err);
           //return next(err);
@@ -572,4 +572,5 @@ router.get(
    res.redirect("/SignIn");
     }
 );
+
 module.exports = router;
