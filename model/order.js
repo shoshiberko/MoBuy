@@ -1,18 +1,23 @@
 const debug = require("debug")("mongo:model-order");
 const mongo = require("mongoose");
 
-module.exports = db => {
+module.exports = (db) => {
   // create a schema
   let schema = new mongo.Schema(
     {
       _id: String,
       userEmail: String,
-      productsList: Array, //array of {productId, color, count}
+      productsList: Array, //array of {productId, color, count, price}
       address: String,
-      paymentDetails: String,
+      paymentDetails: {
+        cardType: String,
+        cardHolder: String,
+        cardNumber4LastDigits: String,
+        totalPrice: Number,
+      },
       isDeleted: Boolean,
       created_at: Date,
-      updated_at: Date
+      updated_at: Date,
     },
     { autoIndex: false }
   );
@@ -21,19 +26,19 @@ module.exports = db => {
   // you can create more important methods like name validations or formatting
   // you can also do queries and find similar users
 
-  schema.statics.CREATE = async function(order) {
+  schema.statics.CREATE = async function (order) {
     return this.create({
       _id: order[0],
       userEmail: order[1],
       productsList: order[2],
       address: order[3],
       paymentDetails: order[4],
-      isDeleted: order[5]
+      isDeleted: order[5],
     });
   };
 
   // on every save, add the date
-  schema.pre("save", function(next) {
+  schema.pre("save", function (next) {
     // get the current date
     let currentDate = new Date();
     // change the updated_at field to current date
@@ -43,7 +48,7 @@ module.exports = db => {
     next();
   });
 
-  schema.statics.REQUEST = async function() {
+  schema.statics.REQUEST = async function () {
     // no arguments - bring all at once
     const args = Array.from(arguments); // [...arguments]
     if (args.length === 0) {
@@ -92,14 +97,14 @@ module.exports = db => {
     return this.find(...args).exec();
   };
 
-  schema.statics.UPDATE = async function(order) {
+  schema.statics.UPDATE = async function (order) {
     const filter = { _id: order._id };
     const update = {
       userEmail: order.userEmail,
       productsList: order.productsList,
       address: order.address,
       paymentDetails: order.paymentDetails,
-      isDeleted: order.isDeleted
+      isDeleted: order.isDeleted,
     };
 
     // `doc` is the document _before_ `update` was applied
@@ -107,7 +112,7 @@ module.exports = db => {
     await doc.save();
   };
 
-  schema.statics.DELETE = async function(order) {
+  schema.statics.DELETE = async function (order) {
     const filter = { _id: order._id };
     const update = { isDeleted: true };
     // `doc` is the document _before_ `update` was applied

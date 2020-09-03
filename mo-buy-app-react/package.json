@@ -24,6 +24,7 @@
     "react-image-gallery": "^1.0.8",
     "react-magnifier": "^3.0.4",
     "react-router-dom": "^5.2.0",
+    "react-script": "^2.0.5",
     "react-scripts": "^3.4.3",
     "react-simple-chatbot": "^0.6.1",
     "recharts": "^1.8.5",

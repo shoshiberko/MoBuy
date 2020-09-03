@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import {
   PlusCircleIcon,
   MinusCircleIcon,
-  TrashIcon
+  TrashIcon,
 } from "../../components/icons";
 import { CartContext } from "../../contexts/CartContext";
 import AddCircleOutlinedIcon from "@material-ui/icons/AddCircleOutlined";
@@ -15,7 +15,7 @@ const CartItem = ({ product }) => {
   const { increase, decrease, removeProduct } = useContext(CartContext);
 
   return (
-    <div className="row no-gutters py-2">
+    <div className="row no-gutters py-2 ">
       <div className="col-sm-2 p-2">
         <img
           alt={product.name}

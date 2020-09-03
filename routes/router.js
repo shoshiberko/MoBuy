@@ -349,6 +349,68 @@ router.post(
   }
 );
 
+/*
+var data = {
+  emailAddress: sessionStorage.getItem("userEmail"),
+  productsList: cartItems.map((item) => {
+    return {
+      id: item.id,
+      color: "0xffffff",
+      count: item.quantity,
+      itemPrice: item.itemPrice,
+    };
+  }),
+  addresses: addresses.join(","),
+  payments: {
+    cardType: payments[0].detail,
+    cardHolder: payments[1].detail,
+    cardNumber4LastDigits: cardNumber4LastDigits,
+    totalPrice: total,
+  },
+};*/
+//PlaceOrder
+router.post("/PlaceOrder", connectEnsureLogin.ensureLoggedIn(), async function (
+  req,
+  res
+) {
+  try {
+    console.log("PlaceOrder");
+    let emailAddress = req.body.emailAddress;
+    let user = await User.findOne({
+      emailAddress: emailAddress,
+      isDeleted: false,
+    }).exec();
+    console.log("user", user);
+    let orderProductsList = req.body.productsList;
+    console.log("orderProductsList", orderProductsList);
+    let address = req.body.addresses;
+    console.log("address", address);
+    let payments = req.body.payments;
+    console.log("payments", payments);
+    //calculate the order id
+    let orders = await Order.find().exec();
+    let orderId = 100; //first order id is 100, the second will be 101...
+    if (orders !== undefined) {
+      orderId += parseInt(orders.length);
+      console.log("orderId1", orderId);
+    }
+    console.log("orderId2", orderId);
+    //create the order in the DB
+    await Order.CREATE([
+      orderId,
+      emailAddress,
+      orderProductsList,
+      address,
+      payments,
+      false,
+    ]);
+    res.json(orderId); //need to send the order id to the client
+  } catch (err) {
+    console.log(err);
+    res.send(404);
+  }
+});
+
 router.post("/AddItem", connectEnsureLogin.ensureLoggedIn(), async function (
   req,
   res
@@ -562,15 +624,13 @@ router.get(
   }
 );
 
-
-router.get(
-  "/LogOut",
-  connectEnsureLogin.ensureLoggedIn(),
-  async function (req, res) {
-   // sessionStorage.setItem("userEmail","");
-   req.logout();
-   res.redirect("/SignIn");
-    }
-);
+router.get("/LogOut", connectEnsureLogin.ensureLoggedIn(), async function (
+  req,
+  res
+) {
+  // sessionStorage.setItem("userEmail","");
+  req.logout();
+  res.redirect("/SignIn");
+});
 
 module.exports = router;

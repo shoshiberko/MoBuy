@@ -4,6 +4,17 @@ import CartProducts from "./CartProducts";
 import { CartContext } from "../../contexts/CartContext";
 import { formatNumber } from "../../helpers/utils";
 import { Link } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  fullScreen: {
+    width: "100vw",
+    height: "100vh",
+  },
+}));
 
 const Cart = () => {
   const {
@@ -12,7 +23,7 @@ const Cart = () => {
     itemCount,
     clearCart,
     checkout,
-    handleCheckout
+    handleCheckout,
   } = useContext(CartContext);
 
   return (

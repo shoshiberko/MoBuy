@@ -1,214 +1,225 @@
-import React from "react";
-import Card from "react-credit-cards";
+import React, { useContext } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Paper from "@material-ui/core/Paper";
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepLabel from "@material-ui/core/StepLabel";
+import Button from "@material-ui/core/Button";
+import Link from "@material-ui/core/Link";
+import Typography from "@material-ui/core/Typography";
+import AddressForm from "./AddressForm";
+import PaymentForm from "./PaymentForm";
+import Review from "./Review";
+import { CartContext } from "../../contexts/CartContext";
+import $ from "jquery";
 
-import {
-  formatCreditCardNumber,
-  formatCVC,
-  formatExpirationDate,
-  formatFormData
-} from "./utils.js";
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {"Copyright © "}
+      <Link color="inherit" href="https://material-ui.com/">
+        Your Website
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
 
-import "react-credit-cards/es/styles-compiled.css";
-import styles from "./styles.css";
+export default function Checkout() {
+  const useStyles = makeStyles((theme) => ({
+    appBar: {
+      position: "relative",
+    },
+    layout: {
+      width: "auto",
+      marginLeft: theme.spacing(2),
+      marginRight: theme.spacing(2),
+      [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
+        width: 600,
+        marginLeft: "auto",
+        marginRight: "auto",
+      },
+    },
+    paper: {
+      marginTop: theme.spacing(3),
+      marginBottom: theme.spacing(3),
+      padding: theme.spacing(2),
+      [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
+        marginTop: theme.spacing(6),
+        marginBottom: theme.spacing(6),
+        padding: theme.spacing(3),
+      },
+    },
+    stepper: {
+      padding: theme.spacing(3, 0, 5),
+    },
+    buttons: {
+      display: "flex",
+      justifyContent: "flex-end",
+    },
+    button: {
+      marginTop: theme.spacing(3),
+      marginLeft: theme.spacing(1),
+    },
+  }));
 
-export default class App extends React.Component {
-  state = {
-    number: "",
-    name: "",
-    expiry: "",
-    cvc: "",
-    issuer: "",
-    focused: "",
-    formData: null
+  const { clearCart } = useContext(CartContext);
+
+  const steps = ["Shipping address", "Payment details", "Review your order"];
+  const classes = useStyles();
+  const [activeStep, setActiveStep] = React.useState(0);
+  const [addresses, addressesSet] = React.useState([]);
+  const [name, nameSet] = React.useState("");
+  const [payments, paymentsSet] = React.useState([]);
+  const [orderId, orderIdSet] = React.useState(0);
+  const { total, cartItems } = useContext(CartContext);
+
+  const handleNext = () => {
+    setActiveStep(activeStep + 1);
   };
 
-  handleCallback = ({ issuer }, isValid) => {
-    if (isValid) {
-      this.setState({ issuer });
-    }
+  const handleBack = () => {
+    setActiveStep(activeStep - 1);
   };
 
-  handleInputFocus = ({ target }) => {
-    this.setState({
-      focused: target.name
-    });
+  const handlePlaceOrder = () => {
+    ////////send order to the server
+
+    var data = {
+      emailAddress: sessionStorage.getItem("userEmail"),
+      productsList: cartItems.map((item) => {
+        return {
+          id: item.id,
+          color: "0xffffff",
+          count: item.quantity,
+          itemPrice: item.price,
+        };
+      }),
+      addresses: addresses.join(","),
+      payments: {
+        cardType: payments[0].detail,
+        cardHolder: payments[1].detail,
+        cardNumber4LastDigits: payments[2].detail,
+        totalPrice: total,
+      },
+    };
+
+    // Submit form via jQuery/AJAX
+    $.ajax({
+      type: "POST",
+      url: "/PlaceOrder",
+      data: data,
+    })
+      .done(function(data) {
+        orderIdSet(data);
+        clearCart();
+        handleNext();
+      })
+      .fail(function(jqXhr) {
+        alert("Sorry! your order is not received, please try again ");
+      });
   };
 
-  handleInputChange = ({ target }) => {
-    if (target.name === "number") {
-      target.value = formatCreditCardNumber(target.value);
-    } else if (target.name === "expiry") {
-      target.value = formatExpirationDate(target.value);
-    } else if (target.name === "cvc") {
-      target.value = formatCVC(target.value);
-    }
-
-    this.setState({ [target.name]: target.value });
-  };
-
-  handleSubmit = e => {
-    e.preventDefault();
-    const { issuer } = this.state;
-    const formData = [...e.target.elements]
-      .filter(d => d.name)
-      .reduce((acc, d) => {
-        acc[d.name] = d.value;
-        return acc;
-      }, {});
-
-    this.setState({ formData });
-    this.form.reset();
-  };
-
-  render() {
-    const { name, number, expiry, cvc, focused, issuer, formData } = this.state;
-
-    return (
-      <div key="Payment">
-        <div className="App-payment">
-          <h1>React Credit Cards</h1>
-          <h4>Beautiful credit cards for your payment forms</h4>
-          <Card
-            number={number}
-            name={name}
-            expiry={expiry}
-            cvc={cvc}
-            focused={focused}
-            callback={this.handleCallback}
-          />
-          <form ref={c => (this.form = c)} onSubmit={this.handleSubmit}>
-            <div className="form-group">
-              <input
-                type="tel"
-                name="number"
-                className="form-control"
-                placeholder="Card Number"
-                pattern="[\d| ]{16,22}"
-                required
-                onChange={this.handleInputChange}
-                onFocus={this.handleInputFocus}
-              />
-              <small>E.g.: 49..., 51..., 36..., 37...</small>
-            </div>
-            <div className="form-group">
-              <input
-                type="text"
-                name="name"
-                className="form-control"
-                placeholder="Name"
-                required
-                onChange={this.handleInputChange}
-                onFocus={this.handleInputFocus}
-              />
-            </div>
-            <div className="row">
-              <div className="col-6">
-                <input
-                  type="tel"
-                  name="expiry"
-                  className="form-control"
-                  placeholder="Valid Thru"
-                  pattern="\d\d/\d\d"
-                  required
-                  onChange={this.handleInputChange}
-                  onFocus={this.handleInputFocus}
-                />
-              </div>
-              <div className="col-6">
-                <input
-                  type="tel"
-                  name="cvc"
-                  className="form-control"
-                  placeholder="CVC"
-                  pattern="\d{3,4}"
-                  required
-                  onChange={this.handleInputChange}
-                  onFocus={this.handleInputFocus}
-                />
-              </div>
-            </div>
-            <input type="hidden" name="issuer" value={issuer} />
-            <div className="form-actions">
-              <button className="btn btn-primary btn-block">PAY</button>
-            </div>
-          </form>
-          {formData && (
-            <div className="App-highlight">
-              {formatFormData(formData).map((d, i) => (
-                <div key={i}>{d}</div>
-              ))}
-            </div>
-          )}
-          <hr style={{ margin: "60px 0 30px" }} />
-
-          <hr style={{ margin: "30px 0" }} />
-        </div>
-        <div className="App-cards-list">
-          <Card
-            name="John Smith"
-            number="5555 4444 3333 1111"
-            expiry="10/20"
-            cvc="737"
-          />
-
-          <Card
-            name="John Smith"
-            number="4111 1111 1111 1111"
-            expiry="10/20"
-            cvc="737"
-          />
-
-          <Card
-            name="John Smith"
-            number="3700 0000 0000 002"
-            expiry="10/20"
-            cvc="737"
-          />
-
-          <Card
-            name="John Smith"
-            number="3600 666633 3344"
-            expiry="10/20"
-            cvc="737"
-          />
-          <Card
-            name="John Smith"
-            number="6011 6011 6011 6611"
-            expiry="10/20"
-            cvc="737"
-          />
-
-          <Card
-            name="John Smith"
-            number="5066 9911 1111 1118"
-            expiry="10/20"
-            cvc="737"
-          />
-
-          <Card
-            name="John Smith"
-            number="6250 9460 0000 0016"
-            expiry="10/20"
-            cvc="737"
-          />
-
-          <Card
-            name="John Smith"
-            number="6062 8288 8866 6688"
-            expiry="10/20"
-            cvc="737"
-          />
-
-          <Card
-            name="John Smith"
-            number="**** **** **** 7048"
-            expiry="10/20"
-            cvc="737"
-            preview={true}
-            issuer="visa"
-          />
-        </div>
-      </div>
+  const handlePayment = (formPaymentData) => {
+    let creditCardNumber = formPaymentData.number;
+    let cardNumber4LastDigits = creditCardNumber.substr(
+      creditCardNumber.length - 4
     );
+    //console.log(formPaymentData);
+    paymentsSet([
+      { name: "Card type", detail: formPaymentData.issuer },
+      { name: "Card holder", detail: formPaymentData.name },
+      { name: "Last card digits", detail: cardNumber4LastDigits },
+      { name: "Cvc", detail: formPaymentData.cvc },
+      { name: "Expiry date", detail: formPaymentData.expiry },
+    ]);
+    handleNext();
+  };
+
+  const handleAddress = ({
+    firstName,
+    lastName,
+    address1,
+    address2,
+    city,
+    state,
+    zip,
+    country,
+  }) => {
+    addressesSet([address1, address2, city, state, zip, country]);
+    nameSet(firstName + lastName);
+
+    handleNext();
+  };
+  function getStepContent(step) {
+    switch (step) {
+      case 0:
+        return <AddressForm handleAddressProps={handleAddress} />;
+      case 1:
+        return <PaymentForm handlePaymentProps={handlePayment} />;
+      case 2:
+        return <Review addresses={addresses} name={name} payments={payments} />;
+      default:
+        throw new Error("Unknown step");
+    }
   }
+
+  return (
+    <React.Fragment>
+      <CssBaseline />
+      <main className={classes.layout}>
+        <Paper className={classes.paper}>
+          <Typography component="h1" variant="h4" align="center">
+            Checkout
+          </Typography>
+          <Stepper activeStep={activeStep} className={classes.stepper}>
+            {steps.map((label) => (
+              <Step key={label}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+          <React.Fragment>
+            {activeStep === steps.length ? (
+              <React.Fragment>
+                <Typography variant="h5" gutterBottom>
+                  Thank you for your order.
+                </Typography>
+                <Typography variant="subtitle1">
+                  {"Your order number is " +
+                    orderId +
+                    ". We have emailed your order\\n confirmation, and will send you an update when your order has\\nshipped."}
+                </Typography>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                {getStepContent(activeStep)}
+                <div className={classes.buttons}>
+                  {activeStep !== 0 && (
+                    <Button onClick={handleBack} className={classes.button}>
+                      Back
+                    </Button>
+                  )}
+                  {activeStep === steps.length - 1 && (
+                    <Button
+                      variant="contained"
+                      onClick={handlePlaceOrder}
+                      className={classes.button}
+                    >
+                      Place order
+                    </Button>
+                  )}
+                </div>
+              </React.Fragment>
+            )}
+          </React.Fragment>
+        </Paper>
+        <Copyright />
+      </main>
+    </React.Fragment>
+  );
 }

@@ -118,7 +118,7 @@ function SignInAppBar() {
           MoBuy
         </Typography>
         <Tooltip title="Login">
-          <IconButton color="inherit" component="a"  href="/SignIn">
+          <IconButton color="inherit" component="a" href="/SignIn">
             <AccountCircleIcon />
           </IconButton>
         </Tooltip>
@@ -179,7 +179,6 @@ export default function App() {
               <div>
                 <SignInAppBar />
                 <SignIn {...props} />
-                <SwitchComp checked={darkState} onChange={handleThemeChange} />
               </div>
             )}
           />
@@ -227,6 +226,7 @@ export default function App() {
           />
           <Route path="/ViewProductItem/:productId" component={MainWindow} />
         </Switch>
+        <SwitchComp checked={darkState} onChange={handleThemeChange} />
         <CssBaseline />
       </div>
     </ThemeProvider>
