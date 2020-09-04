@@ -55,32 +55,47 @@ const ProductsGrid = () => {
 
   //const { products } = useContext(ProductsContext);
   const [products, productsSet] = React.useState([]);
-  const [productsNamesAndIds, productsNamesAndIdsSet] = React.useState([]);
+  const [productsToShow, productsToShowSet] = React.useState([]);
+  //const [productsNamesAndIds, productsNamesAndIdsSet] = React.useState([]);
   const [sort, setSort] = React.useState(0);
+  const [searchValue, setSearchValue] = React.useState("");
 
   const handleChangeSort = (event) => {
     setSort(event.target.value);
     console.log(event.target.value);
     switch (event.target.value) {
-      case 0:
-        console.log("0", products);
-        break;
-      case 1: //high to low
-        products.sort(function(a, b) {
-          return parseInt(a.price) - parseInt(b.price);
-        });
-        console.log("1", products);
-        break;
-      case 2: //low to high
-        products.sort(function(a, b) {
+      case 0: //high to low
+        productsToShow.sort(function(a, b) {
           return parseInt(b.price) - parseInt(a.price);
         });
-        console.log("2", products);
+        break;
+      case 1: //low to high
+        productsToShow.sort(function(a, b) {
+          return parseInt(a.price) - parseInt(b.price);
+        });
         break;
       default:
         break;
     }
   };
+
+  const handleSearchChange = (event, newInputValue) => {
+    setSearchValue(newInputValue);
+    console.log(newInputValue);
+    if (newInputValue !== "" && newInputValue !== null) {
+      let index = products.findIndex((item) => {
+        return item.name === newInputValue;
+      });
+      console.log(index);
+      if (index !== -1) {
+        productsToShowSet([products[index]]);
+        console.log("change", products);
+      }
+    } else {
+      productsToShowSet(products);
+    }
+  };
+
   React.useEffect(() => {
     async function fetchProducts() {
       const fullResponse = await fetch(
@@ -88,12 +103,7 @@ const ProductsGrid = () => {
       );
       const responseJson = await fullResponse.json();
       productsSet(responseJson);
-      productsNamesAndIdsSet(
-        responseJson.map((item) => {
-          return { name: item.name, id: item.id };
-        })
-      );
-      console.log(productsNamesAndIdsSet);
+      productsToShowSet(responseJson);
     }
 
     fetchProducts();
@@ -129,17 +139,14 @@ const ProductsGrid = () => {
                 <Grid item>
                   <div style={{ width: 300 }}>
                     <Autocomplete
-                      freeSolo
-                      id="free-solo-2-demo"
-                      disableClearable
-                      options={productsNamesAndIds.map((option) => option.name)}
+                      value={searchValue}
+                      onChange={handleSearchChange}
+                      options={products.map((option) => option.name)}
                       renderInput={(params) => (
                         <TextField
                           {...params}
                           label="Search"
-                          margin="normal"
                           variant="outlined"
-                          InputProps={{ ...params.InputProps, type: "search" }}
                         />
                       )}
                     />
@@ -153,15 +160,13 @@ const ProductsGrid = () => {
                     <Select
                       labelId="demo-simple-select-autowidth-label"
                       id="demo-simple-select-autowidth"
+                      defaultValue={0}
                       value={sort}
                       onChange={handleChangeSort}
                       autoWidth
                     >
-                      <MenuItem value={0}>
-                        <em></em>
-                      </MenuItem>
-                      <MenuItem value={1}>Price high to low</MenuItem>
-                      <MenuItem value={2}>Price low to high</MenuItem>
+                      <MenuItem value={0}>Price high to low</MenuItem>
+                      <MenuItem value={1}>Price low to high</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
@@ -173,8 +178,8 @@ const ProductsGrid = () => {
           {/* End hero unit */}
 
           <Grid container spacing={4}>
-            {products !== undefined &&
-              products.map((product, index) => (
+            {productsToShow !== undefined &&
+              productsToShow.map((product, index) => (
                 <Grid item key={index} xs={12} sm={6} md={4}>
                   <ProductItem key={index} product={product} />
                 </Grid>
