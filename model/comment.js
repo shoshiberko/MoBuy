@@ -1,20 +1,21 @@
 const debug = require("debug")("mongo:model-comment");
 const mongo = require("mongoose");
 
-module.exports = db => {
+module.exports = (db) => {
   // create a schema
   let schema = new mongo.Schema(
     {
       _id: String,
       name: String, // name of the commented person (user or not)
       userEmail: String,
+      userImage: String,
       rating: Number,
       color: String,
       date: Date,
       commentsData: String,
       isDeleted: Boolean,
       created_at: Date,
-      updated_at: Date
+      updated_at: Date,
     },
     { autoIndex: false }
   );
@@ -23,21 +24,22 @@ module.exports = db => {
   // you can create more important methods like name validations or formatting
   // you can also do queries and find similar users
 
-  schema.statics.CREATE = async function(comment) {
+  schema.statics.CREATE = async function (comment) {
     return this.create({
       _id: comment[0],
       name: comment[1],
       userEmail: comment[2],
-      rating: comment[3],
-      color: comment[4],
-      date: comment[5],
-      commentsData: comment[6],
-      isDeleted: comment[7]
+      userImage: comment[3],
+      rating: comment[4],
+      color: comment[5],
+      date: comment[6],
+      commentsData: comment[7],
+      isDeleted: comment[8],
     });
   };
 
   // on every save, add the date
-  schema.pre("save", function(next) {
+  schema.pre("save", function (next) {
     // get the current date
     let currentDate = new Date();
     // change the updated_at field to current date
@@ -47,7 +49,7 @@ module.exports = db => {
     next();
   });
 
-  schema.statics.REQUEST = async function() {
+  schema.statics.REQUEST = async function () {
     // no arguments - bring all at once
     const args = Array.from(arguments); // [...arguments]
     if (args.length === 0) {
@@ -96,24 +98,24 @@ module.exports = db => {
     return this.find(...args).exec();
   };
 
-  schema.statics.UPDATE = async function(comment) {
+  schema.statics.UPDATE = async function (comment) {
     const filter = { _id: comment._id };
     const update = {
       name: comment.name,
       userEmail: comment.userEmail,
+      userImage: comment.userImage,
       rating: comment.rating,
       color: comment.color,
       date: comment.date,
       commentsData: comment.commentsData,
-      isDeleted: comment.isDeleted
+      isDeleted: comment.isDeleted,
     };
-
     // `doc` is the document _before_ `update` was applied
     let doc = await this.findOneAndUpdate(filter, update);
     await doc.save();
   };
 
-  schema.statics.DELETE = async function(comment) {
+  schema.statics.DELETE = async function (comment) {
     const filter = { _id: comment._id };
     const update = { isDeleted: true };
     // `doc` is the document _before_ `update` was applied

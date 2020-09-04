@@ -626,7 +626,7 @@ router.post(
       }).exec();
 
       console.log(req.body);
-      let productId = req.body.comment.productId;
+      let productId = req.body.productId;
       console.log(productId);
       let product = await Product.findOne({
         isDeleted: false,
@@ -684,7 +684,17 @@ router.post(
           commentsList: _commentsList, //a
           isDeleted: false,
         });
-        res.send(200);
+        res.json({
+          _id: comments.length,
+          name: user.name + " " + user.lastName,
+          userEmail: user.emailAddress,
+          userImage: user.image,
+          rating: req.body.comment.rating,
+          color: "",
+          date: req.body.comment.time,
+          commentsData: req.body.comment.text,
+          isDeleted: false,
+        });
       } else res.send(404);
     } catch (err) {
       console.log(err);

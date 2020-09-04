@@ -3,15 +3,18 @@ import { Button, Comment, Form, Header } from "semantic-ui-react";
 import ReactDOM from "react-dom";
 import Rating from "@material-ui/lab/Rating";
 import { makeStyles } from "@material-ui/core/styles";
+import Avatar from "@material-ui/core/Avatar";
+import $ from "jquery";
+import Paper from "@material-ui/core/Paper";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexDirection: "column",
     "& > * + *": {
-      marginTop: theme.spacing(1)
-    }
-  }
+      marginTop: theme.spacing(1),
+    },
+  },
 }));
 
 let listComments = [
@@ -20,64 +23,62 @@ let listComments = [
     avatar: "https://react.semantic-ui.com/images/avatar/small/matt.jpg",
     time: "20.07.2020, 10:30",
     text: "How artistic!",
-    rating: "5"
+    rating: "5",
   },
   {
     name: "Elliot Fu",
     avatar: "https://react.semantic-ui.com/images/avatar/small/elliot.jpg",
     time: "20.01.2020, 17:28",
     text: "This has been very useful for my research. Thanks as well!",
-    rating: "2.5"
+    rating: "2.5",
   },
   {
     name: "Jenny Hess",
     avatar: "https://react.semantic-ui.com/images/avatar/small/jenny.jpg",
     time: "01.08.2020, 23:00",
     text: "Elliot you are always so right :)",
-    rating: "0.5"
-  }
+    rating: "0.5",
+  },
 ];
 
-const OurCommants = ({list}) => {
+const OurCommants = ({ list }) => {
   const classes = useStyles();
   return (
     <div>
-      {list.map(item => (
-        <Comment>
-          <Comment.Avatar src={item.avatar} />
-          <Comment.Content>
-            <Comment.Author as="a">{item.name}</Comment.Author>
-            <Comment.Metadata>
-              <div>{item.time}</div>
-              <div className={classes.root}>
-                {" "}
-                <Rating
-                  name="half-rating"
-                  defaultValue={item.rating}
-                  precision={0.5}
-                  readOnly
-                />
-              </div>
-            </Comment.Metadata>
-            <Comment.Text>{item.text}</Comment.Text>
-          </Comment.Content>
-        </Comment>
-      ))}
+      {list !== undefined &&
+        list.map((item) => (
+          <Paper elevation={3}>
+            <Comment>
+              {item.avatar.length === 1 ? (
+                <Avatar>{item.avatar}</Avatar>
+              ) : (
+                <Avatar src={item.avatar} />
+              )}
+              <Comment.Content>
+                <Comment.Author as="a">{item.name}</Comment.Author>
+                <Comment.Metadata>
+                  <div>{item.time}</div>
+                  <div className={classes.root}>
+                    {" "}
+                    <Rating
+                      name="half-rating"
+                      defaultValue={item.rating}
+                      precision={0.5}
+                      readOnly
+                    />
+                  </div>
+                </Comment.Metadata>
+                <Comment.Text>{item.text}</Comment.Text>
+              </Comment.Content>
+            </Comment>
+          </Paper>
+        ))}
     </div>
   );
 };
 
-class CommentExampleComment extends React.Component {
+function CommentExampleComment({ product }) {
   //state = { name: "", textArea: "", rating: 0 };
-  constructor({ product }) {
-    super();
-    this.state = { name: "", textArea: "", rating: 0, product:{},CommentsList:[]};
-    //this.setState({CommentsList: props.product.commentsList});
-    this.setState({product: product, CommentsList: product.commentsList});
-    this.forceUpdateHandler = this.forceUpdateHandler.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleChangeRating = this.handleChangeRating.bind(this);
-  }
 
   /*async componentDidMount() {
     try {
@@ -92,16 +93,18 @@ class CommentExampleComment extends React.Component {
       console.log(err);
     }
   }*/
-
-  handleChange = (e, { name, value }) => {
-    this.setState({ [name]: value });
+  const [rating, SetRating] = React.useState(0);
+  const [commentText, SetCommentText] = React.useState("");
+  const [commentsList, SetCommentsList] = React.useState(product.commentsList);
+  const handleChange = (e, { name, value }) => {
+    SetCommentText(value);
   };
-  handleChangeRating = (e, value) => {
-    this.setState({ rating: value });
+  const handleChangeRating = (e, value) => {
+    SetRating(value);
   };
 
-  forceUpdateHandler() {
-    const { name, textArea, rating } = this.state;
+  const forceUpdateHandler = () => {
+    alert(product._id);
     let nowDate = new Date();
     let day = nowDate.getDate();
     if (day < 10) day = "0" + day;
@@ -121,73 +124,61 @@ class CommentExampleComment extends React.Component {
       hour +
       ":" +
       minutes;
-    if (!name) {
-      const str =
-        "https://onlinelearninginsights.files.wordpress.com/2012/06/facebook-avatar.png";
-      listComments.push({
-        name: "Anonymous",
-        avatar: str,
-        time: time,
-        text: textArea,
-        rating: rating
-      });
-    } else {
-      const str =
-        "https://react.semantic-ui.com/images/avatar/small/" +
-        name.split(" ")[0].toLowerCase() +
-        ".jpg";
-      listComments.push({
-        name: name,
-        avatar: str,
-        time: time,
-        text: textArea,
-        rating: rating
-      });
-    }
-    this.forceUpdate();
-    this.setState({ name: "", textArea: "", rating: 0 });
-  }
-  render() {
-    const { name, textArea, rating, CommentsList } = this.state;
-    return (
-      <Comment.Group id="commentsList">
-        <Header as="h3" dividing>
-          Comments
-        </Header>
-        <OurCommants list={CommentsList} />
-        <Form reply>
-          <Form.Field>
-            <Form.Input
-              type="text"
-              placeholder="Who are you?"
-              name="name"
-              value={name}
-              onChange={this.handleChange}
-            ></Form.Input>
-            <Rating
-              name="rating"
-              value={rating}
-              precision={0.5}
-              onChange={this.handleChangeRating}
-            />
-          </Form.Field>
-          <Form.TextArea
-            placeholder="You have a comment?"
-            name="textArea"
-            value={textArea}
-            onChange={this.handleChange}
+    alert(product.name);
+    let comment = {
+      emailAddress: sessionStorage.getItem("userEmail"), //name+image
+      time: time,
+      text: commentText,
+      rating: rating,
+    };
+
+    var data = {
+      productId: product._id,
+      comment: comment,
+    };
+    $.ajax({
+      type: "POST",
+      url: "/AddCommentToProduct",
+      data: data,
+    })
+      .done(function(data) {
+        SetCommentsList(commentsList.concat([data]));
+      })
+      .fail(function(jqXhr) {});
+    SetCommentText("");
+    SetRating(0);
+  };
+  return (
+    <Comment.Group id="commentsList">
+      <Header as="h3" dividing>
+        Comments
+      </Header>
+      <OurCommants list={commentsList} />
+      <Form reply>
+        <Form.Field>
+          <Rating
+            name="rating"
+            value={rating}
+            precision={0.5}
+            onChange={handleChangeRating}
           />
-          <Button
-            content="Add Comment"
-            labelPosition="left"
-            icon="edit"
-            onClick={this.forceUpdateHandler}
-            primary
-          />
-        </Form>
-      </Comment.Group>
-    );
-  }
+        </Form.Field>
+        <Form.TextArea
+          placeholder="You have a comment?"
+          name="commentText"
+          value={commentText}
+          onChange={handleChange}
+        />
+        <Button
+          content="Add Comment"
+          labelPosition="left"
+          icon="edit"
+          onClick={forceUpdateHandler}
+          primary
+        />
+      </Form>
+    </Comment.Group>
+  );
 }
 
 export default CommentExampleComment;
