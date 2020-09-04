@@ -16,8 +16,20 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
+import TextField from "@material-ui/core/TextField";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 
 const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
   icon: {
     marginRight: theme.spacing(2),
   },
@@ -43,6 +55,32 @@ const ProductsGrid = () => {
 
   //const { products } = useContext(ProductsContext);
   const [products, productsSet] = React.useState([]);
+  const [productsNamesAndIds, productsNamesAndIdsSet] = React.useState([]);
+  const [sort, setSort] = React.useState(0);
+
+  const handleChangeSort = (event) => {
+    setSort(event.target.value);
+    console.log(event.target.value);
+    switch (event.target.value) {
+      case 0:
+        console.log("0", products);
+        break;
+      case 1: //high to low
+        products.sort(function(a, b) {
+          return parseInt(a.price) - parseInt(b.price);
+        });
+        console.log("1", products);
+        break;
+      case 2: //low to high
+        products.sort(function(a, b) {
+          return parseInt(b.price) - parseInt(a.price);
+        });
+        console.log("2", products);
+        break;
+      default:
+        break;
+    }
+  };
   React.useEffect(() => {
     async function fetchProducts() {
       const fullResponse = await fetch(
@@ -50,6 +88,12 @@ const ProductsGrid = () => {
       );
       const responseJson = await fullResponse.json();
       productsSet(responseJson);
+      productsNamesAndIdsSet(
+        responseJson.map((item) => {
+          return { name: item.name, id: item.id };
+        })
+      );
+      console.log(productsNamesAndIdsSet);
     }
 
     fetchProducts();
@@ -83,10 +127,43 @@ const ProductsGrid = () => {
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justifyContent="center">
                 <Grid item>
-                  <Button variant="contained">Main call to action</Button>
+                  <div style={{ width: 300 }}>
+                    <Autocomplete
+                      freeSolo
+                      id="free-solo-2-demo"
+                      disableClearable
+                      options={productsNamesAndIds.map((option) => option.name)}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label="Search"
+                          margin="normal"
+                          variant="outlined"
+                          InputProps={{ ...params.InputProps, type: "search" }}
+                        />
+                      )}
+                    />
+                  </div>
                 </Grid>
                 <Grid item>
-                  <Button variant="outlined">Secondary action</Button>
+                  <FormControl className={classes.formControl}>
+                    <InputLabel id="demo-simple-select-autowidth-label">
+                      Sort
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-autowidth-label"
+                      id="demo-simple-select-autowidth"
+                      value={sort}
+                      onChange={handleChangeSort}
+                      autoWidth
+                    >
+                      <MenuItem value={0}>
+                        <em></em>
+                      </MenuItem>
+                      <MenuItem value={1}>Price high to low</MenuItem>
+                      <MenuItem value={2}>Price low to high</MenuItem>
+                    </Select>
+                  </FormControl>
                 </Grid>
               </Grid>
             </div>

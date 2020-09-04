@@ -19,7 +19,9 @@ ReactDOM.render(
     <ProductsContextProvider>
       <CartContextProvider>
         <Router>
-          <MobuyApp />
+          <div>
+            <MobuyApp />
+          </div>
         </Router>
       </CartContextProvider>
     </ProductsContextProvider>

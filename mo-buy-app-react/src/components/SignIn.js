@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -60,16 +60,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   let history = useHistory();
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [email, setEmail] = React.useState(localStorage.getItem("userEmail"));
+  const [password, setPassword] = React.useState(
+    localStorage.getItem("password")
+  );
+  const [checkedRemember, setChecked] = React.useState(
+    JSON.parse(localStorage.getItem("checked"))
+  );
   const classes = useStyles();
 
-
   useEffect(() => {
-    fetch("/LogOut")
-      .then(sessionStorage.setItem("userEmail", ""));
+    fetch("/LogOut").then(sessionStorage.setItem("userEmail", ""));
   });
-
 
   const responseFacebook = (response) => {
     console.log(response);
@@ -79,10 +81,45 @@ export default function SignIn() {
     console.log(response);
   };
 
-  const onChangeEmailHandler = (e) => setEmail(e.target.value);
-  const onChangePasswordHandler = (e) => setPassword(e.target.value);
-
   function SignUp() {
+    let history = useHistory();
+    const [fName, setFName] = React.useState("");
+    const [lName, setLName] = React.useState("");
+    const [email, setEmail] = React.useState("");
+    const [password, setPassword] = React.useState("");
+    const onChangeEmailHandler = (e) => setEmail(e.target.value);
+    const onChangePasswordHandler = (e) => setPassword(e.target.value);
+    const onChangeFName = (e) => setFName(e.target.value);
+    const onChangeLName = (e) => setLName(e.target.value);
+    function onSubmitSignUpHandler(e) {
+      //var self;
+      e.preventDefault();
+      //self = this;
+      //console.log(this.state);
+      var data = {
+        emailAddress: email,
+        password: password,
+        fName: fName,
+        lName: lName,
+      };
+      // Submit form via jQuery/AJAX
+      $.ajax({
+        type: "POST",
+        url: "/SignUp",
+        data: data,
+      })
+        .done(function(data) {
+          sessionStorage.setItem("userEmail", email);
+          history.push("/Market");
+        })
+        .fail(function(jqXhr) {
+          alert("Try again!!");
+        });
+    }
+    function redirectSignIn(e) {
+      //e.preventDefault();
+      history.push("/SignIn");
+    }
     return (
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -91,7 +128,11 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form
+          className={classes.form}
+          onSubmit={onSubmitSignUpHandler}
+          noValidate
+        >
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -103,6 +144,7 @@ export default function SignIn() {
                 id="firstName"
                 label="First Name"
                 autoFocus
+                onChange={onChangeFName}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -114,6 +156,7 @@ export default function SignIn() {
                 label="Last Name"
                 name="lastName"
                 autoComplete="lname"
+                onChange={onChangeLName}
               />
             </Grid>
             <Grid item xs={12}>
@@ -125,6 +168,7 @@ export default function SignIn() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                onChange={onChangeEmailHandler}
               />
             </Grid>
             <Grid item xs={12}>
@@ -137,6 +181,7 @@ export default function SignIn() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={onChangePasswordHandler}
               />
             </Grid>
             <Grid item xs={12}>
@@ -156,7 +201,7 @@ export default function SignIn() {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="/SignIn" variant="body2">
+              <Link onClick={redirectSignIn} variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>
@@ -166,6 +211,11 @@ export default function SignIn() {
     );
   }
 
+  const onChangeEmailHandler = (e) => setEmail(e.target.value);
+  const onChangePasswordHandler = (e) => setPassword(e.target.value);
+  const handleCheckChange = (event) => {
+    setChecked(event.target.checked);
+  };
   function submitHandler(e) {
     //var self;
 
@@ -188,11 +238,30 @@ export default function SignIn() {
       .done(function(data) {
         sessionStorage.setItem("userEmail", email);
         history.push("/Market");
+        if (checkedRemember) {
+          localStorage.setItem("password", password);
+          localStorage.setItem("userEmail", email);
+          localStorage.setItem("checked", "true");
+        } else {
+          localStorage.setItem("password", "");
+          localStorage.setItem("userEmail", "");
+          localStorage.setItem("checked", "false");
+        }
         //this.props.history.push("/Market");
       })
       .fail(function(jqXhr) {
         alert("Try again!!");
       });
+  }
+
+  /* if(localStorage.getItem("checked"))
+{
+  setEmail(localStorage.getItem("userEmail"));
+  setPassword(localStorage.getItem("password"));
+}*/
+  function redirectSignUp(e) {
+    //e.preventDefault();
+    history.push("/SignUp");
   }
 
   return (
@@ -225,6 +294,7 @@ export default function SignIn() {
                     label="Email Address"
                     name="email"
                     autoComplete="email"
+                    value={email}
                     onChange={onChangeEmailHandler}
                     autoFocus
                   />
@@ -233,6 +303,7 @@ export default function SignIn() {
                     margin="normal"
                     required
                     fullWidth
+                    value={password}
                     name="password"
                     label="Password"
                     type="password"
@@ -241,7 +312,14 @@ export default function SignIn() {
                     onChange={onChangePasswordHandler}
                   />
                   <FormControlLabel
-                    control={<Checkbox value="remember" color="primary" />}
+                    control={
+                      <Checkbox
+                        value="remember"
+                        checked={checkedRemember}
+                        onChange={handleCheckChange}
+                        color="primary"
+                      />
+                    }
                     label="Remember me"
                   />
                   <Button
@@ -268,7 +346,7 @@ export default function SignIn() {
                       <Link>Forgot password?</Link>
                     </Grid>
                     <Grid item>
-                      <Link component="a" href="/SignUp">
+                      <Link onClick={redirectSignUp}>
                         {"Don't have an account? Sign Up"}
                       </Link>
                     </Grid>

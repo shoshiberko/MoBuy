@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import ChatBot from "react-simple-chatbot";
 import validatorP from "validator";
+import "react-chat-widget/lib/styles.css";
 
 class Review extends Component {
   constructor(props) {
@@ -11,7 +12,7 @@ class Review extends Component {
       name: "",
       gender: "",
       age: "",
-      phone_number: ""
+      phone_number: "",
     };
   }
 
@@ -49,11 +50,11 @@ class Review extends Component {
 }
 
 Review.propTypes = {
-  steps: PropTypes.object
+  steps: PropTypes.object,
 };
 
 Review.defaultProps = {
-  steps: undefined
+  steps: undefined,
 };
 
 class SimpleForm extends Component {
@@ -65,7 +66,7 @@ class SimpleForm extends Component {
             id: "1",
             message:
               "Hello, welcome to our MoBuy online store! Please choose one of the opions: ",
-            trigger: "2"
+            trigger: "2",
           },
           {
             id: "2",
@@ -73,42 +74,42 @@ class SimpleForm extends Component {
               {
                 value: "Search cellphone",
                 label: "Search cellphone",
-                trigger: "3"
+                trigger: "3",
               },
               {
                 value: "Questions about bills",
                 label: "Questions about bills",
-                trigger: "4"
+                trigger: "4",
               },
-              { value: "Fix service", label: "Fix service", trigger: "4" }
-            ]
+              { value: "Fix service", label: "Fix service", trigger: "4" },
+            ],
           },
           {
             id: "3",
             message: "Please choose the company from the follows:",
-            trigger: "company"
+            trigger: "company",
           },
           {
             id: "4",
             message: "What is your phone number? Enter only number characters",
-            trigger: "phone_number"
+            trigger: "phone_number",
           },
           {
             id: "phone_number",
             user: true,
             trigger: "finish-call-you-message",
-            validator: value => {
+            validator: (value) => {
               if (validatorP.isMobilePhone(value)) {
                 if (value < 0) return "It is not a phone number";
                 return true;
               } else return `${value}? Come on! Enter a phone number`;
-            }
+            },
           },
           {
             id: "finish-call-you-message",
             message:
               "OK, our representative will call you soon! Have a good day",
-            end: true
+            end: true,
           },
           {
             id: "company",
@@ -117,81 +118,81 @@ class SimpleForm extends Component {
               { value: "Samsung", label: "Samsung", trigger: "5" },
               { value: "Xiaomi", label: "Xiaomi", trigger: "5" },
               { value: "Huawei", label: "Xiaomi", trigger: "5" },
-              { value: "LG", label: "LG", trigger: "5" }
-            ]
+              { value: "LG", label: "LG", trigger: "5" },
+            ],
           },
           {
             id: "5",
             message: "What is the max price ?",
-            trigger: "price"
+            trigger: "price",
           },
           {
             id: "price",
             user: true,
             trigger: "7",
-            validator: value => {
+            validator: (value) => {
               if (validatorP.isNumber(value)) {
                 if (value < 0) return "It is not a price number";
                 return true;
               } else return `${value}? Come on! Enter a number`;
-            }
+            },
           },
           {
             id: "7",
             message: "Great! Check out your summary",
-            trigger: "review"
+            trigger: "review",
           },
           {
             id: "review",
             component: <Review />,
             asMessage: true,
-            trigger: "update"
+            trigger: "update",
           },
           {
             id: "update",
             message: "Would you like to update some field?",
-            trigger: "update-question"
+            trigger: "update-question",
           },
           {
             id: "update-question",
             options: [
               { value: "yes", label: "Yes", trigger: "update-yes" },
-              { value: "no", label: "No", trigger: "end-message" }
-            ]
+              { value: "no", label: "No", trigger: "end-message" },
+            ],
           },
           {
             id: "update-yes",
             message: "What field would you like to update?",
-            trigger: "update-fields"
+            trigger: "update-fields",
           },
           {
             id: "update-fields",
             options: [
               { value: "name", label: "Name", trigger: "update-name" },
               { value: "gender", label: "Gender", trigger: "update-gender" },
-              { value: "age", label: "Age", trigger: "update-age" }
-            ]
+              { value: "age", label: "Age", trigger: "update-age" },
+            ],
           },
           {
             id: "update-name",
             update: "name",
-            trigger: "7"
+            trigger: "7",
           },
           {
             id: "update-gender",
             update: "gender",
-            trigger: "7"
+            trigger: "7",
           },
           {
             id: "update-age",
             update: "age",
-            trigger: "7"
+            trigger: "7",
           },
           {
             id: "end-message",
             message: "Thanks! Your data was submitted successfully!",
-            end: true
-          }
+            end: true,
+          },
         ]}
       />
     );

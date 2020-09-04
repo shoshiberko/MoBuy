@@ -20,6 +20,7 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import Rating from "@material-ui/lab/Rating";
+import { useHistory } from "react-router-dom";
 import $ from "jquery";
 
 const useStyles = makeStyles((theme) => ({
@@ -46,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function RecipeReviewCard({ product, renderProductsGrid }) {
+  let history = useHistory();
   const [saved, setSaved] = React.useState(product.savedItem);
   const handleProductChangedSaved = () => {
     var data = {
@@ -86,6 +88,13 @@ export default function RecipeReviewCard({ product, renderProductsGrid }) {
     return !!cartItems.find((item) => item.id === product.id);
   };
 
+  function ViewProductItemHandler(e) {
+    //var self;
+
+    e.preventDefault();
+
+    history.push("/ViewProductItem/" + product.id);
+  }
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -126,8 +135,8 @@ export default function RecipeReviewCard({ product, renderProductsGrid }) {
         </IconButton>
         <IconButton
           aria-label="preview"
-          component="a"
-          href={"/ViewProductItem/" + product.id}
+          //component="a"
+          onClick={ViewProductItemHandler}
         >
           <VisibilityIcon />
         </IconButton>

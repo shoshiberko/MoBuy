@@ -5,6 +5,7 @@ import { CartContext } from "../../contexts/CartContext";
 import { formatNumber } from "../../helpers/utils";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,6 +18,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Cart = () => {
+  const classes = useStyles();
+  let history = useHistory();
   const {
     total,
     cartItems,
@@ -26,6 +29,10 @@ const Cart = () => {
     handleCheckout,
   } = useContext(CartContext);
 
+  function redirectCheckOut(e) {
+    //e.preventDefault();
+    history.push("/Checkout");
+  }
   return (
     <div>
       <div className="text-center mt-5">
@@ -62,10 +69,11 @@ const Cart = () => {
                 <button
                   type="button"
                   className="btn btn-primary mb-2"
-                  //onClick={handleCheckout}
+                  onClick={redirectCheckOut}
                 >
-                  <a href="/Checkout">CHECKOUT</a>
+                  CHECKOUT
                 </button>
+
                 <button
                   type="button"
                   className="btn btn-outlineprimary btn-sm"

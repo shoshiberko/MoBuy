@@ -35,7 +35,7 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import SignInDialog from "./SignInDialog";
 import SignUpDialog from "./SignUpDialog";
 import ContantInfo from "./ContantInfo";
-import ContantUs from "./ContantUs";
+import ContantUs from "./ContactUs";
 import CallIcon from "@material-ui/icons/Call";
 import AboutUs from "./AboutUs";
 import { Card } from "@material-ui/core";

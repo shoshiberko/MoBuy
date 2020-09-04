@@ -603,4 +603,120 @@ router.get("/LogOut", connectEnsureLogin.ensureLoggedIn(), async function (
   res.redirect("/SignIn");
 });
 
+router.get("/LogOut", async function (req, res) {
+  // sessionStorage.setItem("userEmail","");
+  req.logout();
+  res.redirect("/SignIn");
+});
+
+router.get("/GetAllProductItem", async function (req, res) {
+  // sessionStorage.setItem("userEmail","");
+  let products = await Product.find({});
+  res.json(products);
+});
+
+router.post(
+  "/AddCommentToProduct",
+  connectEnsureLogin.ensureLoggedIn(),
+  async function (req, res) {
+    try {
+      let user = await User.findOne({
+        emailAddress: req.body.comment.emailAddress,
+        isDeleted: false,
+      }).exec();
+
+      console.log(req.body);
+      let productId = req.body.comment.productId;
+      console.log(productId);
+      let product = await Product.findOne({
+        isDeleted: false,
+        _id: productId,
+      }).exec();
+      console.log(product);
+      let comments = await Comment.find({}).exec();
+
+      if (user.image === "") {
+        let str = user.firstName.replace(/\s/g, "");
+        await Comment.CREATE([
+          comments.length,
+          user.name + " " + user.lastName,
+          user.emailAddress,
+          str.substring(1, 1),
+          req.body.comment.rating,
+          "",
+          req.body.comment.time,
+          req.body.comment.text,
+          false,
+        ]);
+      } else {
+        await Comment.CREATE([
+          comments.length,
+          user.name + " " + user.lastName,
+          user.emailAddress,
+          user.image,
+          req.body.comment.rating,
+          "",
+          req.body.comment.time,
+          req.body.comment.text,
+          false,
+        ]);
+      }
+
+      let _commentsList = product.commentsList;
+      //need to add the product id to the user's savedItems lis
+      if (_commentsList === undefined) _commentsList = [];
+      if (
+        _commentsList === [] ||
+        _commentsList.findIndex((item) => item === comments.length) === -1
+      ) {
+        _commentsList.push(comments.length);
+        await Product.UPDATE({
+          _id: product._id,
+          name: product.name,
+          price: product.price,
+          imagesList: product.imageList, //Str
+          rating: product.rating,
+          numOfRatings: product.numOfRatings,
+          moreDetails: product.moreDetails, //st
+          colorsList: product.colorsList, // st
+          productType: product.productType,
+          company: product.company,
+          commentsList: _commentsList, //a
+          isDeleted: false,
+        });
+        res.send(200);
+      } else res.send(404);
+    } catch (err) {
+      console.log(err);
+      res.send(404);
+    }
+  }
+);
+
+router.post("/SignUp", async function (req, res) {
+  let usersList = await User.find({});
+  User.register(
+    {
+      _id: usersList.length.toString(),
+      firstName: req.body.fName,
+      lastName: req.body.lName,
+      emailAddress: req.body.emailAddress,
+      userType: "Client",
+      image: "",
+      savedItemsList: [],
+      cartItemsList: [],
+      orderList: [],
+      address: "",
+      isDeleted: false,
+    },
+    DecryptPassword(req.body.password),
+    function (err, user) {
+      if (err) {
+        console.log(err);
+      }
+    }
+  );
+  res.send(200);
+});
+
 module.exports = router;

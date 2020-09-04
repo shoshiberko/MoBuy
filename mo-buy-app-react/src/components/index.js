@@ -27,7 +27,7 @@ import IconButton from "@material-ui/core/IconButton";
 import SignInDialog from "./SignInDialog";
 import SignUpDialog from "./SignUpDialog";
 import ContantInfo from "./ContantInfo";
-import ContantUs from "./ContantUs";
+import ContantUs from "./ContactUs";
 import CallIcon from "@material-ui/icons/Call";
 import AboutUs from "./AboutUs";
 import { Card } from "@material-ui/core";
@@ -43,15 +43,8 @@ import SignIn from "./SignIn";
 import InfoRoundedIcon from "@material-ui/icons/InfoRounded";
 import ContactSupportRoundedIcon from "@material-ui/icons/ContactSupportRounded";
 import Tooltip from "@material-ui/core/Tooltip";
-import { createMuiTheme } from "@material-ui/core/styles";
-import { ThemeProvider } from "@material-ui/styles";
-import SwitchComp from "@material-ui/core/Switch";
-import {
-  orange,
-  lightBlue,
-  deepPurple,
-  deepOrange,
-} from "@material-ui/core/colors";
+
+import { useHistory } from "react-router-dom";
 
 const drawerWidth = 240;
 /*const theme = createMuiTheme({
@@ -85,25 +78,26 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
   },
-  fullScreen: {
-    width: "100vw",
-    height: "100vh",
-  },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
   },
   title: {
     flexGrow: 1,
   },
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    height: "100vh",
-    overflow: "auto",
-  },
 }));
 
 function SignInAppBar() {
+  let history = useHistory();
+  function redirectSignIn(e) {
+    history.push("/SignIn");
+  }
+  function redirectAboutUs(e) {
+    history.push("/AboutUs");
+  }
+  function redirectContactUs(e) {
+    history.push("/ContactUs");
+  }
+
   const classes = useStyles();
   return (
     <AppBar position="absolute">
@@ -118,17 +112,17 @@ function SignInAppBar() {
           MoBuy
         </Typography>
         <Tooltip title="Login">
-          <IconButton color="inherit" component="a" href="/SignIn">
+          <IconButton color="inherit" onClick={redirectSignIn}>
             <AccountCircleIcon />
           </IconButton>
         </Tooltip>
         <Tooltip title="About Us">
-          <IconButton color="inherit" component="a" href="/AboutUs">
+          <IconButton color="inherit" onClick={redirectAboutUs}>
             <InfoRoundedIcon />
           </IconButton>
         </Tooltip>
         <Tooltip title="Contact Us">
-          <IconButton color="inherit" component="a" href="ContactUs">
+          <IconButton color="inherit" onClick={redirectContactUs}>
             <ContactSupportRoundedIcon />
           </IconButton>
         </Tooltip>
@@ -138,24 +132,6 @@ function SignInAppBar() {
 }
 
 export default function App() {
-  const [darkState, setDarkState] = useState(false);
-  const palletType = darkState ? "dark" : "light";
-  const mainPrimaryColor = darkState ? orange[500] : lightBlue[500];
-  const mainSecondaryColor = darkState ? deepOrange[900] : deepPurple[500];
-  const darkTheme = createMuiTheme({
-    palette: {
-      type: palletType,
-      primary: {
-        main: mainPrimaryColor,
-      },
-      secondary: {
-        main: mainSecondaryColor,
-      },
-    },
-  });
-  const handleThemeChange = () => {
-    setDarkState(!darkState);
-  };
   const {
     total,
     cartItems,
@@ -168,72 +144,71 @@ export default function App() {
   const classes = useStyles();
 
   return (
-    <ThemeProvider theme={darkTheme}>
-      <div>
-        <Container />
-        <Switch>
-          <Route
-            exact
-            from="/SignIn"
-            render={(props) => (
-              <div>
-                <SignInAppBar />
-                <SignIn {...props} />
-              </div>
-            )}
-          />
-          <Route exact from="/" render={(props) => <Welcome {...props} />} />
-          <Route
-            exact
-            from="/SignUp"
-            render={(props) => (
-              <div>
-                <SignInAppBar />
-                <SignIn {...props} />
-              </div>
-            )}
-          />
-          <Route
-            exact
-            from="/MyOrders"
-            render={(props) => <MainWindow {...props} />}
-          />
-          <Route
-            exact
-            from="/ContactUs"
-            render={(props) => <MainWindow {...props} />}
-          />
-          <Route
-            exact
-            from="/AboutUs"
-            render={(props) => <MainWindow {...props} />}
-          />
-          <Route
-            exact
-            from="/Cart"
-            render={(props) => <MainWindow {...props} />}
-          />
-          <Route
-            exact
-            from="/Checkout"
-            render={(props) => <MainWindow {...props} />}
-          />
-          <Route
-            exact
-            from="/Market"
-            render={(props) => <MainWindow {...props} />}
-          />
+    <div>
+      <Container />
 
-          <Route
-            exact
-            from="/SavedItems"
-            render={(props) => <MainWindow {...props} />}
-          />
-          <Route path="/ViewProductItem/:productId" component={MainWindow} />
-        </Switch>
-        <SwitchComp checked={darkState} onChange={handleThemeChange} />
-        <CssBaseline />
-      </div>
-    </ThemeProvider>
+      <Switch>
+        <Route
+          exact
+          from="/SignIn"
+          render={(props) => (
+            <div>
+              <SignInAppBar />
+              <SignIn {...props} />
+            </div>
+          )}
+        />
+        <Route exact from="/" render={(props) => <Welcome {...props} />} />
+        <Route
+          exact
+          from="/SignUp"
+          render={(props) => (
+            <div>
+              <SignInAppBar />
+              <SignIn {...props} />
+            </div>
+          )}
+        />
+        <Route
+          exact
+          from="/MyOrders"
+          render={(props) => <MainWindow {...props} />}
+        />
+        <Route
+          exact
+          from="/ContactUs"
+          render={(props) => <MainWindow {...props} />}
+        />
+        <Route
+          exact
+          from="/AboutUs"
+          render={(props) => <MainWindow {...props} />}
+        />
+        <Route
+          exact
+          from="/Cart"
+          render={(props) => <MainWindow {...props} />}
+        />
+        <Route
+          exact
+          from="/Checkout"
+          render={(props) => <MainWindow {...props} />}
+        />
+        <Route
+          exact
+          from="/Market"
+          render={(props) => <MainWindow {...props} />}
+        />
+
+        <Route
+          exact
+          from="/SavedItems"
+          render={(props) => <MainWindow {...props} />}
+        />
+        <Route path="/ViewProductItem/:productId" component={MainWindow} />
+        <Route path="/Branches" component={MainWindow} />
+      </Switch>
+      <CssBaseline />
+    </div>
   );
 }

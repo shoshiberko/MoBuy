@@ -10,6 +10,9 @@ import BranchesIcon from "@material-ui/icons/Place";
 import AboutUsIcon from "@material-ui/icons/Info";
 import ContactUsIcon from "@material-ui/icons/ContactSupport";
 import AssignmentTurnedInRoundedIcon from "@material-ui/icons/AssignmentTurnedInRounded";
+//import { useHistory } from "react-router-dom";
+import { withRouter } from "react-router-dom";
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -23,72 +26,90 @@ import Link from "@material-ui/core/Link";
   </div>
 );*/
 
-const mainListItems = (
-  <div>
-    <Link href="/">
-      <ListItem button>
-        <ListItemIcon>
-          <HomeIcon />
-        </ListItemIcon>
-        <ListItemText primary="Home" />
-      </ListItem>
-    </Link>
-    <Link href="/SignIn">
-      <ListItem button>
-        <ListItemIcon>
-          <ProfileIcon />
-        </ListItemIcon>
-        <ListItemText primary="Profile" />
-      </ListItem>
-    </Link>
-    <Link href="/Market">
-      <ListItem button>
-        <ListItemIcon>
-          <MarketIcon />
-        </ListItemIcon>
-        <ListItemText primary="Market" />
-      </ListItem>
-    </Link>
-    <Link href="/SavedItems">
-      <ListItem button>
-        <ListItemIcon>
-          <FavoriteIcon />
-        </ListItemIcon>
-        <ListItemText primary="Saved Items" />
-      </ListItem>
-    </Link>
-    <Link href="/MyOrders">
-      <ListItem button>
-        <ListItemIcon>
-          <AssignmentTurnedInRoundedIcon />
-        </ListItemIcon>
-        <ListItemText primary="My Orders" />
-      </ListItem>
-    </Link>
-    <Link href="/Branches">
-      <ListItem button>
-        <ListItemIcon>
-          <BranchesIcon />
-        </ListItemIcon>
-        <ListItemText primary="Branches" />
-      </ListItem>
-    </Link>
-    <Link href="/AboutUs">
-      <ListItem button>
-        <ListItemIcon>
-          <AboutUsIcon />
-        </ListItemIcon>
-        <ListItemText primary="About Us" />
-      </ListItem>
-    </Link>
-    <Link href="/ContactUs">
-      <ListItem button>
-        <ListItemIcon>
-          <ContactUsIcon />
-        </ListItemIcon>
-        <ListItemText primary="Contact Us" />
-      </ListItem>
-    </Link>
-  </div>
-);
-export default mainListItems;
+class mainListItems extends React.Component {
+  pushHistory = () => {
+    const { history } = this.props;
+    if (history) history.push("/");
+  };
+
+  pushHistoryMarket = () => {
+    const { history } = this.props;
+    history.push("/Market");
+  };
+
+  pushHistorySavedItems = () => {
+    const { history } = this.props;
+    history.push("/SavedItems");
+  };
+
+  pushHistoryMyOrders = () => {
+    const { history } = this.props;
+    history.push("/MyOrders");
+  };
+
+  pushHistoryBranches = () => {
+    const { history } = this.props;
+    history.push("/Branches");
+  };
+
+  pushHistoryContactUs = () => {
+    const { history } = this.props;
+    history.push("/ContactUs");
+  };
+  render() {
+    return (
+      <div>
+        <ListItem button onClick={this.pushHistory}>
+          <ListItemIcon>
+            <HomeIcon />
+          </ListItemIcon>
+          <ListItemText primary="Home" />
+        </ListItem>
+        <ListItem button onClick={this.pushHistorySignIn}>
+          <ListItemIcon>
+            <ProfileIcon />
+          </ListItemIcon>
+          <ListItemText primary="Profile" />
+        </ListItem>
+        <ListItem button onClick={this.pushHistoryMarket}>
+          <ListItemIcon>
+            <MarketIcon />
+          </ListItemIcon>
+          <ListItemText primary="Market" />
+        </ListItem>
+        <ListItem button onClick={this.pushHistorySavedItems}>
+          <ListItemIcon>
+            <FavoriteIcon />
+          </ListItemIcon>
+          <ListItemText primary="Saved Items" />
+        </ListItem>
+        <ListItem button onClick={this.pushHistoryMyOrders}>
+          <ListItemIcon>
+            <AssignmentTurnedInRoundedIcon />
+          </ListItemIcon>
+          <ListItemText primary="My Orders" />
+        </ListItem>
+        <ListItem button onClick={this.pushHistoryBranches}>
+          <ListItemIcon>
+            <BranchesIcon />
+          </ListItemIcon>
+          <ListItemText primary="Branches" />
+        </ListItem>
+        <ListItem button onClick={this.pushHistory}>
+          <ListItemIcon>
+            <AboutUsIcon />
+          </ListItemIcon>
+          <ListItemText primary="About Us" />
+        </ListItem>
+        <ListItem button onClick={this.pushHistoryContactUs}>
+          <ListItemIcon>
+            <ContactUsIcon />
+          </ListItemIcon>
+          <ListItemText primary="Contact Us" />
+        </ListItem>
+      </div>
+    );
+  }
+}
+
+export default withRouter(mainListItems);
