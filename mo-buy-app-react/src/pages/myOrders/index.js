@@ -131,7 +131,8 @@ export default function CollapsibleTable() {
 
   return (
     <div>
-      <Grid container spacing={10}>
+      <Grid container spacing={5}>
+        <Grid item xs={12} />
         <Grid item xs={12} />
         <Grid item xs={12} />
       </Grid>

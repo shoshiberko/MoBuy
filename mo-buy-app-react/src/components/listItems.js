@@ -56,6 +56,11 @@ class mainListItems extends React.Component {
     const { history } = this.props;
     history.push("/ContactUs");
   };
+
+  pushHistoryAboutUs = () => {
+    const { history } = this.props;
+    history.push("/AboutUs");
+  };
   render() {
     return (
       <div>
@@ -95,7 +100,7 @@ class mainListItems extends React.Component {
           </ListItemIcon>
           <ListItemText primary="Branches" />
         </ListItem>
-        <ListItem button onClick={this.pushHistory}>
+        <ListItem button onClick={this.pushHistoryAboutUs}>
           <ListItemIcon>
             <AboutUsIcon />
           </ListItemIcon>

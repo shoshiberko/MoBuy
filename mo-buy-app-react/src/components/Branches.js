@@ -38,6 +38,17 @@ export default GoogleApiWrapper({
 import React, { useState } from "react";
 import GoogleMapReact from "google-map-react";
 import "./css/marker.css";
+import img1 from "./backgroundImages/shop7.jpg";
+import img2 from "./backgroundImages/shop2.jpg";
+import img3 from "./backgroundImages/shop3.jpg";
+
+import img4 from "./backgroundImages/shop4.jpg";
+import img5 from "./backgroundImages/shop5.jpg";
+import img6 from "./backgroundImages/shop8.jpg";
+import Paper from "@material-ui/core/Paper";
+import GridList from "@material-ui/core/GridList";
+import GridListTile from "@material-ui/core/GridListTile";
+import Typography from "@material-ui/core/Typography";
 
 const markerList = [
   { lat: 11.0168, lng: 76.9558 },
@@ -91,6 +102,42 @@ const SimpleMap = (props) => {
           <Marker lat={item.lat} lng={item.lng} name="My Marker" color="blue" />
         ))}
       </GoogleMapReact>
+
+      <br />
+      <br />
+      <br />
+      <Typography variant="h3" color="inherit" align="center">
+        Galary
+      </Typography>
+      <br />
+      <Paper>
+        {/* Increase the priority of the hero background image */}
+
+        <GridList cols={3}>
+          <GridListTile>
+            <img src={img1} />
+          </GridListTile>
+          <GridListTile>
+            <img src={img2} />
+          </GridListTile>
+          <GridListTile>
+            <img src={img3} />
+          </GridListTile>
+        </GridList>
+        <GridList cols={3}>
+          <GridListTile>
+            <img src={img4} />
+          </GridListTile>
+          <GridListTile>
+            <img src={img5} />
+          </GridListTile>
+          <GridListTile>
+            <img src={img6} />
+          </GridListTile>
+        </GridList>
+      </Paper>
+      <br />
+      <br />
     </div>
   );
 };

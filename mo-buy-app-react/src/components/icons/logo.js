@@ -1,4 +1,4 @@
-import React from "react";
+/*import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { green } from "@material-ui/core/colors";
 import SvgIcon from "@material-ui/core/SvgIcon";
@@ -32,4 +32,24 @@ export default function SvgIconsColor() {
       <HomeIcon style={{ color: green[500] }} />
     </div>
   );
+}*/
+
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { green } from "@material-ui/core/colors";
+import SvgIcon from "@material-ui/core/SvgIcon";
+import PhoneIphoneIcon from "@material-ui/icons/PhoneIphone";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    "& > svg": {
+      margin: theme.spacing(2),
+    },
+  },
+}));
+
+export default function SvgIconsColor() {
+  const classes = useStyles();
+
+  return <PhoneIphoneIcon />;
 }

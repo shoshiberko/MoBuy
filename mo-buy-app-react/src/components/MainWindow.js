@@ -49,6 +49,7 @@ import ProductDetails from "../pages/productDetailsView";
 import ChatBot from "./ChatBot";
 import Welcome from "./Welcome";
 import SwitchComp from "@material-ui/core/Switch";
+//import LogoFont from url("https://fonts.googleapis.com/css?family=Rajdhani");
 import Logo from "./icons/logo";
 
 import ContactUs from "./ContactUs";
@@ -64,6 +65,7 @@ import { ThemeProvider } from "@material-ui/styles";
 
 import Chatbot from "./ChatBotComponent";
 import Branches from "./Branches";
+import PhoneIphoneIcon from "@material-ui/icons/PhoneIphone";
 
 const drawerWidth = 240;
 
@@ -104,6 +106,16 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    fontFamily: "Rajdhani",
+    fontSize: 50,
+  },
+  titleLogo: {
+    fontFamily: "Rajdhani",
+    fontSize: 50,
+    marginTop: 18,
+  },
+  Logo: {
+    fontSize: 40,
   },
   drawerPaper: {
     position: "relative",
@@ -216,16 +228,18 @@ export default function MainWindow() {
             >
               <MenuIcon />
             </IconButton>
+
+            <p className={classes.titleLogo}>M</p>
+            <PhoneIphoneIcon className={classes.Logo} />
+            <p className={classes.titleLogo}>BUY</p>
             <Typography
               component="h1"
               variant="h6"
               color="inherit"
               noWrap
               className={classes.title}
-            >
-              MoBuy
-            </Typography>
-            <Logo />
+            />
+
             <SwitchComp checked={darkState} onChange={handleThemeChange} />
             <IconButton color="inherit">
               <AccountCircleIcon />
