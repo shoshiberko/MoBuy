@@ -335,17 +335,13 @@ export default function SignIn() {
                     >
                       Sign In
                     </Button>
-                    <FacebookLogin
-                      appId="943313892847322" //APP ID NOT CREATED YET
-                      fields="name,email,picture"
-                      callback={responseFacebook}
-                    />
                     <GoogleLogin
                       clientId="985961471303-dd7bludfn1fq92rrgto97j2sbnvlhepr.apps.googleusercontent.com" //CLIENTID NOT CREATED YET
                       buttonText="LOGIN WITH GOOGLE"
                       onSuccess={responseGoogle}
                       onFailure={responseGoogle}
                     />
+                    <br />
                     <Grid container>
                       <Grid item xs>
                         <Link>Forgot password?</Link>

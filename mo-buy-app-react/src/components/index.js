@@ -55,6 +55,7 @@ import {
 } from "@material-ui/core/colors";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
+import Footer from "./Footer";
 
 const drawerWidth = 240;
 /*const theme = createMuiTheme({
@@ -190,19 +191,7 @@ export default function App() {
   } = useContext(CartContext);
 
   const classes = useStyles();
-  function Footer() {
-    return (
-      <div>
-        <br />
-        <br />
-        <Typography variant="body2" align="center">
-          {"Copyright © MOBUY by Shoshi & Efrat"}
-        </Typography>
-        <br />
-        <br />
-      </div>
-    );
-  }
+
   return (
     <ThemeProvider theme={darkTheme}>
       <div>
