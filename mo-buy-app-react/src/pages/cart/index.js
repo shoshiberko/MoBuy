@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-
+import Typography from "@material-ui/core/Typography";
 import CartProducts from "./CartProducts";
 import { CartContext } from "../../contexts/CartContext";
 import { formatNumber } from "../../helpers/utils";
@@ -35,10 +35,21 @@ const Cart = () => {
   }
   return (
     <div>
-      <div className="text-center mt-5">
-        <h1>Cart</h1>
-        <p>This is the Cart Page.</p>
-      </div>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <Typography
+        component="h1"
+        variant="h2"
+        align="center"
+        color="textPrimary"
+        gutterBottom
+      >
+        Cart
+      </Typography>
 
       <div className="row no-gutters justify-content-center">
         <div className="col-sm-9 p-3">

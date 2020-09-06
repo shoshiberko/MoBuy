@@ -16,19 +16,6 @@ import Review from "./Review";
 import { CartContext } from "../../contexts/CartContext";
 import $ from "jquery";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 export default function Checkout() {
   const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -171,6 +158,9 @@ export default function Checkout() {
 
   return (
     <React.Fragment>
+      <br />
+      <br />
+      <br />
       <CssBaseline />
       <main className={classes.layout}>
         <Paper className={classes.paper}>
@@ -219,7 +209,6 @@ export default function Checkout() {
             )}
           </React.Fragment>
         </Paper>
-        <Copyright />
       </main>
     </React.Fragment>
   );

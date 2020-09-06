@@ -46,6 +46,15 @@ import Tooltip from "@material-ui/core/Tooltip";
 import PhoneIphoneIcon from "@material-ui/icons/PhoneIphone";
 
 import { useHistory } from "react-router-dom";
+import {
+  orange,
+  cyan,
+  lightBlue,
+  deepPurple,
+  deepOrange,
+} from "@material-ui/core/colors";
+import { createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/styles";
 
 const drawerWidth = 240;
 /*const theme = createMuiTheme({
@@ -142,6 +151,35 @@ function SignInAppBar() {
 }
 
 export default function App() {
+  const [darkState, setDarkState] = useState(false);
+  const palletType = darkState ? "dark" : "light";
+  const mainPrimaryColor = darkState ? cyan[500] : cyan[500];
+  const mainSecondaryColor = darkState ? deepPurple[500] : deepPurple[500];
+  const darkTheme = createMuiTheme({
+    palette: {
+      type: palletType,
+      primary: {
+        main: mainPrimaryColor,
+      },
+      secondary: {
+        main: mainSecondaryColor,
+      },
+    },
+    typography: {
+      /* fontFamily: [
+        "Roboto Condensed".
+        "Nunito",
+        "Roboto",
+        '"Helvetica Neue"',
+        "Arial",
+        "sans-serif",
+      ].join(","),*/
+      fontFamily: ["sans-serif"].join(","),
+    },
+  });
+  const handleThemeChange = () => {
+    setDarkState(!darkState);
+  };
   const {
     total,
     cartItems,
@@ -152,73 +190,168 @@ export default function App() {
   } = useContext(CartContext);
 
   const classes = useStyles();
-
+  function Footer() {
+    return (
+      <div>
+        <br />
+        <br />
+        <Typography variant="body2" align="center">
+          {"Copyright © MOBUY by Shoshi & Efrat"}
+        </Typography>
+        <br />
+        <br />
+      </div>
+    );
+  }
   return (
-    <div>
-      <Container />
+    <ThemeProvider theme={darkTheme}>
+      <div>
+        <Container />
 
-      <Switch>
-        <Route
-          exact
-          from="/SignIn"
-          render={(props) => (
-            <div>
-              <SignInAppBar />
-              <SignIn {...props} />
-            </div>
-          )}
-        />
-        <Route exact from="/" render={(props) => <Welcome {...props} />} />
-        <Route
-          exact
-          from="/SignUp"
-          render={(props) => (
-            <div>
-              <SignInAppBar />
-              <SignIn {...props} />
-            </div>
-          )}
-        />
-        <Route
-          exact
-          from="/MyOrders"
-          render={(props) => <MainWindow {...props} />}
-        />
-        <Route
-          exact
-          from="/ContactUs"
-          render={(props) => <MainWindow {...props} />}
-        />
-        <Route
-          exact
-          from="/AboutUs"
-          render={(props) => <MainWindow {...props} />}
-        />
-        <Route
-          exact
-          from="/Cart"
-          render={(props) => <MainWindow {...props} />}
-        />
-        <Route
-          exact
-          from="/Checkout"
-          render={(props) => <MainWindow {...props} />}
-        />
-        <Route
-          exact
-          from="/Market"
-          render={(props) => <MainWindow {...props} />}
-        />
+        <Switch>
+          <Route
+            exact
+            from="/SignIn"
+            render={(props) => (
+              <div>
+                <SignInAppBar />
+                <SignIn {...props} />
+                <Footer />
+              </div>
+            )}
+          />
+          <Route exact from="/" render={(props) => <Welcome {...props} />} />
+          <Route
+            exact
+            from="/SignUp"
+            render={(props) => (
+              <div>
+                <SignInAppBar />
+                <SignIn {...props} />
+                <Footer />
+              </div>
+            )}
+          />
+          <Route
+            exact
+            from="/MyOrders"
+            render={(props) => (
+              <div>
+                <MainWindow
+                  handleThemeChange={handleThemeChange}
+                  darkState={darkState}
+                />
+                <Footer />
+              </div>
+            )}
+          />
+          <Route
+            exact
+            from="/ContactUs"
+            render={(props) => (
+              <div>
+                <MainWindow
+                  handleThemeChange={handleThemeChange}
+                  darkState={darkState}
+                />
+                <Footer />
+              </div>
+            )}
+          />
+          <Route
+            exact
+            from="/AboutUs"
+            render={(props) => (
+              <div>
+                <MainWindow
+                  handleThemeChange={handleThemeChange}
+                  darkState={darkState}
+                />
+                <Footer />
+              </div>
+            )}
+          />
+          <Route
+            exact
+            from="/Cart"
+            render={(props) => (
+              <div>
+                <MainWindow
+                  handleThemeChange={handleThemeChange}
+                  darkState={darkState}
+                />
+                <Footer />
+              </div>
+            )}
+          />
+          <Route
+            exact
+            from="/Checkout"
+            render={(props) => (
+              <div>
+                <MainWindow
+                  handleThemeChange={handleThemeChange}
+                  darkState={darkState}
+                />
+                <Footer />
+              </div>
+            )}
+          />
+          <Route
+            exact
+            from="/Market"
+            render={(props) => (
+              <div>
+                <MainWindow
+                  handleThemeChange={handleThemeChange}
+                  darkState={darkState}
+                />
+                <Footer />
+              </div>
+            )}
+          />
 
-        <Route
-          exact
-          from="/SavedItems"
-          render={(props) => <MainWindow {...props} />}
-        />
-        <Route path="/ViewProductItem/:productId" component={MainWindow} />
-        <Route path="/Branches" component={MainWindow} />
-      </Switch>
-      <CssBaseline />
-    </div>
+          <Route
+            exact
+            from="/SavedItems"
+            render={(props) => (
+              <div>
+                <MainWindow
+                  handleThemeChange={handleThemeChange}
+                  darkState={darkState}
+                />
+                <Footer />
+              </div>
+            )}
+          />
+          <Route
+            from="/ViewProductItem/:productId"
+            render={(props) => (
+              <div>
+                <MainWindow
+                  handleThemeChange={handleThemeChange}
+                  darkState={darkState}
+                />
+                <Footer />
+              </div>
+            )}
+          />
+          <Route
+            from="/Branches"
+            render={(props) => (
+              <div>
+                <MainWindow
+                  handleThemeChange={handleThemeChange}
+                  darkState={darkState}
+                />
+                <Footer />
+              </div>
+            )}
+          />
+        </Switch>
+
+        <CssBaseline />
+      </div>
+    </ThemeProvider>
   );
 }

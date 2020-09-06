@@ -46,25 +46,32 @@ import img4 from "./backgroundImages/shop4.jpg";
 import img5 from "./backgroundImages/shop5.jpg";
 import img6 from "./backgroundImages/shop8.jpg";
 import Paper from "@material-ui/core/Paper";
+import { Item, Label } from "semantic-ui-react";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import Typography from "@material-ui/core/Typography";
 
 const markerList = [
-  { lat: 11.0168, lng: 76.9558 },
-  { lat: 0.0168, lng: 76.9558 },
-  { lat: 23.0168, lng: 77.9558 },
-  { lat: 9.0168, lng: 76.9558 },
+  { lat: 31.787677, lng: 35.180161, label: "Jerusalem" },
+  { lat: 31.759529, lng: 35.181891, label: "Jerusalem" },
+  { lat: 31.866687, lng: 35.174519, label: "Givat Ze'ev" },
+  { lat: 31.898725, lng: 34.810862, label: "Rehovot" },
+  { lat: 31.895223, lng: 34.997369, label: "Modiin" },
 ];
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
+
 const Marker = (props) => {
-  const { color, name, id } = props;
+  const { color, name, label } = props;
   return (
     <div
       className="marker"
-      style={{ backgroundColor: color, cursor: "pointer" }}
+      style={{ backgroundColor: color, cursor: "pointer", label: label }}
       title={name}
-    />
+    >
+      <Label pointing prompt>
+        {label}
+      </Label>
+    </div>
   );
 };
 
@@ -89,17 +96,29 @@ const Marker = (props) => {
 }
 export default SimpleMap;*/
 const SimpleMap = (props) => {
-  const [center, setCenter] = useState({ lat: 11.0168, lng: 76.9558 });
+  const [center, setCenter] = useState({ lat: 31.786362, lng: 35.191316 });
   const [zoom, setZoom] = useState(11);
   return (
     <div style={{ height: "100vh", width: "100%" }}>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
       <GoogleMapReact
         bootstrapURLKeys={{ key: "AIzaSyCukvfeuswGR_N6fC4pBoyXQch2etw2LHk" }}
         defaultCenter={center}
         defaultZoom={zoom}
       >
         {markerList.map((item) => (
-          <Marker lat={item.lat} lng={item.lng} name="My Marker" color="blue" />
+          <Marker
+            lat={item.lat}
+            lng={item.lng}
+            label={Item.label}
+            name="My Marker"
+            color="blue"
+          />
         ))}
       </GoogleMapReact>
 

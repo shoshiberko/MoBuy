@@ -1,36 +1,32 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { withRouter } from "react-router-dom";
 import PhoneIphoneIcon from "@material-ui/icons/PhoneIphone";
-/*const useStyles = makeStyles((theme) => ({
-  root: {
-    height: "100vh",
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
+import Fab from "@material-ui/core/Fab";
+const styles = (theme) => ({
   centerScreen: {
-    display: flex,
-    flexDirection: column,
-    justifyContent: center,
-    alignItems: center,
-    textAlign: center,
-    minHeight: "100vh",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
+    minHeight: "95vh",
   },
-}));
 
-export default function Welcome() {
-  const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
-
-  return (
-    <Grid container component="main" className={classes.root}>
-      <CircularProgress size={150} />
-    </Grid>
-  );
-}*/
+  Logo: {
+    fontSize: 70,
+    position: "fixed",
+    top: "39%",
+    left: "49%",
+  },
+  progress: {
+    position: "fixed",
+    top: "30%",
+    left: "45%",
+  },
+});
 
 class Welcome extends React.Component {
   componentDidMount() {
@@ -39,13 +35,17 @@ class Welcome extends React.Component {
     }, 2000); // render for 2 seconds and then push to home
   }
   render() {
+    const { classes } = this.props;
     return (
-      <Grid container /*component="main" className={classes.root}*/>
-        <CircularProgress size={150} />
-        <PhoneIphoneIcon />
-      </Grid>
+      <div>
+        <PhoneIphoneIcon className={classes.Logo} color="primary" />
+        <CircularProgress
+          className={classes.progress}
+          size={200}
+        ></CircularProgress>
+      </div>
     );
   }
 }
 
-export default withRouter(Welcome);
+export default withRouter(withStyles(styles, { withTheme: true })(Welcome));

@@ -55,14 +55,6 @@ import Logo from "./icons/logo";
 
 import ContactUs from "./ContactUs";
 import { useHistory } from "react-router-dom";
-import {
-  orange,
-  lightBlue,
-  deepPurple,
-  deepOrange,
-} from "@material-ui/core/colors";
-import { createMuiTheme } from "@material-ui/core/styles";
-import { ThemeProvider } from "@material-ui/styles";
 
 import Chatbot from "./ChatBotComponent";
 import Branches from "./Branches";
@@ -162,25 +154,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(4),
   },
 }));
-export default function MainWindow() {
-  const [darkState, setDarkState] = useState(false);
-  const palletType = darkState ? "dark" : "light";
-  const mainPrimaryColor = darkState ? orange[500] : lightBlue[500];
-  const mainSecondaryColor = darkState ? deepOrange[900] : deepPurple[500];
-  const darkTheme = createMuiTheme({
-    palette: {
-      type: palletType,
-      primary: {
-        main: mainPrimaryColor,
-      },
-      secondary: {
-        main: mainSecondaryColor,
-      },
-    },
-  });
-  const handleThemeChange = () => {
-    setDarkState(!darkState);
-  };
+export default function MainWindow({ handleThemeChange, darkState }) {
   let history = useHistory();
   const {
     total,
@@ -210,120 +184,118 @@ export default function MainWindow() {
   }
 
   return (
-    <ThemeProvider theme={darkTheme}>
-      <div className={classes.root}>
-        <AppBar
-          position="absolute"
-          className={clsx(classes.appBar, open && classes.appBarShift)}
-        >
-          <Toolbar className={classes.toolbar}>
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
-              className={clsx(
-                classes.menuButton,
-                open && classes.menuButtonHidden
-              )}
+    <div className={classes.root}>
+      <AppBar
+        position="absolute"
+        className={clsx(classes.appBar, open && classes.appBarShift)}
+      >
+        <Toolbar className={classes.toolbar}>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            className={clsx(
+              classes.menuButton,
+              open && classes.menuButtonHidden
+            )}
+          >
+            <MenuIcon />
+          </IconButton>
+
+          <p className={classes.titleLogo}>M</p>
+          <PhoneIphoneIcon className={classes.Logo} />
+          <p className={classes.titleLogo}>BUY</p>
+          <Typography
+            component="h1"
+            variant="h6"
+            color="inherit"
+            noWrap
+            className={classes.title}
+          />
+
+          <SwitchComp checked={darkState} onChange={handleThemeChange} />
+          <IconButton color="inherit">
+            <AccountCircleIcon />
+          </IconButton>
+          <IconButton color="inherit" onClick={redirectSignIn}>
+            <ExitToAppIcon />
+          </IconButton>
+          <IconButton color="inherit" onClick={redirectCart}>
+            <Badge
+              badgeContent={itemCount}
+              color="secondary"
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "right",
+              }}
             >
-              <MenuIcon />
-            </IconButton>
-
-            <p className={classes.titleLogo}>M</p>
-            <PhoneIphoneIcon className={classes.Logo} />
-            <p className={classes.titleLogo}>BUY</p>
-            <Typography
-              component="h1"
-              variant="h6"
-              color="inherit"
-              noWrap
-              className={classes.title}
-            />
-
-            <SwitchComp checked={darkState} onChange={handleThemeChange} />
-            <IconButton color="inherit">
-              <AccountCircleIcon />
-            </IconButton>
-            <IconButton color="inherit" onClick={redirectSignIn}>
-              <ExitToAppIcon />
-            </IconButton>
-            <IconButton color="inherit" onClick={redirectCart}>
-              <Badge
-                badgeContent={itemCount}
-                color="secondary"
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "right",
-                }}
-              >
-                <CartIcon />
-              </Badge>
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-        <Drawer
-          variant="permanent"
-          classes={{
-            paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-          }}
-          open={open}
-        >
-          <div className={classes.toolbarIcon}>
-            <IconButton onClick={handleDrawerClose}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </div>
-          <List>
-            <MainListItems />
-          </List>
-        </Drawer>
-        <Container className={classes.container}>
-          <Switch>
-            <Route
-              exact
-              from="/ContactUs"
-              render={(props) => <ContactUs {...props} />}
-            />
-            <Route
-              exact
-              from="/AboutUs"
-              render={(props) => <AboutUs {...props} />}
-            />
-            <Route exact from="/Cart" render={(props) => <Cart {...props} />} />
-            <Route
-              exact
-              from="/Checkout"
-              render={(props) => <Checkout {...props} />}
-            />
-            <Route
-              exact
-              from="/Market"
-              render={(props) => <Store {...props} />}
-            />
-            <Route
-              exact
-              from="/MyOrders"
-              render={(props) => <MyOrders {...props} />}
-            />
-            <Route
-              exact
-              from="/SavedItems"
-              render={(props) => <SavedItems {...props} />}
-            />
-            <Route
-              path="/ViewProductItem/:productId"
-              component={ProductDetails}
-            />
-            <Route
-              exact
-              from="/Branches"
-              render={(props) => <Branches {...props} />}
-            />
-          </Switch>
-        </Container>
-        <Chatbot />
-      </div>
-    </ThemeProvider>
+              <CartIcon />
+            </Badge>
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        variant="permanent"
+        classes={{
+          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+        }}
+        open={open}
+      >
+        <div className={classes.toolbarIcon}>
+          <IconButton onClick={handleDrawerClose}>
+            <ChevronLeftIcon />
+          </IconButton>
+        </div>
+        <List>
+          <MainListItems />
+        </List>
+      </Drawer>
+      <Container className={classes.container}>
+        <Switch>
+          <Route
+            exact
+            from="/ContactUs"
+            render={(props) => <ContactUs {...props} />}
+          />
+          <Route
+            exact
+            from="/AboutUs"
+            render={(props) => <AboutUs {...props} />}
+          />
+          <Route exact from="/Cart" render={(props) => <Cart {...props} />} />
+          <Route
+            exact
+            from="/Checkout"
+            render={(props) => <Checkout {...props} />}
+          />
+          <Route
+            exact
+            from="/Market"
+            render={(props) => <Store {...props} />}
+          />
+          <Route
+            exact
+            from="/MyOrders"
+            render={(props) => <MyOrders {...props} />}
+          />
+          <Route
+            exact
+            from="/SavedItems"
+            render={(props) => <SavedItems {...props} />}
+          />
+          <Route
+            path="/ViewProductItem/:productId"
+            component={ProductDetails}
+          />
+          <Route
+            exact
+            from="/Branches"
+            render={(props) => <Branches {...props} />}
+          />
+        </Switch>
+      </Container>
+      <Chatbot />
+    </div>
   );
 }

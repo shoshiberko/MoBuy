@@ -32,9 +32,6 @@ function Row(props) {
 
   return (
     <React.Fragment>
-      <br />
-      <br />
-      <br />
       <TableRow className={classes.root}>
         <TableCell>
           <IconButton
@@ -134,11 +131,11 @@ export default function CollapsibleTable() {
 
   return (
     <div>
-      <Grid container spacing={5}>
-        <Grid item xs={12} />
-        <Grid item xs={12} />
-        <Grid item xs={12} />
-      </Grid>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
       <Typography
         component="h1"
         variant="h2"

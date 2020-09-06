@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
   },
   image: {
-    backgroundImage: "url(https://source.unsplash.com/random)",
+    backgroundImage: "url(https://source.unsplash.com/random/?phone)",
     backgroundRepeat: "no-repeat",
     backgroundColor:
       theme.palette.type === "light"
@@ -122,6 +122,8 @@ export default function SignIn() {
     }
     return (
       <div className={classes.paper}>
+        <br />
+        <br />
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
@@ -265,101 +267,105 @@ export default function SignIn() {
   }
 
   return (
-    <Grid container component="main" className={classes.root}>
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={8} square>
-        <Switch>
-          <Route
-            exact
-            from="/SignIn"
-            render={(props) => (
-              <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                  <LockOutlinedIcon />
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                  Sign in
-                </Typography>
-                <form
-                  className={classes.form}
-                  onSubmit={submitHandler}
-                  noValidate
-                >
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    value={email}
-                    onChange={onChangeEmailHandler}
-                    autoFocus
-                  />
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    value={password}
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                    onChange={onChangePasswordHandler}
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        value="remember"
-                        checked={checkedRemember}
-                        onChange={handleCheckChange}
-                        color="primary"
-                      />
-                    }
-                    label="Remember me"
-                  />
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    className={classes.submit}
+    <div>
+      <Grid container component="main" className={classes.root}>
+        <Grid item xs={false} sm={4} md={7} className={classes.image} />
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={8} square>
+          <Switch>
+            <Route
+              exact
+              from="/SignIn"
+              render={(props) => (
+                <div className={classes.paper}>
+                  <br />
+                  <br />
+                  <Avatar className={classes.avatar}>
+                    <LockOutlinedIcon />
+                  </Avatar>
+                  <Typography component="h1" variant="h5">
+                    Sign in
+                  </Typography>
+                  <form
+                    className={classes.form}
+                    onSubmit={submitHandler}
+                    noValidate
                   >
-                    Sign In
-                  </Button>
-                  <FacebookLogin
-                    appId="943313892847322" //APP ID NOT CREATED YET
-                    fields="name,email,picture"
-                    callback={responseFacebook}
-                  />
-                  <GoogleLogin
-                    clientId="985961471303-dd7bludfn1fq92rrgto97j2sbnvlhepr.apps.googleusercontent.com" //CLIENTID NOT CREATED YET
-                    buttonText="LOGIN WITH GOOGLE"
-                    onSuccess={responseGoogle}
-                    onFailure={responseGoogle}
-                  />
-                  <Grid container>
-                    <Grid item xs>
-                      <Link>Forgot password?</Link>
+                    <TextField
+                      variant="outlined"
+                      margin="normal"
+                      required
+                      fullWidth
+                      id="email"
+                      label="Email Address"
+                      name="email"
+                      autoComplete="email"
+                      value={email}
+                      onChange={onChangeEmailHandler}
+                      autoFocus
+                    />
+                    <TextField
+                      variant="outlined"
+                      margin="normal"
+                      required
+                      fullWidth
+                      value={password}
+                      name="password"
+                      label="Password"
+                      type="password"
+                      id="password"
+                      autoComplete="current-password"
+                      onChange={onChangePasswordHandler}
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          value="remember"
+                          checked={checkedRemember}
+                          onChange={handleCheckChange}
+                          color="primary"
+                        />
+                      }
+                      label="Remember me"
+                    />
+                    <Button
+                      type="submit"
+                      fullWidth
+                      variant="contained"
+                      className={classes.submit}
+                    >
+                      Sign In
+                    </Button>
+                    <FacebookLogin
+                      appId="943313892847322" //APP ID NOT CREATED YET
+                      fields="name,email,picture"
+                      callback={responseFacebook}
+                    />
+                    <GoogleLogin
+                      clientId="985961471303-dd7bludfn1fq92rrgto97j2sbnvlhepr.apps.googleusercontent.com" //CLIENTID NOT CREATED YET
+                      buttonText="LOGIN WITH GOOGLE"
+                      onSuccess={responseGoogle}
+                      onFailure={responseGoogle}
+                    />
+                    <Grid container>
+                      <Grid item xs>
+                        <Link>Forgot password?</Link>
+                      </Grid>
+                      <Grid item>
+                        <Link onClick={redirectSignUp}>
+                          {"Don't have an account? Sign Up"}
+                        </Link>
+                      </Grid>
                     </Grid>
-                    <Grid item>
-                      <Link onClick={redirectSignUp}>
-                        {"Don't have an account? Sign Up"}
-                      </Link>
-                    </Grid>
-                  </Grid>
-                </form>
-              </div>
-            )}
-          />
+                  </form>
+                </div>
+              )}
+            />
 
-          <Route exact from="/SignUp" render={(props) => <SignUp />} />
-        </Switch>
+            <Route exact from="/SignUp" render={(props) => <SignUp />} />
+          </Switch>
+        </Grid>
       </Grid>
-    </Grid>
+    </div>
   );
 }
 

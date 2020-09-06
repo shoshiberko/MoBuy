@@ -45,10 +45,32 @@ function initDB() {
 
   var products_ = [
     {
-      id: 206,
-      name: "Galaxi S8",
+      id: 210,
+      name: "LG G8",
+      price: 1000,
+      imagesList: [
+        "../../Phones/LGG8/LGG8_1.png",
+        "../../Phones/LGG8/LGG8_2.png",
+        "../../Phones/LGG8/LGG8_3.png",
+      ], //String's array
+      rating: 0,
+      numOfRatings: 0,
+      moreDetails: ["", "", ""],
+      colorsList: ["0x000000", "0xffffff"], // string's list (hex color in rgb)
+      productType: "phone",
+      company: "LG",
+      commentsList: [], //array of comments id (id-s from the comment schema)
+      isDeleted: false,
+    },
+    {
+      id: 211,
+      name: "Galaxi A70",
       price: 500,
-      imagesList: ["", "", ""], //String's array
+      imagesList: [
+        "../../Phones/GalaxyA70/GalaxyA70_1.png",
+        "../../Phones/GalaxyA70/GalaxyA70_2.png",
+        "../../Phones/GalaxyA70/GalaxyA70_3.png",
+      ], //String's array
       rating: 0,
       numOfRatings: 0,
       moreDetails: ["", "", ""],
@@ -59,30 +81,74 @@ function initDB() {
       isDeleted: false,
     },
     {
-      id: 207,
-      name: "Galaxi S9",
+      id: 212,
+      name: "iPhone 11 Pro",
       price: 500,
-      imagesList: ["", "", ""], //String's array
-      rating: 0,
-      numOfRatings: 0,
-      moreDetails: ["", "", ""],
-      colorsList: ["0x000000", "0xffffff"], // string's list (hex color in rgb)
-      productType: "phone",
-      company: "SAMSUNG",
-      commentsList: [], //array of comments id (id-s from the comment schema)
-      isDeleted: false,
-    },
-    {
-      id: 208,
-      name: "Iphone X",
-      price: 500,
-      imagesList: ["", "", ""], //String's array
+      imagesList: [
+        "../../Phones/iPhone11Pro/11Pro_2.png",
+        "../../Phones/iPhone11Pro/11Pro_1.png",
+        "../../Phones/iPhone11Pro/11Pro_3.png",
+      ], //String's array
       rating: 0,
       numOfRatings: 0,
       moreDetails: ["", "", ""],
       colorsList: ["0x000000", "0xffffff"], // string's list (hex color in rgb)
       productType: "phone",
       company: "Apple",
+      commentsList: [], //array of comments id (id-s from the comment schema)
+      isDeleted: false,
+    },
+    {
+      id: 213,
+      name: "iPhone SE",
+      price: 2000,
+      imagesList: [
+        "../../Phones/iPhoneSE/IphoneSE_1.png",
+        "../../Phones/iPhoneSE/IphoneSE_2.png",
+        "../../Phones/iPhoneSE/IphoneSE_3.png",
+      ], //String's array
+      rating: 0,
+      numOfRatings: 0,
+      moreDetails: ["", "", ""],
+      colorsList: ["0x000000", "0xffffff"], // string's list (hex color in rgb)
+      productType: "phone",
+      company: "Apple",
+      commentsList: [], //array of comments id (id-s from the comment schema)
+      isDeleted: false,
+    },
+    {
+      id: 214,
+      name: "Xiaomi Redmi 9",
+      price: 500,
+      imagesList: [
+        "../../Phones/XiaomiRedmi9/Redmi9_1.png",
+        "../../Phones/XiaomiRedmi9/Redmi9_2.png",
+        "../../Phones/XiaomiRedmi9/Redmi9_3.png",
+      ], //String's array
+      rating: 0,
+      numOfRatings: 0,
+      moreDetails: ["", "", ""],
+      colorsList: ["0x000000", "0xffffff"], // string's list (hex color in rgb)
+      productType: "phone",
+      company: "Xiaomi",
+      commentsList: [], //array of comments id (id-s from the comment schema)
+      isDeleted: false,
+    },
+    {
+      id: 215,
+      name: "Xiaomi Redmi Note 9",
+      price: 500,
+      imagesList: [
+        "../../Phones/XiaomiRedmiNote9/RedmiNote9_1.png",
+        "../../Phones/XiaomiRedmiNote9/RedmiNote9_2.png",
+        "../../Phones/XiaomiRedmiNote9/RedmiNote9_3.png",
+      ], //String's array
+      rating: 0,
+      numOfRatings: 0,
+      moreDetails: ["", "", ""],
+      colorsList: ["0x000000", "0xffffff"], // string's list (hex color in rgb)
+      productType: "phone",
+      company: "Xiaomi",
       commentsList: [], //array of comments id (id-s from the comment schema)
       isDeleted: false,
     },
@@ -121,7 +187,7 @@ function initDB() {
     ])
   );
 
-  User.register(
+  /*User.register(
     {
       _id: "12388888",
       firstName: "Shosh",
@@ -141,7 +207,7 @@ function initDB() {
         console.log(err);
       }
     }
-  );
+  );*/
 
   console.log("initDB");
 }
@@ -615,49 +681,97 @@ router.get("/GetAllProductItem", async function (req, res) {
   res.json(products);
 });
 
-router.post(
+router.get(
+  "/GetCommentsList",
+  connectEnsureLogin.ensureLoggedIn(),
+  async function (req, res) {
+    try {
+      let product = await Product.findOne({
+        _id: req.query.productId,
+        isDeleted: false,
+      }).exec();
+      console.log(product);
+      console.log(product.commentsList);
+      if (
+        product !== undefined &&
+        product !== null &&
+        product.commentsList !== undefined
+      ) {
+        console.log("Efrat");
+        let comments = await Comment.find({}).exec();
+        console.log("Ef1", comments);
+        //let Gcomments=comments.filter((item)=>{return product.commentsList.findIndex((element)=>element===item._id)!==-1});
+        let Gcomments = comments.filter((item) => {
+          return product.commentsList.includes(item._id);
+        });
+        res.json(Gcomments);
+        console.log("Ef", Gcomments);
+      } else {
+        res.json([]);
+        console.log([]);
+      }
+    } catch (err) {
+      res.send(404);
+    }
+  }
+);
+
+router.get(
   "/AddCommentToProduct",
   connectEnsureLogin.ensureLoggedIn(),
   async function (req, res) {
     try {
       let user = await User.findOne({
-        emailAddress: req.body.comment.emailAddress,
+        emailAddress: req.query.emailAddress,
         isDeleted: false,
       }).exec();
 
-      console.log(req.body);
-      let productId = req.body.productId;
-      console.log(productId);
+      let productId = req.query.productId;
       let product = await Product.findOne({
         isDeleted: false,
         _id: productId,
       }).exec();
-      console.log(product);
+      var rNum = 0;
+      if (product.numOfRatings !== undefined && product.numOfRatings !== null)
+        rNum = product.numOfRatings;
+      console.log("R", rNum);
+      var b = 0;
+      if (
+        product.rating !== null &&
+        product.rating !== undefined &&
+        !isNaN(product.rating)
+      )
+        b = product.rating;
+      var newRating = (b * rNum + parseFloat(req.query.rating)) / (rNum + 1);
+      console.log("newRating", newRating);
       let comments = await Comment.find({}).exec();
-
-      if (user.image === "") {
+      var countId = 0;
+      if (comments !== undefined) countId = comments.length;
+      var imageComment = user.image;
+      if (user.image === "" || user.image === undefined) {
         let str = user.firstName.replace(/\s/g, "");
+        imageComment = str.substring(0, 1);
         await Comment.CREATE([
-          comments.length,
-          user.name + " " + user.lastName,
+          countId,
+          user.firstName + " " + user.lastName,
           user.emailAddress,
-          str.substring(1, 1),
-          req.body.comment.rating,
+          str.substring(0, 1),
+          req.query.rating,
           "",
-          req.body.comment.time,
-          req.body.comment.text,
+          req.query.time,
+          req.query.text,
           false,
         ]);
       } else {
         await Comment.CREATE([
-          comments.length,
-          user.name + " " + user.lastName,
+          countId,
+          user.firstName + " " + user.lastName,
           user.emailAddress,
           user.image,
-          req.body.comment.rating,
+          req.query.rating,
           "",
-          req.body.comment.time,
-          req.body.comment.text,
+          req.query.time,
+          req.query.text,
           false,
         ]);
       }
@@ -674,27 +788,28 @@ router.post(
           _id: product._id,
           name: product.name,
           price: product.price,
-          imagesList: product.imageList, //Str
-          rating: product.rating,
-          numOfRatings: product.numOfRatings,
-          moreDetails: product.moreDetails, //st
-          colorsList: product.colorsList, // st
+          imagesList: product.imagesList,
+          rating: newRating,
+          numOfRatings: rNum + 1,
+          moreDetails: product.moreDetails,
+          colorsList: product.colorsList,
           productType: product.productType,
           company: product.company,
-          commentsList: _commentsList, //a
+          commentsList: _commentsList,
           isDeleted: false,
         });
         res.json({
           _id: comments.length,
-          name: user.name + " " + user.lastName,
+          name: user.firstName + " " + user.lastName,
           userEmail: user.emailAddress,
-          userImage: user.image,
-          rating: req.body.comment.rating,
+          userImage: imageComment,
+          rating: req.query.rating,
           color: "",
-          date: req.body.comment.time,
-          commentsData: req.body.comment.text,
+          date: req.query.time,
+          commentsData: req.query.text,
           isDeleted: false,
         });
+        0;
       } else res.send(404);
     } catch (err) {
       console.log(err);
@@ -719,7 +834,7 @@ router.post("/SignUp", async function (req, res) {
       address: "",
       isDeleted: false,
     },
-    DecryptPassword(req.body.password),
+    req.body.password,
     function (err, user) {
       if (err) {
         console.log(err);
@@ -727,20 +842,6 @@ router.post("/SignUp", async function (req, res) {
     }
   );
   res.send(200);
-});
-
-router.get("/UserImage", connectEnsureLogin.ensureLoggedIn(), async function (
-  req,
-  res
-) {
-  var userEmail = req.query.userEmail;
-  let user = await User.findOne({
-    emailAddress: userEmail,
-    isDeleted: false,
-  }).exec();
-
-  if (user !== undefined) res.json(user.image);
-  else res.json("");
 });
 
 module.exports = router;

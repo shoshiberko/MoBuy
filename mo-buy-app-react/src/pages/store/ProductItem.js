@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
   media: {
     height: 0,
-    paddingTop: "56.25%", // 16:9
+    paddingTop: "80.25%", // 16:9
   },
   expand: {
     transform: "rotate(0deg)",
@@ -123,7 +123,13 @@ export default function RecipeReviewCard({ product, renderProductsGrid }) {
         subheader={formatNumber(product.price)}
       />
 
-      <CardMedia className={classes.media} image={product.photo} title="" />
+      {product !== undefined && product.imagesList !== undefined && (
+        <CardMedia
+          className={classes.media}
+          image={product.imagesList[0]}
+          title=""
+        />
+      )}
       <CardContent></CardContent>
       <CardActions disableSpacing>
         <IconButton
@@ -159,7 +165,9 @@ export default function RecipeReviewCard({ product, renderProductsGrid }) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>{product.moreDetails}</Typography>
+          {product.moreDetails !== undefined && (
+            <Typography paragraph>{product.moreDetails[0]}</Typography>
+          )}
         </CardContent>
       </Collapse>
     </Card>

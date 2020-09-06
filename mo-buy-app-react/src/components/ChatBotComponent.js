@@ -26,7 +26,12 @@ class FloatingActionButtons extends React.Component {
       console.log(err);
     }
     addResponseMessage(
-      "Welcome to out MoBuy online store!please reply the number of the wanted option:\\n(1) Search phone\\n(2) Question about your bills \\n(3) Fixes service\\n(4) Something else"
+      `Welcome to out MoBuy online store!
+      please reply the number of the wanted option: 
+        (1) Search phone 
+        (2) Question about your bills 
+        (3) Fixes service 
+        (4) Something else`
     );
   }
 
@@ -35,7 +40,12 @@ class FloatingActionButtons extends React.Component {
     switch (messageNum.toString()) {
       case "0": {
         addResponseMessage(
-          "Welcome to out MoBuy online store!please reply the number of the wanted option:\\n(1) Search phone\\n(2) Question about your bills \\n(3) Fixes service\\n(4) Something else"
+          `Welcome to out MoBuy online store!
+           please reply the number of the wanted option: 
+          (1) Search phone 
+          (2) Question about your bills 
+          (3) Fixes service 
+          (4) Something else`
         );
         this.setState({ messageNum: 1 });
         break;
@@ -96,7 +106,12 @@ class FloatingActionButtons extends React.Component {
             );
             this.setState({ messageNum: 1 });
             addResponseMessage(
-              "Welcome to out MoBuy online store!please reply the number of the wanted option:\\n(1) Search phone\\n(2) Question about your bills \\n(3) Fixes service\\n(4) Something else"
+              `Welcome to out MoBuy online store!
+              please reply the number of the wanted option: 
+                (1) Search phone 
+                (2) Question about your bills 
+                (3) Fixes service 
+                (4) Something else`
             );
             break;
           } else {
@@ -130,7 +145,12 @@ class FloatingActionButtons extends React.Component {
 
           this.setState({ messageNum: 1 });
           addResponseMessage(
-            "Welcome to out MoBuy online store!please reply the number of the wanted option:\\n(1) Search phone\\n(2) Question about your bills \\n(3) Fixes service\\n(4) Something else"
+            `Welcome to out MoBuy online store!
+            please reply the number of the wanted option: 
+              (1) Search phone 
+              (2) Question about your bills 
+              (3) Fixes service 
+              (4) Something else`
           );
           break;
         }
@@ -143,7 +163,7 @@ class FloatingActionButtons extends React.Component {
       <div className="App">
         <Widget
           handleNewUserMessage={this.handleNewUserMessage}
-          profileAvatar={"url(https://source.unsplash.com/random)"}
+          //profileAvatar={"../faviconPNG.png"}
           title="MoBuy Chat"
           subtitle=""
         />

@@ -10,19 +10,21 @@ import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
 import IconButton from "@material-ui/core/IconButton";
 import { formatNumber } from "../../helpers/utils";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { useTheme } from "@material-ui/core/styles";
 
 const CartItem = ({ product }) => {
   const { increase, decrease, removeProduct } = useContext(CartContext);
-
+  const theme = useTheme();
   return (
     <div className="row no-gutters py-2 ">
       <div className="col-sm-2 p-2">
-        <img
-          alt={product.name}
-          style={{ margin: "0 auto", maxHeight: "50px" }}
-          src={product.photo}
-          className="img-fluid d-block"
-        />
+        {product !== undefined && product.imagesList !== undefined && (
+          <img
+            style={{ margin: "0 auto", maxHeight: "50px" }}
+            src={product.imagesList[0]}
+            className="img-fluid d-block"
+          />
+        )}
       </div>
       <div className="col-sm-4 p-2">
         <h5 className="mb-1">{product.name}</h5>

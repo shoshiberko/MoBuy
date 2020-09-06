@@ -1,7 +1,7 @@
 const debug = require("debug")("mongo:model-product");
 const mongo = require("mongoose");
 
-module.exports = db => {
+module.exports = (db) => {
   // create a schema
   let schema = new mongo.Schema(
     {
@@ -18,7 +18,7 @@ module.exports = db => {
       commentsList: Array, //array of comments id (id-s from the comment schema)
       isDeleted: Boolean,
       created_at: Date,
-      updated_at: Date
+      updated_at: Date,
     },
     { autoIndex: false }
   );
@@ -27,7 +27,7 @@ module.exports = db => {
   // you can create more important methods like name validations or formatting
   // you can also do queries and find similar users
 
-  schema.statics.CREATE = async function(product) {
+  schema.statics.CREATE = async function (product) {
     return this.create({
       _id: product[0],
       name: product[1],
@@ -40,12 +40,12 @@ module.exports = db => {
       productType: product[8],
       company: product[9],
       commentsList: product[10],
-      isDeleted: product[11]
+      isDeleted: product[11],
     });
   };
 
   // on every save, add the date
-  schema.pre("save", function(next) {
+  schema.pre("save", function (next) {
     // get the current date
     let currentDate = new Date();
     // change the updated_at field to current date
@@ -55,7 +55,7 @@ module.exports = db => {
     next();
   });
 
-  schema.statics.REQUEST = async function() {
+  schema.statics.REQUEST = async function () {
     // no arguments - bring all at once
     const args = Array.from(arguments); // [...arguments]
     if (args.length === 0) {
@@ -104,20 +104,20 @@ module.exports = db => {
     return this.find(...args).exec();
   };
 
-  schema.statics.UPDATE = async function(product) {
+  schema.statics.UPDATE = async function (product) {
     const filter = { _id: product._id };
     const update = {
       name: product.name,
       price: product.price,
-      imagesList: product.imageList,
+      imagesList: product.imagesList,
       rating: product.rating,
-      numOfRatings: product.numOfRating,
+      numOfRatings: product.numOfRatings,
       moreDetails: product.moreDetails,
       colorsList: product.colorsList,
       productType: product.productType,
       company: product.company,
       commentsList: product.commentsList,
-      isDeleted: product.isDeleted
+      isDeleted: product.isDeleted,
     };
 
     // `doc` is the document _before_ `update` was applied
@@ -125,7 +125,7 @@ module.exports = db => {
     await doc.save();
   };
 
-  schema.statics.DELETE = async function(product) {
+  schema.statics.DELETE = async function (product) {
     const filter = { _id: product._id };
     const update = { isDeleted: true };
     // `doc` is the document _before_ `update` was applied

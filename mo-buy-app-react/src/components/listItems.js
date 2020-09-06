@@ -70,17 +70,12 @@ class mainListItems extends React.Component {
           </ListItemIcon>
           <ListItemText primary="Home" />
         </ListItem>
-        <ListItem button onClick={this.pushHistorySignIn}>
-          <ListItemIcon>
-            <ProfileIcon />
-          </ListItemIcon>
-          <ListItemText primary="Profile" />
-        </ListItem>
+
         <ListItem button onClick={this.pushHistoryMarket}>
           <ListItemIcon>
             <MarketIcon />
           </ListItemIcon>
-          <ListItemText primary="Market" />
+          <ListItemText primary="Shop" />
         </ListItem>
         <ListItem button onClick={this.pushHistorySavedItems}>
           <ListItemIcon>
