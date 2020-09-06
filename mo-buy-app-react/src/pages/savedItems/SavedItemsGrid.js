@@ -48,6 +48,9 @@ const ProductsGrid = () => {
 
   return (
     <React.Fragment>
+      <br />
+      <br />
+      <br />
       <CssBaseline />
       <main>
         {/* Hero unit */}
@@ -60,28 +63,8 @@ const ProductsGrid = () => {
               color="textPrimary"
               gutterBottom
             >
-              Album layout
+              Saved Items
             </Typography>
-            <Typography
-              variant="h5"
-              align="center"
-              color="textSecondary"
-              paragraph
-            >
-              Something short and leading about the collection below—its
-              contents, the creator, etc. Make it short and sweet, but not too
-              short so folks don&apos;t simply skip over it entirely.
-            </Typography>
-            <div className={classes.heroButtons}>
-              <Grid container spacing={2} justifyContent="center">
-                <Grid item>
-                  <Button variant="contained">Main call to action</Button>
-                </Grid>
-                <Grid item>
-                  <Button variant="outlined">Secondary action</Button>
-                </Grid>
-              </Grid>
-            </div>
           </Container>
         </div>
         <Container className={classes.cardGrid} maxWidth="md">
@@ -108,21 +91,10 @@ const ProductsGrid = () => {
           </Grid>
         </Container>
       </main>
-      {/* Footer */}
-      <footer className={classes.footer}>
-        <Typography variant="h6" align="center" gutterBottom>
-          Footer
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="textSecondary"
-          component="p"
-        >
-          Something here to give the footer a purpose!
-        </Typography>
-      </footer>
-      {/* End footer */}
+
+      <br />
+      <br />
+      <br />
     </React.Fragment>
   );
 };

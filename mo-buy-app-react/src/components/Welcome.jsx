@@ -3,13 +3,21 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { withRouter } from "react-router-dom";
-/*
-const useStyles = makeStyles((theme) => ({
+import PhoneIphoneIcon from "@material-ui/icons/PhoneIphone";
+/*const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+  },
+  centerScreen: {
+    display: flex,
+    flexDirection: column,
+    justifyContent: center,
+    alignItems: center,
+    textAlign: center,
+    minHeight: "100vh",
   },
 }));
 
@@ -28,12 +36,13 @@ class Welcome extends React.Component {
   componentDidMount() {
     setTimeout(() => {
       this.props.history.push("/SignIn");
-    }, 5000); // render for 5 seconds and then push to home
+    }, 2000); // render for 2 seconds and then push to home
   }
   render() {
     return (
       <Grid container /*component="main" className={classes.root}*/>
         <CircularProgress size={150} />
+        <PhoneIphoneIcon />
       </Grid>
     );
   }

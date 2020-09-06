@@ -43,6 +43,7 @@ import SignIn from "./SignIn";
 import InfoRoundedIcon from "@material-ui/icons/InfoRounded";
 import ContactSupportRoundedIcon from "@material-ui/icons/ContactSupportRounded";
 import Tooltip from "@material-ui/core/Tooltip";
+import PhoneIphoneIcon from "@material-ui/icons/PhoneIphone";
 
 import { useHistory } from "react-router-dom";
 
@@ -84,6 +85,14 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  titleLogo: {
+    fontFamily: "Rajdhani",
+    fontSize: 50,
+    marginTop: 18,
+  },
+  Logo: {
+    fontSize: 40,
+  },
 }));
 
 function SignInAppBar() {
@@ -102,15 +111,16 @@ function SignInAppBar() {
   return (
     <AppBar position="absolute">
       <Toolbar className={classes.toolbar}>
+        <p className={classes.titleLogo}>M</p>
+        <PhoneIphoneIcon className={classes.Logo} />
+        <p className={classes.titleLogo}>BUY</p>
         <Typography
           component="h1"
           variant="h6"
           color="inherit"
           noWrap
           className={classes.title}
-        >
-          MoBuy
-        </Typography>
+        />
         <Tooltip title="Login">
           <IconButton color="inherit" onClick={redirectSignIn}>
             <AccountCircleIcon />

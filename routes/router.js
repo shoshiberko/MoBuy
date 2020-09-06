@@ -729,4 +729,18 @@ router.post("/SignUp", async function (req, res) {
   res.send(200);
 });
 
+router.get("/UserImage", connectEnsureLogin.ensureLoggedIn(), async function (
+  req,
+  res
+) {
+  var userEmail = req.query.userEmail;
+  let user = await User.findOne({
+    emailAddress: userEmail,
+    isDeleted: false,
+  }).exec();
+
+  if (user !== undefined) res.json(user.image);
+  else res.json("");
+});
+
 module.exports = router;

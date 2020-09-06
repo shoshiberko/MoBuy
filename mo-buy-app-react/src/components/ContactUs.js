@@ -16,7 +16,7 @@ import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import img from "./backgroundImages/contact4.jpg";
+import img from "./backgroundImages/contact5.jpg";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -35,7 +35,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundImage: `url(${img})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
-    backgroundPosition: "bottom",
+    backgroundPosition: "center",
+    // backgroundColor: "rgba(0, 0, 0, 0.2)",
+    //backdropFilter: "brightness(120%)",
   },
   overlay: {
     position: "absolute",
@@ -60,6 +62,7 @@ export default function ContantUsForm() {
 
   return (
     <div>
+      <br />
       <br />
       <br />
       <br />

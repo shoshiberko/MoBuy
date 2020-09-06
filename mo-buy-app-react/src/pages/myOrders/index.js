@@ -32,6 +32,9 @@ function Row(props) {
 
   return (
     <React.Fragment>
+      <br />
+      <br />
+      <br />
       <TableRow className={classes.root}>
         <TableCell>
           <IconButton
