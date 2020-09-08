@@ -1,0 +1,43 @@
+{
+  "files": {
+    "main.css": "/static/css/main.0372cfb4.chunk.css",
+    "main.js": "/static/js/main.fcccefbc.chunk.js",
+    "main.js.map": "/static/js/main.fcccefbc.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.6162c7a9.js",
+    "runtime-main.js.map": "/static/js/runtime-main.6162c7a9.js.map",
+    "static/css/2.491e0341.chunk.css": "/static/css/2.491e0341.chunk.css",
+    "static/js/2.c3713d25.chunk.js": "/static/js/2.c3713d25.chunk.js",
+    "static/js/2.c3713d25.chunk.js.map": "/static/js/2.c3713d25.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.f32deb3e4fb6584fefc7a1ad2a5168cd.js": "/precache-manifest.f32deb3e4fb6584fefc7a1ad2a5168cd.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.491e0341.chunk.css.map": "/static/css/2.491e0341.chunk.css.map",
+    "static/css/main.0372cfb4.chunk.css.map": "/static/css/main.0372cfb4.chunk.css.map",
+    "static/js/2.c3713d25.chunk.js.LICENSE.txt": "/static/js/2.c3713d25.chunk.js.LICENSE.txt",
+    "static/media/contact5.jpg": "/static/media/contact5.3a8c0d8b.jpg",
+    "static/media/logo.svg": "/static/media/logo.ee7cd8ed.svg",
+    "static/media/phone_background1.jpg": "/static/media/phone_background1.de47ec27.jpg",
+    "static/media/phone_background12.jpg": "/static/media/phone_background12.3407d5c3.jpg",
+    "static/media/phone_background13.jpg": "/static/media/phone_background13.2ad79105.jpg",
+    "static/media/phone_background14.jpg": "/static/media/phone_background14.b2f39b71.jpg",
+    "static/media/phone_background2.jpg": "/static/media/phone_background2.11ae6837.jpg",
+    "static/media/phone_background3.jpg": "/static/media/phone_background3.3f81a805.jpg",
+    "static/media/phone_background4.jpg": "/static/media/phone_background4.56052cd8.jpg",
+    "static/media/phone_background5.jpg": "/static/media/phone_background5.11e0c2ba.jpg",
+    "static/media/phone_background6.jpg": "/static/media/phone_background6.b8c88484.jpg",
+    "static/media/phone_background8.jpg": "/static/media/phone_background8.9cc4abf0.jpg",
+    "static/media/shop2.jpg": "/static/media/shop2.8623f77c.jpg",
+    "static/media/shop3.jpg": "/static/media/shop3.86274e4e.jpg",
+    "static/media/shop4.jpg": "/static/media/shop4.3f094242.jpg",
+    "static/media/shop5.jpg": "/static/media/shop5.8fe5ec53.jpg",
+    "static/media/shop7.jpg": "/static/media/shop7.a4f802ac.jpg",
+    "static/media/shop8.jpg": "/static/media/shop8.83cb7180.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6162c7a9.js",
+    "static/css/2.491e0341.chunk.css",
+    "static/js/2.c3713d25.chunk.js",
+    "static/css/main.0372cfb4.chunk.css",
+    "static/js/main.fcccefbc.chunk.js"
+  ]
+}
