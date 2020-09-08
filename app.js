@@ -1,4 +1,5 @@
 var bodyParser = require("body-parser");
+
 const passport = require("passport");
 var favicon = require("serve-favicon");
 const expressSession = require("express-session")({
@@ -18,9 +19,15 @@ var logger = require("morgan");
 
 var app = express();
 var router = express.Router();
+
+const publicPath = path.join(__dirname, "..", "mo-buy-app-react", "public");
+
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
+app.set(+"view engine", "ejs");
+
+// Tal
+app.use(express.static(publicPath));
 
 // view engine setup
 app.use(bodyParser.json());
@@ -86,6 +93,11 @@ app.use(function (err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render("error");
+});
+
+// Tal
+app.get("*", (req, res) => {
+  res.sendFile(path.join(publicPath, "index.html"));
 });
 
 module.exports = app;
