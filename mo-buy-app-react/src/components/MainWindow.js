@@ -59,6 +59,7 @@ import { useHistory } from "react-router-dom";
 import Chatbot from "./ChatBotComponent";
 import Branches from "./Branches";
 import PhoneIphoneIcon from "@material-ui/icons/PhoneIphone";
+import Footer from "./Footer";
 
 const drawerWidth = 240;
 
@@ -294,7 +295,9 @@ export default function MainWindow({ handleThemeChange, darkState }) {
             render={(props) => <Branches {...props} />}
           />
         </Switch>
+        <Footer />
       </Container>
+
       <Chatbot />
     </div>
   );

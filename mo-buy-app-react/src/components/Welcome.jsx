@@ -19,7 +19,7 @@ const styles = (theme) => ({
     fontSize: 70,
     position: "fixed",
     top: "39%",
-    left: "49%",
+    left: "49.5%",
   },
   progress: {
     position: "fixed",

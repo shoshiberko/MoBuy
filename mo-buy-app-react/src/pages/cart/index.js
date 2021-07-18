@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
     width: "100vw",
     height: "100vh",
   },
+  root: {
+    minHeight: "100vh",
+  },
 }));
 
 const Cart = () => {
@@ -34,7 +37,7 @@ const Cart = () => {
     history.push("/Checkout");
   }
   return (
-    <div>
+    <div className={classes.root}>
       <br />
       <br />
       <br />

@@ -50,6 +50,7 @@ import { Item, Label } from "semantic-ui-react";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import Typography from "@material-ui/core/Typography";
+import Footer from "./Footer";
 
 const markerList = [
   { lat: 31.787677, lng: 35.180161, label: "Jerusalem" },
@@ -157,6 +158,7 @@ const SimpleMap = (props) => {
       </Paper>
       <br />
       <br />
+      <Footer />
     </div>
   );
 };
