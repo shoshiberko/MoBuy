@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
   },
+  root: {
+    minHeight: "100vh",
+  },
 }));
 
 const ProductsGrid = () => {
@@ -47,7 +50,7 @@ const ProductsGrid = () => {
   }, []);
 
   return (
-    <React.Fragment>
+    <div className={classes.root}>
       <br />
       <br />
       <br />
@@ -95,7 +98,7 @@ const ProductsGrid = () => {
       <br />
       <br />
       <br />
-    </React.Fragment>
+    </div>
   );
 };
 

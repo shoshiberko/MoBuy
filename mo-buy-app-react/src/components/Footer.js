@@ -9,9 +9,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary">
       {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Mobuy by Shoshi & Efrat
-      </Link>{" "}
+      <Link color="inherit">MOBUY by Shoshi Berko & Efrat Swisa</Link>{" "}
       {new Date().getFullYear()}
       {"."}
     </Typography>
@@ -20,17 +18,19 @@ function Copyright() {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
-    flexDirection: "column",
-    minHeight: "100vh",
+    //display: "flex",
+    //flexDirection: "column",
+    //minHeight: "30vh",
   },
   main: {
-    marginTop: theme.spacing(8),
-    marginBottom: theme.spacing(2),
+    //marginTop: theme.spacing(8),
+    //marginBottom: theme.spacing(2),
   },
   footer: {
-    padding: theme.spacing(3, 2),
-    marginTop: "auto",
+    // padding: theme.spacing(3, 2),
+    //marginTop: "auto",
+    textAlign: "center",
+    width: "1500",
     backgroundColor:
       theme.palette.type === "light"
         ? theme.palette.grey[200]
@@ -41,32 +41,22 @@ const useStyles = makeStyles((theme) => ({
 export default function StickyFooter() {
   const classes = useStyles();
 
-  return <div></div>;
+  return (
+    <div className={classes.root}>
+      <CssBaseline />
+
+      <footer className={classes.footer}>
+        <br />
+        <Copyright />
+        <br />
+      </footer>
+    </div>
+  );
 }
 
 /*
 
  return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <Container component="main" className={classes.main} maxWidth="sm">
-        <Typography variant="h2" component="h1" gutterBottom>
-          Sticky footer
-        </Typography>
-        <Typography variant="h5" component="h2" gutterBottom>
-          {"Pin a footer to the bottom of the viewport."}
-          {"The footer will move as the main element of the page grows."}
-        </Typography>
-        <Typography variant="body1">Sticky footer placeholder.</Typography>
-      </Container>
-      <footer className={classes.footer}>
-        <Container maxWidth="sm">
-          <Typography variant="body1">
-            My sticky footer can be found here.
-          </Typography>
-          <Copyright />
-        </Container>
-      </footer>
-    </div>
+   
   );
 */

@@ -23,6 +23,7 @@ import FacebookLogin from "react-facebook-login";
 import GoogleLogin from "react-google-login";
 import $ from "jquery";
 import { useHistory } from "react-router-dom";
+import Footer from "./Footer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -361,6 +362,7 @@ export default function SignIn() {
           </Switch>
         </Grid>
       </Grid>
+      <Footer />
     </div>
   );
 }

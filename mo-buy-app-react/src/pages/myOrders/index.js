@@ -23,6 +23,9 @@ const useRowStyles = makeStyles({
       borderBottom: "unset",
     },
   },
+  main: {
+    minHeight: "100vh",
+  },
 });
 
 function Row(props) {
@@ -116,6 +119,7 @@ Row.propTypes = {
 };
 
 export default function CollapsibleTable() {
+  const classes = useRowStyles();
   const [orders, ordersSet] = React.useState([]);
   React.useEffect(() => {
     async function fetchOrders() {
@@ -130,7 +134,7 @@ export default function CollapsibleTable() {
   }, []);
 
   return (
-    <div>
+    <div className={classes.main}>
       <br />
       <br />
       <br />

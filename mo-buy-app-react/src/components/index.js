@@ -55,7 +55,6 @@ import {
 } from "@material-ui/core/colors";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
-import Footer from "./Footer";
 
 const drawerWidth = 240;
 /*const theme = createMuiTheme({
@@ -205,7 +204,6 @@ export default function App() {
               <div>
                 <SignInAppBar />
                 <SignIn {...props} />
-                <Footer />
               </div>
             )}
           />
@@ -217,7 +215,6 @@ export default function App() {
               <div>
                 <SignInAppBar />
                 <SignIn {...props} />
-                <Footer />
               </div>
             )}
           />
@@ -225,78 +222,60 @@ export default function App() {
             exact
             from="/MyOrders"
             render={(props) => (
-              <div>
-                <MainWindow
-                  handleThemeChange={handleThemeChange}
-                  darkState={darkState}
-                />
-                <Footer />
-              </div>
+              <MainWindow
+                handleThemeChange={handleThemeChange}
+                darkState={darkState}
+              />
             )}
           />
           <Route
             exact
             from="/ContactUs"
             render={(props) => (
-              <div>
-                <MainWindow
-                  handleThemeChange={handleThemeChange}
-                  darkState={darkState}
-                />
-                <Footer />
-              </div>
+              <MainWindow
+                handleThemeChange={handleThemeChange}
+                darkState={darkState}
+              />
             )}
           />
           <Route
             exact
             from="/AboutUs"
             render={(props) => (
-              <div>
-                <MainWindow
-                  handleThemeChange={handleThemeChange}
-                  darkState={darkState}
-                />
-                <Footer />
-              </div>
+              <MainWindow
+                handleThemeChange={handleThemeChange}
+                darkState={darkState}
+              />
             )}
           />
           <Route
             exact
             from="/Cart"
             render={(props) => (
-              <div>
-                <MainWindow
-                  handleThemeChange={handleThemeChange}
-                  darkState={darkState}
-                />
-                <Footer />
-              </div>
+              <MainWindow
+                handleThemeChange={handleThemeChange}
+                darkState={darkState}
+              />
             )}
           />
           <Route
             exact
             from="/Checkout"
             render={(props) => (
-              <div>
-                <MainWindow
-                  handleThemeChange={handleThemeChange}
-                  darkState={darkState}
-                />
-                <Footer />
-              </div>
+              <MainWindow
+                handleThemeChange={handleThemeChange}
+                darkState={darkState}
+              />
             )}
           />
           <Route
             exact
             from="/Market"
             render={(props) => (
-              <div>
-                <MainWindow
-                  handleThemeChange={handleThemeChange}
-                  darkState={darkState}
-                />
-                <Footer />
-              </div>
+              <MainWindow
+                handleThemeChange={handleThemeChange}
+                darkState={darkState}
+              />
             )}
           />
 
@@ -304,37 +283,28 @@ export default function App() {
             exact
             from="/SavedItems"
             render={(props) => (
-              <div>
-                <MainWindow
-                  handleThemeChange={handleThemeChange}
-                  darkState={darkState}
-                />
-                <Footer />
-              </div>
+              <MainWindow
+                handleThemeChange={handleThemeChange}
+                darkState={darkState}
+              />
             )}
           />
           <Route
             from="/ViewProductItem/:productId"
             render={(props) => (
-              <div>
-                <MainWindow
-                  handleThemeChange={handleThemeChange}
-                  darkState={darkState}
-                />
-                <Footer />
-              </div>
+              <MainWindow
+                handleThemeChange={handleThemeChange}
+                darkState={darkState}
+              />
             )}
           />
           <Route
             from="/Branches"
             render={(props) => (
-              <div>
-                <MainWindow
-                  handleThemeChange={handleThemeChange}
-                  darkState={darkState}
-                />
-                <Footer />
-              </div>
+              <MainWindow
+                handleThemeChange={handleThemeChange}
+                darkState={darkState}
+              />
             )}
           />
         </Switch>
